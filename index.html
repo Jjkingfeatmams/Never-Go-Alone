@@ -1,0 +1,2001 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Never Go Alone</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+
+    :root {
+      --ink: #292530;
+      --muted: #706775;
+      --paper: #fffaf6;
+      --card: #ffffff;
+      --line: #e8dfd9;
+      --brand: #554abb;
+      --brand-soft: #eeebff;
+      --coral: #e66d56;
+      --green: #247852;
+      --green-soft: #dff3e7;
+      --gold: #c98d21;
+      --shadow: 0 18px 48px rgba(52, 37, 30, .18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+      background: #f2ece7;
+      color: var(--ink);
+      font-family: "DM Sans", system-ui, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #f2a64a;
+      outline-offset: 3px;
+    }
+
+    .stage {
+      min-height: 100vh;
+      min-height: 100svh;
+      height: 100vh;
+      height: 100dvh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px minmax(0, 1fr);
+      align-items: center;
+      gap: 48px;
+      padding: 24px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 35%, #e8e0ff, #f2ece7 56%);
+    }
+
+    .intro { max-width: 290px; justify-self: end; }
+    .intro small { color: var(--brand); font-weight: 800; letter-spacing: .12em; }
+    .intro h1 {
+      margin: 10px 0;
+      font: 700 48px/.93 "Fraunces", Georgia, serif;
+      letter-spacing: -.08em;
+    }
+    .intro em { color: var(--brand); font-style: normal; }
+    .intro p, .side { color: var(--muted); line-height: 1.55; }
+    .side { max-width: 190px; }
+
+    .phone {
+      position: relative;
+      width: 420px;
+      height: 874px;
+      padding: 5px;
+      border: 10px solid #181820;
+      border-radius: 54px;
+      background: #181820;
+      box-shadow: var(--shadow);
+      transform: scale(var(--phone-scale, 1));
+      transform-origin: center;
+    }
+
+    .notch {
+      position: absolute;
+      z-index: 5;
+      top: 5px;
+      left: calc(50% - 63px);
+      width: 126px;
+      height: 28px;
+      border-radius: 0 0 18px 18px;
+      background: #181820;
+    }
+
+    #app {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 39px;
+      background: var(--paper);
+    }
+
+    .view {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .screen-header {
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      min-height: 76px;
+      padding: 32px 16px 8px;
+    }
+
+    .screen-header strong { text-align: center; font-size: 13px; }
+    .header-spacer { width: 36px; height: 36px; }
+    .home-header { grid-template-columns: 86px 1fr 40px; }
+    .home-button {
+      min-height: 36px;
+      padding: 0 9px;
+      border: 0;
+      border-radius: 18px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .explore-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 39px 20px 10px;
+    }
+
+    .eyebrow {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 8px;
+      font: 700 25px/1.04 "Fraunces", Georgia, serif;
+      letter-spacing: -.045em;
+    }
+    h2 { margin-bottom: 7px; font-size: 16px; }
+    h3 { margin-bottom: 5px; font-size: 15px; }
+    .muted { color: var(--muted); line-height: 1.45; }
+    .tiny { font-size: 11px; }
+
+    .location-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 20px 12px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: #f0eae5;
+      color: #514a57;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .location-bar button {
+      margin-left: auto;
+      padding: 2px 0;
+      border: 0;
+      background: none;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .scroll {
+      flex: 1;
+      overflow: auto;
+      padding: 0 20px 88px;
+      scrollbar-width: none;
+      overscroll-behavior: contain;
+    }
+    .scroll::-webkit-scrollbar { display: none; }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow: auto;
+      margin: 0 -20px 14px;
+      padding: 0 20px;
+      scrollbar-width: none;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: var(--card);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .chip.active {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .age-preference {
+      margin: 15px 0;
+      padding: 13px;
+      border: 1px solid #dcd5ee;
+      border-radius: 14px;
+      background: var(--brand-soft);
+    }
+    .age-preference b { display: block; font-size: 12px; }
+    .age-preference p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .age-preference .filters { margin: 10px -13px 0; padding: 0 13px; }
+
+    .event-list { display: grid; gap: 12px; }
+
+    .event-card {
+      width: 100%;
+      overflow: hidden;
+      border: 0;
+      border-radius: 18px;
+      background: var(--card);
+      color: var(--ink);
+      text-align: left;
+      box-shadow: 0 4px 14px rgba(56, 41, 26, .08);
+    }
+
+    .event-poster {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      min-height: 110px;
+      padding: 13px;
+      overflow: hidden;
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .event-poster::after {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(20, 16, 34, .76), rgba(20, 16, 34, .1) 60%, rgba(12, 9, 19, .58));
+      content: "";
+    }
+    .event-artwork {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .event-artwork.contain { padding: 15px; object-fit: contain; background: radial-gradient(circle, rgba(255, 255, 255, .22), rgba(13, 25, 47, .9)); }
+    .matchup-artwork {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px 22px;
+      background: radial-gradient(circle at center, #427e9d, #172b4b 68%);
+    }
+    .matchup-artwork img { width: min(33%, 92px); max-height: 76px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .35)); }
+    .matchup-artwork span { color: #fff; font-size: 12px; font-weight: 900; letter-spacing: .1em; }
+    .event-poster small,
+    .event-poster b {
+      position: relative;
+      z-index: 2;
+    }
+    .event-poster b {
+      max-width: 230px;
+      font: 700 25px/.95 "Fraunces", Georgia, serif;
+      letter-spacing: -.06em;
+      text-align: right;
+    }
+
+    .event-poster {
+      background-position: center;
+      background-size: cover;
+    }
+    .concert {
+      background-image: linear-gradient(110deg, rgba(28, 22, 62, .78), rgba(108, 39, 73, .18), rgba(15, 11, 30, .58)), url("assets/concert-live.png");
+    }
+    .sport {
+      background-image: linear-gradient(110deg, rgba(12, 53, 71, .8), rgba(22, 100, 105, .13), rgba(9, 25, 44, .53)), url("assets/sport-run.png");
+    }
+    .football {
+      background-image: linear-gradient(110deg, rgba(8, 21, 55, .82), rgba(88, 15, 31, .14), rgba(4, 10, 28, .58)), url("assets/football-derby.png");
+    }
+    .theatre {
+      background-image: linear-gradient(110deg, rgba(47, 13, 25, .79), rgba(104, 33, 33, .13), rgba(19, 9, 13, .56)), url("assets/theatre-stage.png");
+    }
+    .club {
+      background-image: linear-gradient(110deg, rgba(16, 12, 47, .81), rgba(72, 28, 113, .12), rgba(24, 12, 45, .57)), url("assets/club-night.png");
+    }
+    .festival {
+      background-image: linear-gradient(110deg, rgba(83, 37, 15, .73), rgba(134, 57, 18, .1), rgba(53, 21, 8, .53)), url("assets/festival-outdoor.png");
+    }
+    .humour {
+      background-image: linear-gradient(110deg, rgba(48, 26, 12, .79), rgba(99, 43, 15, .1), rgba(29, 15, 8, .55)), url("assets/comedy-night.png");
+    }
+
+    .event-copy { padding: 12px 13px 13px; }
+    .event-copy p { margin-bottom: 8px; color: var(--muted); font-size: 11px; }
+    .price-line { display: flex; align-items: baseline; gap: 7px; }
+    .price-line b { color: var(--brand); }
+    .price-line s { color: var(--muted); font-size: 11px; }
+    .progress {
+      height: 7px;
+      margin: 10px 0 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #f3e3dd;
+    }
+    .progress > span { display: block; height: 100%; border-radius: inherit; background: var(--coral); }
+    .event-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 10px; }
+    .member-dots { color: var(--brand); letter-spacing: -2px; }
+    .live-note { margin: -3px 0 14px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .source-link { display: inline-flex; margin: -2px 0 5px; color: var(--brand); font-size: 11px; font-weight: 800; text-decoration: none; }
+    .source-link:hover { text-decoration: underline; }
+
+    .bottom-nav {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 66px;
+      padding: 7px 9px;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      backdrop-filter: blur(12px);
+    }
+
+    .bottom-nav button {
+      border: 0;
+      border-radius: 10px;
+      background: none;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .bottom-nav button.active { color: var(--brand); background: var(--brand-soft); }
+
+    .hero-poster { margin: 0 0 17px; border-radius: 18px; }
+    .info-card, .notice-card, .profile-card, .private-lock {
+      margin: 14px 0;
+      padding: 13px;
+      border-radius: 14px;
+      background: #f1ebe6;
+    }
+    .info-card p, .notice-card p, .profile-card p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .private-lock { border: 1px solid #ddd3ff; background: var(--brand-soft); color: #39306f; }
+    .private-lock p { margin: 4px 0 0; font-size: 12px; line-height: 1.4; }
+
+    .primary {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+    }
+    .primary.coral { background: var(--coral); }
+    .primary.gold { background: linear-gradient(135deg, #b47814, #f2cf6b); color: #3a2500; }
+    .primary.ghost { border: 1px solid var(--brand); background: transparent; color: var(--brand); }
+    .fixed-action { position: absolute; right: 20px; bottom: 16px; left: 20px; }
+
+    .member-list { display: grid; }
+    .member-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 11px;
+      padding: 12px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+    }
+    .member-row > span:nth-child(2) { min-width: 0; flex: 1; }
+    .member-row b { display: block; font-size: 13px; }
+    .member-row p { margin: 3px 0 0; overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+    .profile-arrow { color: var(--brand); font-size: 18px; }
+
+    .avatar {
+      position: relative;
+      display: inline-grid;
+      flex: 0 0 auto;
+      width: 43px;
+      height: 43px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      isolation: isolate;
+    }
+    .avatar::after {
+      position: absolute;
+      z-index: -1;
+      inset: 10px 10px -6px;
+      border-radius: 50% 50% 36% 36%;
+      background: rgba(255, 255, 255, .25);
+      content: "";
+    }
+    .avatar-0, .photo-0 { background: linear-gradient(145deg, #e3b58e 0 38%, #365c60 39%); }
+    .avatar-1, .photo-1 { background: linear-gradient(145deg, #d59d76 0 38%, #41527e 39%); }
+    .avatar-2, .photo-2 { background: linear-gradient(145deg, #c98263 0 38%, #7e3e5c 39%); }
+    .avatar-3, .photo-3 { background: linear-gradient(145deg, #ca956e 0 38%, #4a775f 39%); }
+    .avatar-4, .photo-4 { background: linear-gradient(145deg, #b77a57 0 38%, #614d88 39%); }
+    .avatar-5, .photo-5 { background: linear-gradient(145deg, #8f633f 0 38%, #315f78 39%); }
+    .avatar-6, .photo-6 { background: linear-gradient(145deg, #d4a16c 0 38%, #315a51 39%); }
+    .avatar-7, .photo-7 { background: linear-gradient(145deg, #9a5c42 0 38%, #76426c 39%); }
+    .avatar-8, .photo-8 { background: linear-gradient(145deg, #bc8058 0 38%, #3d597b 39%); }
+    .avatar-9, .photo-9 { background: linear-gradient(145deg, #d6ac7e 0 38%, #6e5734 39%); }
+    .avatar-10, .photo-10 { background: linear-gradient(145deg, #875d48 0 38%, #3a6b70 39%); }
+    .avatar-11, .photo-11 { background: linear-gradient(145deg, #c78d69 0 38%, #52447a 39%); }
+
+    .profile-hero { text-align: center; }
+    .profile-hero .avatar { width: 78px; height: 78px; font-size: 27px; }
+    .verified { margin: 6px 0 0; color: var(--green); font-size: 12px; font-weight: 800; }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: 88px 88px;
+      gap: 7px;
+      margin: 17px 0;
+    }
+    .profile-photo {
+      position: relative;
+      display: grid;
+      place-items: end start;
+      overflow: hidden;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .profile-photo:first-child { grid-row: span 2; }
+    .profile-photo::after {
+      position: absolute;
+      right: 18%;
+      bottom: -24px;
+      width: 58%;
+      height: 76%;
+      border-radius: 50% 50% 18px 18px;
+      background: rgba(255, 255, 255, .22);
+      content: "";
+    }
+    .profile-photo span { z-index: 1; padding: 9px; text-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+
+    .field { display: grid; gap: 6px; margin: 14px 0; }
+    .field label { font-size: 11px; font-weight: 800; }
+    .field input, .field select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dcd1cb;
+      border-radius: 11px;
+      background: var(--card);
+      color: var(--ink);
+    }
+    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .check { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .check input { margin-top: 2px; }
+    .feedback { min-height: 18px; margin: 6px 0; color: #a03934; font-size: 11px; font-weight: 700; }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 8px 20px 11px;
+      border-bottom: 1px solid var(--line);
+    }
+    .tabs button {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 5px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .tabs button.active { background: var(--brand-soft); color: var(--brand); }
+
+    .message {
+      max-width: 84%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 13px 13px 13px 3px;
+      background: #f0ebe6;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+    .message.mine {
+      margin-left: auto;
+      border-radius: 13px 13px 3px 13px;
+      background: var(--brand);
+      color: #fff;
+    }
+    .chat-author { display: block; margin-bottom: 3px; font-size: 9px; font-weight: 800; opacity: .76; }
+    .chat-composer { display: flex; gap: 7px; margin-top: 12px; }
+    .chat-composer input { min-width: 0; flex: 1; padding: 11px; border: 1px solid var(--line); border-radius: 11px; background: var(--card); color: var(--ink); }
+    .chat-composer button { width: 44px; border: 0; border-radius: 11px; background: var(--brand); color: #fff; font-size: 18px; }
+
+    .restaurant {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 9px;
+      margin: 7px 0;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: var(--card);
+      color: var(--ink);
+      text-align: left;
+    }
+    .restaurant span:first-child { flex: 1; font-size: 12px; font-weight: 700; }
+    .restaurant span:last-child { color: var(--brand); font-size: 10px; font-weight: 800; }
+
+    .timeline { display: grid; gap: 0; margin: 14px 0; }
+    .timeline-step { position: relative; padding: 0 0 17px 28px; color: var(--muted); font-size: 12px; }
+    .timeline-step::before { position: absolute; top: 0; left: 0; width: 14px; height: 14px; border: 3px solid var(--line); border-radius: 50%; background: var(--paper); content: ""; }
+    .timeline-step::after { position: absolute; top: 15px; bottom: 0; left: 6px; width: 2px; background: var(--line); content: ""; }
+    .timeline-step:last-child::after { display: none; }
+    .timeline-step.done { color: var(--green); font-weight: 700; }
+    .timeline-step.done::before { border-color: var(--green); background: var(--green); box-shadow: inset 0 0 0 3px var(--paper); }
+    .status { margin: 12px 0; padding: 12px; border-radius: 12px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 700; }
+    .status.neutral { background: var(--brand-soft); color: #39306f; }
+    .qr {
+      display: grid;
+      width: 160px;
+      aspect-ratio: 1;
+      place-items: center;
+      margin: 18px auto 6px;
+      border: 12px solid #fff;
+      background: repeating-conic-gradient(#25212d 0 25%, #fff 0 50%) 50% / 22px 22px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      text-shadow: 0 1px 3px #000;
+    }
+
+    .city-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin: 8px 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--card);
+      color: var(--ink);
+      text-align: left;
+    }
+    .city-row b { flex: 1; }
+    .city-row span { color: var(--brand); font-size: 11px; font-weight: 800; }
+
+    .empty { padding: 100px 7px 0; text-align: center; }
+    .empty p { color: var(--muted); line-height: 1.45; }
+
+    .google-form {
+      display: block;
+      width: 100%;
+      min-height: 570px;
+      margin: 14px 0 0;
+      border: 0;
+      border-radius: 12px;
+      background: #fff;
+    }
+    .form-note { padding: 12px; border-radius: 12px; background: #fff3d6; color: #5c4105; font-size: 11px; line-height: 1.45; }
+
+    .live-banner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 13px 0;
+      padding: 11px 12px;
+      border: 1px solid #cfe8db;
+      border-radius: 13px;
+      background: #effaf4;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .live-banner::before { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px rgba(36, 120, 82, .12); content: ""; }
+    .live-count { color: var(--green); font-size: 11px; font-weight: 800; }
+    .live-empty { margin: 18px 0; padding: 18px 13px; border: 1px dashed #d8cec7; border-radius: 14px; color: var(--muted); font-size: 12px; line-height: 1.45; text-align: center; }
+    .live-member-copy { color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .live-member-copy b { color: var(--ink); }
+    .live-form { padding-bottom: 26px; }
+    .live-form h1 { margin-top: 2px; }
+    .live-form .check { margin: 12px 0; }
+    .live-form .check strong { color: var(--ink); }
+    .live-form .tiny { display: block; color: var(--muted); line-height: 1.45; }
+    .live-form-actions { display: grid; gap: 9px; margin-top: 15px; }
+    .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .success-card { margin: 12px 0 16px; padding: 14px; border-radius: 14px; background: var(--green-soft); color: var(--green); }
+    .success-card b { display: block; margin-bottom: 4px; }
+    .success-card p { margin: 0; font-size: 12px; line-height: 1.4; }
+    .withdraw-button { margin-top: 10px; color: #9c3f36 !important; border-color: #c9766c !important; }
+
+    .language-picker {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 7px;
+      margin: 14px 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--card);
+    }
+    .language-picker > span { color: var(--muted); font-size: 12px; font-weight: 800; }
+    .language-picker button {
+      min-width: 65px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 8px 9px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .language-picker button.active {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    body.dark {
+      --ink: #f6f0f5;
+      --muted: #cbbfca;
+      --paper: #211e27;
+      --card: #2c2732;
+      --line: #4d4452;
+      --brand-soft: #3a345e;
+      --green-soft: #1c4738;
+      background: #17151b;
+    }
+    body.dark .stage { background: radial-gradient(circle at 50% 35%, #332a4d, #17151b 56%); }
+    body.dark .info-card,
+    body.dark .notice-card,
+    body.dark .profile-card,
+    body.dark .message:not(.mine) { background: #342d37; }
+    body.dark .location-bar {
+      border-color: #5d5066;
+      background: #342d37;
+      color: #ffffff;
+    }
+    body.dark .location-bar button { color: #ffffff; }
+    body.dark .city-row,
+    body.dark .restaurant {
+      border-color: #5d5066;
+      background: #342d37;
+      color: #ffffff;
+    }
+    body.dark .city-row b,
+    body.dark .restaurant span:first-child { color: #ffffff; }
+    body.dark .city-row span,
+    body.dark .restaurant span:last-child { color: #e2d9ff; }
+    body.dark .source-link { color: #cfc9ff; }
+    body.dark .field input,
+    body.dark .field select,
+    body.dark .chat-composer input { border-color: #5d5066; }
+    body.dark .bottom-nav { background: color-mix(in srgb, var(--paper) 94%, transparent); }
+    body.dark .private-lock { background: #37315a; border-color: #665b9f; color: #f3efff; }
+    body.dark .form-note { background: #4e3910; color: #ffe6a8; }
+    body.dark .live-banner { border-color: #396c57; background: #193b30; color: #b9efd1; }
+    body.dark .live-empty { border-color: #63596b; }
+
+    @media (max-width: 900px) {
+      .stage { grid-template-columns: 1fr; padding: 0; justify-items: center; }
+      .intro, .side { display: none; }
+    }
+    @media (max-width: 600px) {
+      html, body { height: 100%; overflow: hidden; }
+      .stage {
+        display: block;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 100svh;
+        padding: 0;
+      }
+      .phone {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+      }
+      #app { border-radius: 0; }
+      .notch { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <aside class="intro">
+      <small>PROTOTYPE · FRANCE</small>
+      <h1>Never<br><em>Go Alone.</em></h1>
+      <p>Des événements et des personnes à rencontrer.</p>
+    </aside>
+    <section class="phone" aria-label="Prototype mobile Never Go Alone">
+      <i class="notch"></i>
+      <div id="app"></div>
+    </section>
+    <aside class="side">Prototype interactif — les données et paiements sont fictifs.</aside>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      // Dates and venues were checked against the organisers' pages on 21 September 2026.
+      // The group prices and gauges remain simulated prototype data.
+      var events = [
+        { city: "Paris", title: "Internationaux de France de Gymnastique", poster: "Gymnastique", category: "Sport", date: "sam. 26–dim. 27 sept.", dateEn: "Sat. 26–Sun. 27 Sep.", venue: "Accor Arena", publicPrice: 45, groupPrice: 39, current: 5, minimum: 6, theme: "sport", sourceUrl: "https://www.accorarena.com/fr/programmation/internationaux-de-france-de-gymnastique--4a8b1", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w600%2Ch600%2Cfcrop%2Cq85/a56b6852-7049-4c68-838d-c32e6eee0aa9.jpg" },
+        { city: "Paris", title: "A$AP Rocky — Don't Be Dumb World Tour", poster: "A$AP Rocky", category: "Concerts", date: "mer. 30 sept.", dateEn: "Wed. 30 Sep.", venue: "Accor Arena", publicPrice: 69, groupPrice: 59, current: 7, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/aap-rocky-dont-be-dumb-world-tour--03f96", imageUrl: "https://cdn.sortiraparis.com/images/61/1665/1238486-a-ap-rocky-en-concert-a-l-accor-arena-de-paris-en-septembre-2026.jpg" },
+        { city: "Paris", title: "Gradur", poster: "Gradur", category: "Concerts", date: "ven. 16 oct. · 20h", dateEn: "Fri. 16 Oct. · 20:00", venue: "Accor Arena", publicPrice: 55, groupPrice: 47, current: 6, minimum: 7, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/gradur--54712", imageUrl: "https://www.places-concert.com/images/visuels/events_gradur_accor_arena_paris_1219025546_large_025547.webp" },
+        { city: "Paris", title: "Bigflo & Oli — Karma", poster: "Bigflo & Oli", category: "Concerts", date: "lun. 19–mar. 20 oct. · 20h", dateEn: "Mon. 19–Tue. 20 Oct. · 20:00", venue: "Accor Arena", publicPrice: 59, groupPrice: 51, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/bigflo-and-oli--2fa59", imageUrl: "https://photos.tf1.fr/1280/720/article-tf1-940-x-531-7-ac2de7-e09221-0%403x.jpg" },
+        { city: "Paris", title: "Jungle", poster: "Jungle", category: "Concerts", date: "ven. 30 oct. · 20h", dateEn: "Fri. 30 Oct. · 20:00", venue: "Accor Arena", publicPrice: 60, groupPrice: 52, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/jungle--13ed4", imageUrl: "https://cdn.sortiraparis.com/images/80/1665/1259039-jungle-en-concert-a-paris-bercy-en-octobre-2026.jpg" },
+        { city: "Paris", title: "Le Plus Grand Château Hanté de Paris", poster: "Halloween", category: "Clubs", date: "sam. 31 oct. · 22h–5h", dateEn: "Sat. 31 Oct. · 22:00–05:00", venue: "Club Haussmann", publicPrice: 32, groupPrice: 27, current: 11, minimum: 12, theme: "club", sourceUrl: "https://shotgun.live/fr/events/le-plus-grand-chateau-hante-de-paris-halloween-party-2026", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_1200%2Ch_630/f_jpg/q_auto/production/artworks/halloween-paris-soiree-2026_dgagoc.jpg" },
+
+        { city: "Lyon", title: "LDLC ASVEL vs Maccabi Tel Aviv", poster: "ASVEL · Maccabi", category: "Sport", date: "jeu. 24 sept. · 20h45", dateEn: "Thu. 24 Sep. · 20:45", venue: "LDLC Arena · Décines", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/ldlc-asvel-maccabi-tel-aviv-lyon-septembre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/08/LDLCArena_SansTexte_1920x1080-1.jpg" },
+        { city: "Lyon", title: "France vs Suède — handball féminin", poster: "France · Suède", category: "Sport", date: "sam. 26 sept. · 20h", dateEn: "Sat. 26 Sep. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 38, groupPrice: 32, current: 5, minimum: 7, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/handball-france-vs-suede-lyon-septembre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/05/FRA-SUE_LDLC_ARENA_1920x1080_Billetterie_Salle_LDLC_Arena.jpg" },
+        { city: "Lyon", title: "LDLC ASVEL vs Valencia", poster: "ASVEL · Valencia", category: "Sport", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 42, groupPrice: 36, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/ldlc-asvel-valencia-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/09/LDLCArena_SansTexte_1920x1080-5.jpg" },
+        { city: "Lyon", title: "Grand Prix Auvergne-Rhône-Alpes ATP 250", poster: "ATP 250", category: "Sport", date: "dim. 18–dim. 25 oct.", dateEn: "Sun. 18–Sun. 25 Oct.", venue: "LDLC Arena · Décines", publicPrice: 55, groupPrice: 47, current: 9, minimum: 10, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/grand-prix-auvergne-rhone-alpes-lyon-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/07/10_GP_AURA_VISUEL_BILLET_1920x1080px.jpg" },
+        { city: "Lyon", title: "LDLC ASVEL vs Partizan", poster: "ASVEL · Partizan", category: "Sport", date: "mer. 28 oct. · 20h", dateEn: "Wed. 28 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 42, groupPrice: 36, current: 5, minimum: 8, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/ldlc-asvel-partizan-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/07/asvel-partizan-1920x1080-1.png" },
+        { city: "Lyon", title: "Legend Tour by Trade Republic", poster: "Legend Tour", category: "Humour", date: "jeu. 29 oct. · 20h", dateEn: "Thu. 29 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 49, groupPrice: 42, current: 6, minimum: 7, theme: "humour", sourceUrl: "https://www.ldlcarena.com/evenement/legend-tour-lyon-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/04/Legend_29-octobre-2026_LDLCArena_SansTexte_1920x1080.jpg" },
+        { city: "Lyon", title: "LDLC ASVEL vs Baskonia", poster: "ASVEL · Baskonia", category: "Sport", date: "ven. 30 oct. · 20h", dateEn: "Fri. 30 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/ldlc-asvel-baskonia-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/09/asvel-baskonia-1920x1080-1.png" },
+        { city: "Lyon", title: "Dabeull Live Band", poster: "Dabeull", category: "Concerts", date: "sam. 31 oct. · 20h", dateEn: "Sat. 31 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 45, groupPrice: 38, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.ldlcarena.com/evenement/dabeull-live-band-lyon-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/05/Dabeull_31-octobre-2026_LDLCArena_SansTexte_1920x1080_1.jpg" },
+
+        { city: "Lille", title: "M Pokora — Adrénaline Tour", poster: "M Pokora", category: "Concerts", date: "ven. 25 sept. · 20h", dateEn: "Fri. 25 Sep. · 20:00", venue: "Zénith de Lille", publicPrice: 65, groupPrice: 55, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.zenithdelille.com/evenement/m-pokora-5/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2025/11/affiche-adrenaline-e1764517185454.jpg" },
+        { city: "Lille", title: "Zed", poster: "Zed", category: "Clubs", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "Le Flow · Lille", publicPrice: 25, groupPrice: 22, current: 4, minimum: 6, theme: "club", sourceUrl: "https://shotgun.live/fr/events/zed-lille", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Car_16%3A9%2Cw_3840/fl_lossy/f_auto/q_auto/c_limit%2Cf_auto%2Cfl_lossy%2Cq_auto%2Cw_1920/v1780912745/production/artworks/Fichier_2MONTAGE_cdranw" },
+        { city: "Lille", title: "PLK — Tour 2026", poster: "PLK", category: "Concerts", date: "jeu. 8 oct. · 20h", dateEn: "Thu. 8 Oct. · 20:00", venue: "Zénith de Lille", publicPrice: 49, groupPrice: 42, current: 6, minimum: 7, theme: "concert", sourceUrl: "https://www.zenithdelille.com/evenement/plk/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2025/10/POST-PLK-LILLE-2026-1-scaled.jpg" },
+        { city: "Lille", title: "Florent Pagny — 65 Tour", poster: "Florent Pagny", category: "Concerts", date: "mar. 13 oct. · 20h", dateEn: "Tue. 13 Oct. · 20:00", venue: "Zénith de Lille", publicPrice: 65, groupPrice: 55, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.zenithdelille.com/evenement/florent-pagny-2/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2026/03/FP-LILLE-1080x1350-1.jpg" },
+        { city: "Lille", title: "Kodz × Blizzard Festival", poster: "Blizzard", category: "Festivals", date: "ven. 16–dim. 18 oct.", dateEn: "Fri. 16–Sun. 18 Oct.", venue: "Kodz · Englos", publicPrice: 40, groupPrice: 34, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://shotgun.live/fr/festivals/blizzardfestival", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/dev/artworks/blizzard_festival_1920x1080_hs4zzk.png" },
+        { city: "Lille", title: "LOSC Lille vs Galatasaray", poster: "LOSC · Gala", category: "Sport", date: "mer. 21 oct. · 18h45", dateEn: "Wed. 21 Oct. · 18:45", venue: "Decathlon Arena · Villeneuve-d'Ascq", publicPrice: 58, groupPrice: 50, current: 7, minimum: 8, theme: "football", sourceUrl: "https://www.losc.fr/actualites/2026-09-10/uefa-champions-league-ouverture-du-pack-3-matchs-ce-jour-12h", imageUrl: "https://www.losc.fr/sites/default/files/styles/2_1_small_1x_768x384_mc/public/media/images/P3M_GENERIQUE_16-9%20JE%20RESERVE.png?h=2538f4e7&itok=RKn7RoA6" },
+        { city: "Lille", title: "Lara Fabian — Je suis là", poster: "Lara Fabian", category: "Concerts", date: "dim. 25 oct. · 18h", dateEn: "Sun. 25 Oct. · 18:00", venue: "Zénith de Lille", publicPrice: 69, groupPrice: 59, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://www.zenithdelille.com/en/event/lara-fabien/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2025/12/LARA-FABIAN-STORY-1-e1765984322630.jpg" },
+        { city: "Lille", title: "Josman — DPC Tour", poster: "Josman", category: "Concerts", date: "jeu. 29 oct. · 20h", dateEn: "Thu. 29 Oct. · 20:00", venue: "Zénith de Lille", publicPrice: 45, groupPrice: 38, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.zenithdelille.com/evenement/josman/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2026/02/FEED.jpg" },
+        { city: "Lille", title: "LOSC Lille vs RC Lens", poster: "LOSC · Lens", category: "Sport", date: "ven. 30 oct. · 21h05", dateEn: "Fri. 30 Oct. · 21:05", venue: "Decathlon Arena · Villeneuve-d'Ascq", publicPrice: 52, groupPrice: 45, current: 8, minimum: 8, theme: "football", sourceUrl: "https://www.losc.fr/actualites/2026-09-15/lens-lyon-marseille-monaco-le-meilleur-de-la-ligue-1-domicile-avec-le-pack-4-matchs", imageUrl: "https://www.losc.fr/sites/default/files/styles/2_1_small_1x_768x384_mc/public/media/images/PACK5MATCHS_16-9_0.png?itok=Bh3lypo4" },
+        { city: "Lille", title: "Jeff Panacloc — The Jeff Panacloc Company", poster: "Jeff Panacloc", category: "Humour", date: "ven. 30 oct. · 20h", dateEn: "Fri. 30 Oct. · 20:00", venue: "Zénith de Lille", publicPrice: 45, groupPrice: 38, current: 6, minimum: 7, theme: "humour", sourceUrl: "https://www.zenithdelille.com/evenement/jeff-panacloc-2/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2026/01/Jeff-Panacloc-Company-2026-post-1080x1350-lille-draft1-scaled.jpg" },
+
+        { city: "Marseille", title: "Devin Townsend — Metamorphosis", poster: "Devin Townsend", category: "Concerts", date: "mer. 23 sept. · 20h", dateEn: "Wed. 23 Sep. · 20:00", venue: "Cepac Silo", publicPrice: 42, groupPrice: 36, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://adamconcerts.com/programmation/pop-rock-rap/", imageUrl: "https://adamconcerts.com/wp-content/uploads/2026/05/DT_marseille_460x650_manif.jpg" },
+        { city: "Marseille", title: "The Sisters of Mercy", poster: "Sisters of Mercy", category: "Concerts", date: "jeu. 1 oct. · 20h", dateEn: "Thu. 1 Oct. · 20:00", venue: "Cepac Silo", publicPrice: 49, groupPrice: 42, current: 6, minimum: 7, theme: "concert", sourceUrl: "https://www.cepacsilo-marseille.fr/evenement/the-sisters-of-mercy/", imageUrl: "https://www.cepacsilo-marseille.fr/wp/wp-content/uploads/sites/6/2026/02/1080x1920-tsom-marseille-350x524.jpg" },
+        { city: "Marseille", title: "Sénégal vs Comores", poster: "Sénégal · Comores", category: "Sport", date: "dim. 4 oct. · 15h", dateEn: "Sun. 4 Oct. · 15:00", venue: "CEPAC Vélodrome", publicPrice: 28, groupPrice: 24, current: 8, minimum: 10, theme: "football", sourceUrl: "https://www.cepacvelodrome.com/events/soprano/senegal-comores-e43.html", imageUrl: "https://www.cepacvelodrome.com/upload/evenements/m2-43-095739.png" },
+        { city: "Marseille", title: "FOREVER NU!", poster: "Forever Nu", category: "Clubs", date: "dim. 11 oct. · 20h30", dateEn: "Sun. 11 Oct. · 20:30", venue: "Le Molotov", publicPrice: 26, groupPrice: 22, current: 3, minimum: 5, theme: "club", sourceUrl: "https://lemolotov.com/events/forever-nu/", imageUrl: "https://api.cloudly.space/resize/cropratio/640/640/75/aHR0cHM6Ly9zdGF0aWMuYXBpZGFlLXRvdXJpc21lLmNvbS9maWxlc3RvcmUvb2JqZXRzLXRvdXJpc3RpcXVlcy9pbWFnZXMvMjQwLzEwMy8zODEwMzAyNC5qcGc%3D/image.webp" },
+        { city: "Marseille", title: "Autechre", poster: "Autechre", category: "Clubs", date: "mar. 13 oct. · 19h30", dateEn: "Tue. 13 Oct. · 19:30", venue: "Cabaret Aléatoire", publicPrice: 30, groupPrice: 26, current: 4, minimum: 6, theme: "club", sourceUrl: "https://www.fnacspectacles.com/event/autechre-cabaret-aleatoire-marseille-03-21008056/", imageUrl: "https://images.ra.co/f2a76e86db21bc5f31d27f20b985f9af4c47d9cc.jpg" },
+        { city: "Marseille", title: "Syndrome 81 + Orgueil", poster: "Syndrome 81", category: "Concerts", date: "jeu. 22 oct. · 20h30", dateEn: "Thu. 22 Oct. · 20:30", venue: "Le Molotov", publicPrice: 25, groupPrice: 22, current: 5, minimum: 6, theme: "concert", sourceUrl: "https://lemolotov.com/events/syndrome-81-guest/", imageUrl: "https://www.myprovence.fr/sites/default/files/poi/7688716/35788038_2026-02-19T15343409400038103424.jpg" },
+
+        { city: "Bordeaux", title: "INTERSPORT HYROX Bordeaux", poster: "HYROX", category: "Sport", date: "mer. 30 sept.–dim. 4 oct.", dateEn: "Wed. 30 Sep.–Sun. 4 Oct.", venue: "Parc des Expositions Bordeaux-Lac", publicPrice: 70, groupPrice: 60, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://hyroxfrance.com/fr/event/intersport-hyrox-bordeaux/", imageUrl: "https://maintain.hyrox.com/wp-content/uploads/2025/03/Bordeaux_City_Logo_White_Intersport.png", imageFit: "contain" },
+        { city: "Bordeaux", title: "UBB vs Lyon", poster: "UBB · Lyon", category: "Sport", date: "sam. 3 oct. · 14h30", dateEn: "Sat. 3 Oct. · 14:30", venue: "Stade Chaban-Delmas", publicPrice: 35, groupPrice: 30, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.ubbrugby.com/equipes/equipe-premiere/calendrier-resultats.html", imageUrl: "https://www.ubbrugby.com/application/assets/img/logo-ubb-footer-240x174.png?2025=", secondaryImageUrl: "https://media.api.idalgo.info/Sport/Rugby/Team/Logo/150x150/logo_171.png" },
+        { city: "Bordeaux", title: "Trial Indoor — Legend Cup", poster: "Legend Cup", category: "Sport", date: "ven. 9 oct. · 20h45", dateEn: "Fri. 9 Oct. · 20:45", venue: "Arkéa Arena", publicPrice: 46, groupPrice: 39, current: 5, minimum: 7, theme: "sport", sourceUrl: "https://www.arkeaarena.com/evenements/trial-indoor-international-legend-cup-09-octobre-2026", imageUrl: "https://www.arkeaarena.com/_next/image?q=75&url=https%3A%2F%2Fcontent.arkeaarena.com%2Fuploads%2Flarge_Site_Rename_Event_name_1b1412f973.jpg&w=3840" },
+        { city: "Bordeaux", title: "Lynda Lemay & Jean-Félix Lalanne", poster: "Lynda Lemay", category: "Concerts", date: "mar. 13 oct. · 20h30", dateEn: "Tue. 13 Oct. · 20:30", venue: "Théâtre Fémina", publicPrice: 48, groupPrice: 41, current: 5, minimum: 6, theme: "concert", sourceUrl: "https://theatrefemina.com/evenement/lynda-lemay-et-jean-felix-lalanne/", imageUrl: "https://theatrefemina.com/wp-content/uploads/11bf9c93-64db-48c7-9c1d-3ae1fa170c5e-scaled.jpeg" },
+        { city: "Bordeaux", title: "Sonora Bordeaux Anniversary", poster: "Sonora", category: "Festivals", date: "ven. 16–sam. 17 oct.", dateEn: "Fri. 16–Sat. 17 Oct.", venue: "Parc des Expositions", publicPrice: 55, groupPrice: 47, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://shotgun.live/fr/events/sonora-bordeaux", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/production/artworks/SONORA_BORDEAUX_-_1920x1080_wytexl.jpg" },
+        { city: "Bordeaux", title: "Pink Martini", poster: "Pink Martini", category: "Concerts", date: "ven. 23 oct. · 20h30", dateEn: "Fri. 23 Oct. · 20:30", venue: "Théâtre Fémina", publicPrice: 55, groupPrice: 47, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://theatrefemina.com/evenement/pink-martini/", imageUrl: "https://theatrefemina.com/wp-content/uploads/22_0504_Pink_Martini-1171_v1a-web-scaled.jpg" },
+
+        { city: "Nantes", title: "Nantes Basket Hermine vs Quimper", poster: "Nantes · Quimper", category: "Sport", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "La Trocardière · Rezé", publicPrice: 18, groupPrice: 15, current: 5, minimum: 6, theme: "sport", sourceUrl: "https://billetterie.nantes-basket.com/fr", imageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Nantes/logo.png", secondaryImageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Quimper/logo.png" },
+        { city: "Nantes", title: "FAT FREDDY'S DROP", poster: "Fat Freddy's Drop", category: "Concerts", date: "ven. 9 oct. · 20h", dateEn: "Fri. 9 Oct. · 20:00", venue: "Zénith Nantes Métropole", publicPrice: 45, groupPrice: 39, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.zenith-nantesmetropole.com/shows/FAT%20FREDDY%27S%20DROP-21003", imageUrl: "https://www.reggae.fr/uploads/agenda_photos/DAT_24315.jpg" },
+        { city: "Nantes", title: "Velysia Festival", poster: "Velysia", category: "Festivals", date: "ven. 9–sam. 10 oct.", dateEn: "Fri. 9–Sat. 10 Oct.", venue: "Île de Nantes", publicPrice: 48, groupPrice: 41, current: 9, minimum: 10, theme: "festival", sourceUrl: "https://r.shotgun.live/fr/events/velysia-festival-2026", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/c_limit%2Cf_auto%2Cfl_lossy%2Cq_auto%2Cw_1920/v1786543588/production/artworks/COVER_FINAL_ARTWORK_VELYSIA_jylzye" },
+        { city: "Nantes", title: "FC Nantes vs Stade de Reims", poster: "Nantes · Reims", category: "Sport", date: "sam. 10 oct. · 14h", dateEn: "Sat. 10 Oct. · 14:00", venue: "Stade de la Beaujoire", publicPrice: 28, groupPrice: 24, current: 6, minimum: 8, theme: "football", sourceUrl: "https://www.fcnantes.com/articles/article2809.php?num=49437", imageUrl: "https://www.fcnantes.com/images/Blasons/blasonJaune.png", secondaryImageUrl: "https://www.fcnantes.com/images/Blasons/reims.png" },
+        { city: "Nantes", title: "Autechre", poster: "Autechre", category: "Clubs", date: "jeu. 15 oct. · 20h", dateEn: "Thu. 15 Oct. · 20:00", venue: "Le Lieu Unique", publicPrice: 32, groupPrice: 27, current: 4, minimum: 6, theme: "club", sourceUrl: "https://fr.ra.co/events/2321979", imageUrl: "https://images.ra.co/1a9f21e98c2981acb4e2c24d5dfaec2a72403f0a.png" },
+        { city: "Nantes", title: "Nantes Basket Hermine vs Rouen", poster: "Nantes · Rouen", category: "Sport", date: "ven. 16 oct. · 20h", dateEn: "Fri. 16 Oct. · 20:00", venue: "La Trocardière · Rezé", publicPrice: 18, groupPrice: 15, current: 5, minimum: 6, theme: "sport", sourceUrl: "https://billetterie.nantes-basket.com/fr", imageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Nantes/logo.png", secondaryImageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Rouen/logo.png" },
+        { city: "Nantes", title: "Folie's + Blou Feet", poster: "Folie's", category: "Concerts", date: "mer. 21 oct. · 20h", dateEn: "Wed. 21 Oct. · 20:00", venue: "Stereolux", publicPrice: 22, groupPrice: 19, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://stereolux.org/agenda/folies", imageUrl: "https://stereolux.org/sites/stereolux/files/styles/auto_1920/public/2025-09/folies.png?itok=pytnImHh" },
+
+        { city: "Strasbourg", title: "SIG Strasbourg vs Boulazac", poster: "SIG · Boulazac", category: "Sport", date: "sam. 3 oct. · 18h", dateEn: "Sat. 3 Oct. · 18:00", venue: "Rhenus Sport", publicPrice: 22, groupPrice: 18, current: 6, minimum: 7, theme: "sport", sourceUrl: "https://sigstrasbourg.fr/2026/09/prenez-vos-places-pour-les-premiers-matchs-de-la-saison", imageUrl: "https://sigstrasbourg.fr/sites/default/files/styles/tunnel/public/2026-09/BILLETTERIE%20SITE.png?itok=dXLY8Ign" },
+        { city: "Strasbourg", title: "Marathon Électronique Festival", poster: "Marathon", category: "Festivals", date: "sam. 3–dim. 4 oct.", dateEn: "Sat. 3–Sun. 4 Oct.", venue: "Lieux multiples · Strasbourg", publicPrice: 50, groupPrice: 43, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://shotgun.live/fr/events/marathon-electronique-festival", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/production/artworks/SHOTGUN_lodyfn.png" },
+        { city: "Strasbourg", title: "PACT + Birrd", poster: "PACT", category: "Clubs", date: "ven. 9 oct. · 20h", dateEn: "Fri. 9 Oct. · 20:00", venue: "La Laiterie · Grande Salle", publicPrice: 38, groupPrice: 32, current: 5, minimum: 7, theme: "club", sourceUrl: "https://www.artefact.org/la-laiterie/evenements/pact-joachim-pastor-joris-delacroix-teho/", imageUrl: "https://www.artefact.org/wp-content/uploads/2026/04/PACT-FOCUS-1024x481.jpg" },
+        { city: "Strasbourg", title: "M Pokora — Adrenaline Tour", poster: "M Pokora", category: "Concerts", date: "sam. 10 oct. · 20h", dateEn: "Sat. 10 Oct. · 20:00", venue: "Zénith de Strasbourg Europe", publicPrice: 55, groupPrice: 48, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/m-pokora/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2024/11/M.-Pokora_Amneville-350x524.jpg" },
+        { city: "Strasbourg", title: "Peter Doherty Full Band + Junior Brother", poster: "Peter Doherty", category: "Concerts", date: "mar. 13 oct. · 19h30", dateEn: "Tue. 13 Oct. · 19:30", venue: "La Laiterie · Grande Salle", publicPrice: 35, groupPrice: 30, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://www.artefact.org/la-laiterie/evenements/peter-doherty-full-band/", imageUrl: "https://www.artefact.org/wp-content/uploads/2026/06/doherty-focus-avec-junior-brother-real.png" },
+        { city: "Strasbourg", title: "Christophe Maé", poster: "Christophe Maé", category: "Concerts", date: "sam. 17 oct. · 20h", dateEn: "Sat. 17 Oct. · 20:00", venue: "Zénith de Strasbourg Europe", publicPrice: 58, groupPrice: 50, current: 6, minimum: 7, theme: "concert", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/christophe-mae/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2022/10/Christophe-Mae_40x60_originale-350x524.jpg" },
+        { city: "Strasbourg", title: "Djadja & Dinaz", poster: "Djadja & Dinaz", category: "Concerts", date: "dim. 18 oct. · 18h", dateEn: "Sun. 18 Oct. · 18:00", venue: "Zénith de Strasbourg Europe", publicPrice: 45, groupPrice: 38, current: 6, minimum: 7, theme: "concert", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/djadja-dinaz/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2025/07/Djadja-Dinaz_40x60-350x524.jpg" },
+        { city: "Strasbourg", title: "Orelsan — Tour 2026", poster: "Orelsan", category: "Concerts", date: "mar. 20 oct. · 19h30", dateEn: "Tue. 20 Oct. · 19:30", venue: "Zénith de Strasbourg Europe", publicPrice: 59, groupPrice: 50, current: 7, minimum: 8, theme: "concert", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/orelsan/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2026/03/Orelsan_40x60_originale-1-350x524.png" },
+        { city: "Strasbourg", title: "Mustapha El Atrassi — Renaissance", poster: "Mustapha", category: "Humour", date: "sam. 24 oct. · 20h", dateEn: "Sat. 24 Oct. · 20:00", venue: "Zénith de Strasbourg Europe", publicPrice: 42, groupPrice: 36, current: 5, minimum: 6, theme: "humour", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/mustapha-el-atrassi/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2026/09/image001-350x524.jpg" },
+        { city: "Strasbourg", title: "Fakear — A Nice Place To Be", poster: "Fakear", category: "Clubs", date: "jeu. 29 oct. · 19h30", dateEn: "Thu. 29 Oct. · 19:30", venue: "La Laiterie · Grande Salle", publicPrice: 30, groupPrice: 26, current: 4, minimum: 6, theme: "club", sourceUrl: "https://www.artefact.org/la-laiterie/evenements/fakear2027/", imageUrl: "https://www.artefact.org/wp-content/uploads/2026/05/FAKEAR-FOCUS.jpg" },
+        { city: "Strasbourg", title: "Halloween 2026 — Lucid & Studio Saglio", poster: "Halloween", category: "Clubs", date: "ven. 30 oct.–dim. 1 nov.", dateEn: "Fri. 30 Oct.–Sun. 1 Nov.", venue: "Studio Saglio", publicPrice: 35, groupPrice: 30, current: 8, minimum: 10, theme: "club", sourceUrl: "https://shotgun.live/fr/festivals/halloween-2026-lucid-studio-saglio", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Car_16%3A9%2Cw_3840/fl_lossy/f_auto/q_auto/production/artworks/event_lyvfh0.png" },
+        { city: "Strasbourg", title: "ARES FC Strasbourg — MMA", poster: "ARES", category: "Sport", date: "sam. 31 oct. · 19h30", dateEn: "Sat. 31 Oct. · 19:30", venue: "Zénith de Strasbourg Europe", publicPrice: 49, groupPrice: 42, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://www.zenith-strasbourg.fr/evenement/ares-strasbourg-mma/", imageUrl: "https://www.zenith-strasbourg.fr/wp/wp-content/uploads/sites/7/2026/04/ARES-STRASBOURG_HOMEPAGE_1800x500px-1440x500.jpg" },
+        { city: "Strasbourg", title: "SIG Strasbourg vs Cholet Basket", poster: "SIG · Cholet", category: "Sport", date: "sam. 31 oct. · 18h30", dateEn: "Sat. 31 Oct. · 18:30", venue: "Rhenus Sport", publicPrice: 22, groupPrice: 18, current: 6, minimum: 7, theme: "sport", sourceUrl: "https://sigstrasbourg.fr/2026/09/prenez-vos-places-pour-les-premiers-matchs-de-la-saison", imageUrl: "https://sigstrasbourg.fr/sites/default/files/styles/max_1300x1300/public/2026-08/CALENDRIER%20J6%20YTB_0.png?itok=nVtGPjBR" }
+      ];
+
+      // Paris has a denser catalogue because its organisers and ticketing pages
+      // list substantially more upcoming events than the first V2 selection.
+      // Dates and source links were checked on 22 September 2026; all group
+      // prices and group gauges below remain prototype simulations.
+      events.push.apply(events, [
+        { city: "Paris", title: "Festival d’Automne 2026", poster: "Festival d’Automne", category: "Festivals", date: "mar. 22 sept.–jeu. 31 déc.", dateEn: "Tue. 22 Sep.–Thu. 31 Dec.", venue: "Plusieurs lieux · Paris", publicPrice: 28, groupPrice: 24, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://www.paris.fr/evenements/festival-d-automne-2026-tout-le-programme-123786", imageUrl: "https://cdn.paris.fr/qfapv4/2026/04/28/huge-256d3b54e1e96a14afa8f7b1917f2f9e.jpg" },
+        { city: "Paris", title: "ARES 43", poster: "ARES 43", category: "Sport", date: "ven. 25 sept. · 19h30", dateEn: "Fri. 25 Sep. · 19:30", venue: "adidas arena · Paris 18e", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/e24d9ef2-93f5-4bf5-8b17-1e231a68df10.jpeg" },
+        { city: "Paris", title: "L’Arc Paris — Saturday Night", poster: "L’Arc Paris", category: "Clubs", date: "sam. 26 sept. · 23h", dateEn: "Sat. 26 Sep. · 23:00", venue: "L’Arc · Paris 16e", publicPrice: 25, groupPrice: 21, current: 7, minimum: 9, theme: "club", sourceUrl: "https://www.clubbable.com/fr-FR/Paris/L%27Arc/26-sept.-2026", imageUrl: "https://media.alotea.com/l-arc-paris-1.webp" },
+        { city: "Paris", title: "Stade Français Paris vs LOU Rugby", poster: "Stade Français · LOU", category: "Sport", date: "sam. 26 sept. · 16h35", dateEn: "Sat. 26 Sep. · 16:35", venue: "Stade Jean-Bouin · Paris 16e", publicPrice: 34, groupPrice: 29, current: 5, minimum: 7, theme: "sport", sourceUrl: "https://billetterie.stade.fr/fr/calendrier", imageUrl: "https://billetterie.stade.fr/media/stade-francais-paris.png", secondaryImageUrl: "https://billetterie.stade.fr/media/lou-rugby.png" },
+        { city: "Paris", title: "Paris Basketball vs Partizan Belgrade", poster: "Paris · Partizan", category: "Sport", date: "mar. 29 sept. · 20h45", dateEn: "Tue. 29 Sep. · 20:45", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/d5b23424-f26b-4f7f-8324-34c58fd37a76.jpg" },
+        { city: "Paris", title: "Paris FC Féminines vs Arsenal", poster: "Paris FC · Arsenal", category: "Sport", date: "mer. 30 sept. · 18h45", dateEn: "Wed. 30 Sep. · 18:45", venue: "Stade Jean-Bouin · Paris 16e", publicPrice: 26, groupPrice: 22, current: 5, minimum: 7, theme: "football", sourceUrl: "https://parisfc.fr/pro-feminin/ligue-des-champions-decouvrez-les-six-adversaires-du-paris-fc/", imageUrl: "https://parisfc.fr/wp-content/uploads/2026/09/Plan-de-travail-2.png" },
+        { city: "Paris", title: "Synthony", poster: "Synthony", category: "Clubs", date: "jeu. 1 oct. · 20h", dateEn: "Thu. 1 Oct. · 20:00", venue: "Zénith Paris – La Villette", publicPrice: 52, groupPrice: 44, current: 7, minimum: 8, theme: "club", sourceUrl: "https://le-zenith.com/shows/Synthony-21824", imageUrl: "https://le-zenith.com/media/cache/show_poster/media/uploads/show-poster/68d55eefbbee9604519266.png" },
+        { city: "Paris", title: "Paris Basketball vs Žalgiris Kaunas", poster: "Paris · Žalgiris", category: "Sport", date: "jeu. 1 oct. · 20h45", dateEn: "Thu. 1 Oct. · 20:45", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/1330bd23-9080-45de-b2dd-87d3ffa09a9b.jpg" },
+        { city: "Paris", title: "Bérengère Krief — Sexe", poster: "Bérengère Krief", category: "Humour", date: "jeu. 1–sam. 3 oct.", dateEn: "Thu. 1–Sat. 3 Oct.", venue: "L’Olympia · Paris 9e", publicPrice: 45, groupPrice: 38, current: 4, minimum: 6, theme: "humour", sourceUrl: "https://berengerekrief.fr/", imageUrl: "https://berengerekrief.fr/cdn/shop/files/Section_hero_image.jpg?v=1743174311&width=2500" },
+        { city: "Paris", title: "Neg’ Marrons — 30 ans de carrière", poster: "Neg’ Marrons", category: "Concerts", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "Zénith Paris – La Villette", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://le-zenith.com/shows/Neg%27%20Marrons-21711", imageUrl: "https://le-zenith.com/media/cache/show_poster/media/uploads/show-poster/692f016291146922005717.png" },
+        { city: "Paris", title: "Deviance Paris Pride — Party + After", poster: "Deviance", category: "Clubs", date: "sam. 3 oct. · 23h", dateEn: "Sat. 3 Oct. · 23:00", venue: "WorkshoW · Paris", publicPrice: 27, groupPrice: 23, current: 8, minimum: 10, theme: "club", sourceUrl: "https://shotgun.live/en/events/deviance-pride-2", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/dev/artworks/COVER_SHOTGUN_ulimey.png" },
+        { city: "Paris", title: "Shrek, le musical", poster: "Shrek", category: "Théâtre", date: "sam. 3 oct.–dim. 17 janv.", dateEn: "Sat. 3 Oct.–Sun. 17 Jan.", venue: "Folies Bergère · Paris 9e", publicPrice: 55, groupPrice: 47, current: 5, minimum: 7, theme: "theatre", sourceUrl: "https://www.offi.fr/enfants/les-folies-bergere-2331/shrek-le-musical-104778.html", imageUrl: "https://files.offi.fr/programmation/3164539/images/1000/c322aecb986348b6c1c31ade8dfadd6f.jpg" },
+        { city: "Paris", title: "AEW Grand Slam Paris", poster: "AEW Grand Slam", category: "Sport", date: "mar. 6 oct. · 18h", dateEn: "Tue. 6 Oct. · 18:00", venue: "adidas arena · Paris 18e", publicPrice: 45, groupPrice: 38, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://adidasarena.directus.app/assets/2c7becfa-56d4-42c7-a7fb-c7d4e9f66f2c?format=webp&quality=90&width=320" },
+        { city: "Paris", title: "Paris Basketball vs LDLC ASVEL", poster: "Paris · ASVEL", category: "Sport", date: "mer. 7 oct. · 20h45", dateEn: "Wed. 7 Oct. · 20:45", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://adidasarena.directus.app/assets/43a17bf5-a4ab-44ab-b555-2d6bf2365a0e?format=webp&quality=90&width=320" },
+        { city: "Paris", title: "Apparat", poster: "Apparat", category: "Clubs", date: "ven. 9 oct. · 20h", dateEn: "Fri. 9 Oct. · 20:00", venue: "Élysée Montmartre · Paris 18e", publicPrice: 40, groupPrice: 34, current: 5, minimum: 7, theme: "club", sourceUrl: "https://www.places-concert.com/concert-303269/billets-apparat-elysee-montmartre-paris", imageUrl: "https://www.places-concert.com/images/visuels/events_apparat_elysee_montmartre_paris_0202021217.webp" },
+        { city: "Paris", title: "Paris Saint-Germain vs Le Mans FC", poster: "PSG · Le Mans", category: "Sport", date: "sam. 10 oct. · 20h45", dateEn: "Sat. 10 Oct. · 20:45", venue: "Parc des Princes · Paris 16e", publicPrice: 55, groupPrice: 47, current: 8, minimum: 10, theme: "football", sourceUrl: "https://www.psg.fr/matchs/football-masculin/20262027/paris-vs-le-mans-2026-10-10", imageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/psg-logo_avcznk", secondaryImageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/Lemans_qlupt6" },
+        { city: "Paris", title: "Stade Français Paris vs Montpellier HR", poster: "Stade Français · MHR", category: "Sport", date: "sam. 10 oct. · 14h30", dateEn: "Sat. 10 Oct. · 14:30", venue: "Stade Jean-Bouin · Paris 16e", publicPrice: 34, groupPrice: 29, current: 5, minimum: 7, theme: "sport", sourceUrl: "https://billetterie.stade.fr/fr/calendrier", imageUrl: "https://billetterie.stade.fr/media/stade-francais-paris.png", secondaryImageUrl: "https://billetterie.stade.fr/media/montpellier-herault-rugby.png" },
+        { city: "Paris", title: "Stereorganic présente Synapse", poster: "Synapse", category: "Clubs", date: "sam. 10 oct. · 23h", dateEn: "Sat. 10 Oct. · 23:00", venue: "Le Klub · Paris 1er", publicPrice: 24, groupPrice: 20, current: 6, minimum: 8, theme: "club", sourceUrl: "https://r.shotgun.live/fr/events/stereorganic-presente-synapse-acid-techno-psytrance", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Car_16%3A9%2Cw_3840/fl_lossy/f_auto/q_auto/c_limit%2Cf_auto%2Cfl_lossy%2Cq_auto%2Cw_1920/v1789171349/dev/artworks/Gemini_Generated_Image_6jfsrd6jfsrd6jfs_xkt51c" },
+        { city: "Paris", title: "ARCH Club", poster: "ARCH Club", category: "Clubs", date: "sam. 10 oct. · 18h30", dateEn: "Sat. 10 Oct. · 18:30", venue: "Élysée Montmartre · Paris 18e", publicPrice: 30, groupPrice: 26, current: 5, minimum: 7, theme: "club", sourceUrl: "https://www.elyseemontmartre.com/en/event/arch-club/", imageUrl: "https://www.elyseemontmartre.com/wp-content/uploads/sites/2/arch-club-limak-duno-xo-mau-v-elysee-montmartre.jpg" },
+        { city: "Paris", title: "Paris Basketball vs SIG Strasbourg", poster: "Paris · SIG", category: "Sport", date: "dim. 11 oct. · 16h30", dateEn: "Sun. 11 Oct. · 16:30", venue: "adidas arena · Paris 18e", publicPrice: 30, groupPrice: 26, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://adidasarena.directus.app/assets/48a9d08b-a386-48ff-b08d-3090ed1c04a2?format=webp&quality=90&width=320" },
+        { city: "Paris", title: "MaMA Festival & Convention 2026", poster: "MaMA Festival", category: "Festivals", date: "mer. 14–ven. 16 oct.", dateEn: "Wed. 14–Fri. 16 Oct.", venue: "Pigalle & Montmartre · Paris", publicPrice: 48, groupPrice: 41, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://wbm.be/fr/actualites/mama-festival-convention-2026", imageUrl: "https://wbm.be/sites/default/files/styles/facebook/public/2026-03/mama.png?itok=fKcETSP-" },
+        { city: "Paris", title: "Paris Basketball vs Virtus Bologna", poster: "Paris · Virtus", category: "Sport", date: "mer. 14 oct. · 20h45", dateEn: "Wed. 14 Oct. · 20:45", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://adidasarena.directus.app/assets/76430f5a-5bc8-43a9-a22a-2e3023ba2799?format=webp&quality=90&width=320" },
+        { city: "Paris", title: "Jay Park avec LNGSHOT", poster: "Jay Park", category: "Concerts", date: "mar. 20 oct. · 20h", dateEn: "Tue. 20 Oct. · 20:00", venue: "Zénith Paris – La Villette", publicPrice: 49, groupPrice: 42, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://le-zenith.com/shows/Jay%20Park%20Ft.%20LNGSHOT-22250", imageUrl: "https://le-zenith.com/media/cache/show_cover/media/uploads/show-cover/6a3c0da642c7c686439515.jpg" },
+        { city: "Paris", title: "Paris Saint-Germain vs FC Barcelone", poster: "PSG · Barça", category: "Sport", date: "mar. 20 oct. · 21h", dateEn: "Tue. 20 Oct. · 21:00", venue: "Parc des Princes · Paris 16e", publicPrice: 75, groupPrice: 64, current: 9, minimum: 10, theme: "football", sourceUrl: "https://www.psg.fr/content/le-calendrier-europeen-des-parisiens-est-connu-psg-paris-saint-germain-ucl-champions-league-programmation-2026-2027", imageUrl: "https://media.psg.fr/image/upload/w_3840%2Cc_fill%2Cg_auto%2Car_16%3A9/f_avif%2Cq_75/_A9_3853_xrnfs2" },
+        { city: "Paris", title: "Wallace Cleaver — Marcel Tour", poster: "Wallace Cleaver", category: "Concerts", date: "jeu. 22 oct. · 20h", dateEn: "Thu. 22 Oct. · 20:00", venue: "Zénith Paris – La Villette", publicPrice: 42, groupPrice: 36, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://le-zenith.com/shows/Wallace%20Cleaver-21303", imageUrl: "https://le-zenith.com/media/cache/show_cover/media/uploads/show-banner/6a204c8242a19574634192.jpg" },
+        { city: "Paris", title: "Paris Games Week 2026", poster: "Paris Games Week", category: "Festivals", date: "jeu. 22–dim. 25 oct.", dateEn: "Thu. 22–Sun. 25 Oct.", venue: "Paris Expo Porte de Versailles", publicPrice: 35, groupPrice: 30, current: 10, minimum: 12, theme: "festival", sourceUrl: "https://www.parisgamesweek.com/fr", imageUrl: "https://cdn.sanity.io/images/33r5f5l4/development/8cd247d12825981aeb3b92f41958edf5ae126a09-3600x1881.jpg" },
+        { city: "Paris", title: "Paris Basketball vs Valencia Basket", poster: "Paris · Valencia", category: "Sport", date: "ven. 23 oct. · 20h45", dateEn: "Fri. 23 Oct. · 20:45", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://billetterie.parisbasketball.com/fr/calendrier?view=all", imageUrl: "https://adidasarena.directus.app/assets/08d1cc53-d6cb-424c-94c0-1bfbce74c7a4?format=webp&quality=90&width=320" },
+        { city: "Paris", title: "Art Basel Paris 2026", poster: "Art Basel", category: "Festivals", date: "ven. 23–dim. 25 oct.", dateEn: "Fri. 23–Sun. 25 Oct.", venue: "Grand Palais · Paris 8e", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "festival", sourceUrl: "https://www.grandpalais.fr/fr/programme/art-basel-paris-2026", imageUrl: "https://www.grandpalais.fr/sites/default/files/medias/images/2026-08/visuel_evenement_artbasel_grandpalais_2025.jpeg" },
+        { city: "Paris", title: "Hexagone MMA", poster: "Hexagone MMA", category: "Sport", date: "sam. 24 oct. · 19h", dateEn: "Sat. 24 Oct. · 19:00", venue: "Zénith Paris – La Villette", publicPrice: 46, groupPrice: 39, current: 7, minimum: 9, theme: "sport", sourceUrl: "https://le-zenith.com/shows/Hexagone%20MMA-21164", imageUrl: "https://le-zenith.com/media/cache/show_cover/media/uploads/show-banner/692d74e5ed893390823252.png" },
+        { city: "Paris", title: "Asake — In God We Trust World Tour", poster: "Asake", category: "Concerts", date: "sam. 24 oct. · 20h", dateEn: "Sat. 24 Oct. · 20:00", venue: "Accor Arena", publicPrice: 62, groupPrice: 53, current: 8, minimum: 10, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/asake-in-god-we-trust-world-tour--5d369", imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQE_B2wJeZHUpg/feedshare-shrink_1280/B4EZ5kgq_zJAAM-/0/1779802747235?e=2147483647&t=esq2_rM6EzDEi9iE-AmA9c8jVpp3UCmIH3Ibg_Af30o&v=beta" },
+        { city: "Paris", title: "Paris Saint-Germain vs Olympique Lyonnais", poster: "PSG · Lyon", category: "Sport", date: "dim. 25 oct. · 20h45", dateEn: "Sun. 25 Oct. · 20:45", venue: "Parc des Princes · Paris 16e", publicPrice: 65, groupPrice: 55, current: 8, minimum: 10, theme: "football", sourceUrl: "https://www.psg.fr/content/paris-lyon-le-2510-a-20h45-psg-ligue-1-programmation-calendrier-programme-8e-journee-2026-2027", imageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/psg-logo_avcznk", secondaryImageUrl: "https://api.psg.fr/umbraco/akqa/api/v1.0/sportsImage/Team/121le8unjfzug3iu9pgkqa1c7.png?width=3840" },
+        { city: "Paris", title: "Meryl", poster: "Meryl", category: "Concerts", date: "lun. 26–mar. 27 oct. · 20h", dateEn: "Mon. 26–Tue. 27 Oct. · 20:00", venue: "Accor Arena", publicPrice: 48, groupPrice: 41, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/meryl--98b3e", imageUrl: "https://files.offi.fr/programmation/3126495/images/1000/95e241adac4068f70ef3f6409dc7d98f.png" },
+        { city: "Paris", title: "Duran Duran", poster: "Duran Duran", category: "Concerts", date: "mer. 28 oct. · 20h", dateEn: "Wed. 28 Oct. · 20:00", venue: "Accor Arena", publicPrice: 69, groupPrice: 59, current: 7, minimum: 9, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation?view=calendar", imageUrl: "https://www.places-concert.com/images/visuels/events_duran_duran_accor_arena_paris_0601015525.webp" },
+        { city: "Paris", title: "Salon du Chocolat & de la Pâtisserie", poster: "Salon du Chocolat", category: "Festivals", date: "mer. 28 oct.–dim. 1 nov.", dateEn: "Wed. 28 Oct.–Sun. 1 Nov.", venue: "Paris Expo Porte de Versailles", publicPrice: 22, groupPrice: 19, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://www.salon-du-chocolat.com/fr-FR/paris", imageUrl: "https://www.salon-du-chocolat.com/-/media/Project/Comexposium-Master1/Master1-Chocolat/_banner-paris/patisserie-maxence-barbot.jpg?rev=0246f6467389450d96a25b6d7bcda12f&w=2000&hash=124755BF0AB3B3AD873DC77812D747F0" },
+        { city: "Paris", title: "Paris FC Féminines vs BK Häcken", poster: "Paris FC · Häcken", category: "Sport", date: "jeu. 29 oct. · 18h45", dateEn: "Thu. 29 Oct. · 18:45", venue: "Stade Charléty · Paris 13e", publicPrice: 26, groupPrice: 22, current: 5, minimum: 7, theme: "football", sourceUrl: "https://parisfc.fr/pro-feminin/ligue-des-champions-decouvrez-les-six-adversaires-du-paris-fc/", imageUrl: "https://parisfc.fr/wp-content/uploads/2026/09/Flo_Pernet-1-819x1024.jpg" },
+        { city: "Paris", title: "Dream Nation Festival 2026", poster: "Dream Nation", category: "Festivals", date: "ven. 30–sam. 31 oct.", dateEn: "Fri. 30–Sat. 31 Oct.", venue: "Paris Nord Villepinte", publicPrice: 65, groupPrice: 55, current: 9, minimum: 12, theme: "festival", sourceUrl: "https://www.nrj.fr/evenements-nrj/dream-nation-2026-71366549", imageUrl: "https://img.nrj.fr/tgu4MhwJ7lDcLzhYZ2WmpQ8C_54%3D/0x415/smart/medias%2F2026%2F05%2Fc4gqcuedwarxpmcsuu9tzbilrmhewvk8ztzs5zpetgq_6a0db30cde01a.jpg" },
+        { city: "Paris", title: "La Cage aux Folles", poster: "La Cage aux Folles", category: "Théâtre", date: "ven. 30 oct.–sam. 14 nov.", dateEn: "Fri. 30 Oct.–Sat. 14 Nov.", venue: "La Seine Musicale · Boulogne-Billancourt", publicPrice: 59, groupPrice: 50, current: 5, minimum: 7, theme: "theatre", sourceUrl: "https://www.ticketac.com/spectacles/la-cage-aux-folles", imageUrl: "https://d1k4bi32qf3nf2.cloudfront.net/thumb%402x/product/2026/01/la_cage_aux_folles_seine_musicale_affiche_2026_1769506522.jpg" },
+        { city: "Paris", title: "Rolex Paris Masters", poster: "Rolex Paris Masters", category: "Sport", date: "sam. 31 oct.–dim. 8 nov.", dateEn: "Sat. 31 Oct.–Sun. 8 Nov.", venue: "Paris La Défense Arena · Nanterre", publicPrice: 70, groupPrice: 60, current: 10, minimum: 12, theme: "sport", sourceUrl: "https://www.rolexparismasters.com/fr/actualites/article/billetterie-rolex-paris-masters-2026-tickets-places-40-ans-tournoi-anniversaire", imageUrl: "https://images.prismic.io/app-rpm/aju3gVbRV8_QfzvV_RolexParisMasters2025-Andr%C3%A9FerreiraFFT.jpg?auto=format%2Ccompress" },
+        { city: "Paris", title: "Simple Plan + Neck Deep", poster: "Simple Plan", category: "Concerts", date: "sam. 31 oct. · 20h", dateEn: "Sat. 31 Oct. · 20:00", venue: "Accor Arena", publicPrice: 55, groupPrice: 47, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/simple-plan--c11f2", imageUrl: "https://www.places-concert.com/images/visuels/events_simple_plan_accor_arena_paris_1117100833_large_100833.webp" },
+        { city: "Paris", title: "Paris FC vs AS Monaco", poster: "Paris FC · Monaco", category: "Sport", date: "sam. 31 oct. · 17h15", dateEn: "Sat. 31 Oct. · 17:15", venue: "Stade Jean-Bouin · Paris 16e", publicPrice: 45, groupPrice: 38, current: 7, minimum: 9, theme: "football", sourceUrl: "https://www.asmonaco.com/fr/news/decouvre-la-prog-du-deplacement-sur-la-pelouse-du-paris-fc-pour-la-j9", imageUrl: "https://parisfc.fr/wp-content/uploads/2026/09/CAR09202-683x1024.jpg" },
+        { city: "Paris", title: "Paris FC Féminines vs Paris Saint-Germain", poster: "Paris FC · PSG", category: "Sport", date: "sam. 31 oct. · 16h", dateEn: "Sat. 31 Oct. · 16:00", venue: "Stade Charléty · Paris 13e", publicPrice: 30, groupPrice: 26, current: 8, minimum: 10, theme: "football", sourceUrl: "https://parisfc.fr/match-center/women/119734/2026-10-31/paris-fc-vs-paris-saint-germain-arkema-premiere-ligue/", imageUrl: "https://parisfc.fr/wp-content/uploads/2026/09/Flo_Pernet-12-819x1024.jpg" },
+        { city: "Paris", title: "The World of Hans Zimmer — A New Dimension", poster: "Hans Zimmer", category: "Concerts", date: "lun. 2 nov. · 20h", dateEn: "Mon. 2 Nov. · 20:00", venue: "Accor Arena", publicPrice: 75, groupPrice: 64, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/the-world-of-hans-zimmer--e6f23", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w600%2Ch600%2Cfcrop%2Cq85/785bf426-c14d-45dc-8c1c-6df449ee2a9d.jpg" },
+        { city: "Paris", title: "NCAA Women’s Basketball", poster: "NCAA Women’s", category: "Sport", date: "lun. 2 nov. · 18h", dateEn: "Mon. 2 Nov. · 18:00", venue: "adidas arena · Paris 18e", publicPrice: 35, groupPrice: 30, current: 5, minimum: 7, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/213f9e67-4b35-4520-ad02-106fb6378119.jpg" },
+        { city: "Paris", title: "J. Cole — The Fall-Off Tour", poster: "J. Cole", category: "Concerts", date: "jeu. 5 nov. · 20h", dateEn: "Thu. 5 Nov. · 20:00", venue: "Accor Arena", publicPrice: 75, groupPrice: 64, current: 8, minimum: 10, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/jcole-the-fall-off-tour--e6352", imageUrl: "https://www.places-concert.com/images/visuels/events_j._cole_accor_arena_paris_0217062415.webp" },
+        { city: "Paris", title: "Niall Horan — Dinner Party Live On Tour", poster: "Niall Horan", category: "Concerts", date: "ven. 6 nov. · 20h", dateEn: "Fri. 6 Nov. · 20:00", venue: "Accor Arena", publicPrice: 65, groupPrice: 55, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/niall-horan-dinner-party-live-on-tour--e92a5", imageUrl: "https://www.places-concert.com/images/visuels/events_niall_horan_accor_arena_paris_0325064710.webp" },
+        { city: "Paris", title: "Paris Saint-Germain vs ESTAC Troyes", poster: "PSG · Troyes", category: "Sport", date: "sam. 7 nov. · 19h45", dateEn: "Sat. 7 Nov. · 19:45", venue: "Parc des Princes · Paris 16e", publicPrice: 52, groupPrice: 44, current: 7, minimum: 9, theme: "football", sourceUrl: "https://www.psg.fr/football-masculin/calendrier/season/2026-27?competition=Ligue_1", imageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/psg-logo_avcznk", secondaryImageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/TROYES_qryivh" },
+        { city: "Paris", title: "Fianso", poster: "Fianso", category: "Concerts", date: "jeu. 12 nov. · 20h", dateEn: "Thu. 12 Nov. · 20:00", venue: "Accor Arena", publicPrice: 55, groupPrice: 47, current: 7, minimum: 9, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/fianso--e6392", imageUrl: "https://media.licdn.com/dms/image/v2/D4E22AQFOFaeHYkfXHA/feedshare-shrink_800/B4EZlMZ39UKkAg-/0/1757923476213?e=2147483647&t=6nMq3WKmOs_tE_orBYSHFtK-o5sqT9e1Y1qpKiZGKAw&v=beta" },
+        { city: "Paris", title: "Kery James", poster: "Kery James", category: "Concerts", date: "dim. 15 nov. · 20h", dateEn: "Sun. 15 Nov. · 20:00", venue: "Accor Arena", publicPrice: 59, groupPrice: 50, current: 7, minimum: 9, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/kery-james--7b17e", imageUrl: "https://culturap.fr/wp-content/uploads/2025/10/kery-james-bercy-2026-575x575.jpg" },
+        { city: "Paris", title: "Vanessa Paradis", poster: "Vanessa Paradis", category: "Concerts", date: "mar. 17 nov. · 20h", dateEn: "Tue. 17 Nov. · 20:00", venue: "Accor Arena", publicPrice: 69, groupPrice: 59, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/vanessa-paradis--7b30c", imageUrl: "https://www.concert-auguri.fr/sites/hubber_site_auguri8/files/styles/vignette_card_image/public/2025-09/vanessaparadis-aha-fnac-1080x1080-2509292-1.jpg?itok=-PGEI2aI" },
+        { city: "Paris", title: "No Limit", poster: "No Limit", category: "Concerts", date: "mer. 18 nov. · 20h", dateEn: "Wed. 18 Nov. · 20:00", venue: "Accor Arena", publicPrice: 65, groupPrice: 55, current: 9, minimum: 11, theme: "concert", sourceUrl: "https://www.accorarena.com/fr/programmation/no-limit--1b237", imageUrl: "https://pbs.twimg.com/media/HF4Gn6ZXkAEDco5.jpg" },
+        { city: "Paris", title: "Paris FC Féminines vs HB Køge", poster: "Paris FC · Køge", category: "Sport", date: "jeu. 19 nov. · 18h45", dateEn: "Thu. 19 Nov. · 18:45", venue: "Stade Charléty · Paris 13e", publicPrice: 26, groupPrice: 22, current: 5, minimum: 7, theme: "football", sourceUrl: "https://parisfc.fr/pro-feminin/ligue-des-champions-decouvrez-les-six-adversaires-du-paris-fc/", imageUrl: "https://parisfc.fr/wp-content/uploads/2026/09/Flo_Pernet-36-819x1024.jpg" },
+        { city: "Paris", title: "ARES 45", poster: "ARES 45", category: "Sport", date: "ven. 20 nov. · 19h30", dateEn: "Fri. 20 Nov. · 19:30", venue: "adidas arena · Paris 18e", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/a87a8e72-db25-40fc-bb64-341c35a1df3a.jpeg" },
+        { city: "Paris", title: "No Leash, No Limit — Winter Edition", poster: "No Leash", category: "Clubs", date: "sam. 21 nov. · 23h", dateEn: "Sat. 21 Nov. · 23:00", venue: "Le Klub · Paris 1er", publicPrice: 24, groupPrice: 20, current: 7, minimum: 9, theme: "club", sourceUrl: "https://r.shotgun.live/fr/events/no-leash-no-limit-winter-edition", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Car_16%3A9%2Cw_3840/fl_lossy/f_auto/q_auto/production/artworks/NLNL_Winter_Shotgun_2_ryufvi.png" },
+        { city: "Paris", title: "Paris Saint-Germain vs AS Roma", poster: "PSG · Roma", category: "Sport", date: "mer. 25 nov. · 21h", dateEn: "Wed. 25 Nov. · 21:00", venue: "Parc des Princes · Paris 16e", publicPrice: 72, groupPrice: 61, current: 8, minimum: 10, theme: "football", sourceUrl: "https://www.psg.fr/content/le-calendrier-europeen-des-parisiens-est-connu-psg-paris-saint-germain-ucl-champions-league-programmation-2026-2027", imageUrl: "https://media.psg.fr/image/upload/w_3840%2Cc_fill%2Cg_auto%2Car_16%3A9/f_avif%2Cq_75/_A9_3853_xrnfs2" },
+        { city: "Paris", title: "Paris Saint-Germain vs FC Lorient", poster: "PSG · Lorient", category: "Sport", date: "sam. 28 nov. · 19h45", dateEn: "Sat. 28 Nov. · 19:45", venue: "Parc des Princes · Paris 16e", publicPrice: 52, groupPrice: 44, current: 7, minimum: 9, theme: "football", sourceUrl: "https://www.psg.fr/football-masculin/calendrier/season/2026-27?competition=Ligue_1", imageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/psg-logo_avcznk", secondaryImageUrl: "https://media.psg.fr/image/upload/w_3840/f_avif%2Cq_75/FC_Lorient_wsx1in" },
+        { city: "Paris", title: "World Championships Breaking & Hip-Hop Freestyle", poster: "Breaking Worlds", category: "Sport", date: "sam. 5–dim. 6 déc.", dateEn: "Sat. 5–Sun. 6 Dec.", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 8, minimum: 10, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/13256755-a8fe-4df8-ba9d-ea74ebbe71c8.jpg" }
+      ]);
+
+      // A stable key makes a live interest follow its event even when the
+      // catalogue is filtered or its visual position changes.
+      events.forEach(function (event) {
+        event.id = stableEventId(event);
+        event.liveCount = 0;
+        event.liveMembers = [];
+      });
+
+      var people = [
+        { name: "Maya", age: 25, origin: "Montréal", since: "8 mois", job: "Cheffe de projet culturel", interests: "concerts, photo, brunch", languages: "Français, anglais", verified: true },
+        { name: "Jonas", age: 27, origin: "Berlin", since: "2 ans", job: "Ingénieur logiciel", interests: "électro, cinéma, running", languages: "Allemand, anglais, français", verified: true },
+        { name: "Sofia", age: 23, origin: "Lisbonne", since: "6 mois", job: "Étudiante en architecture", interests: "design, théâtre, expo", languages: "Portugais, anglais, français", verified: true },
+        { name: "Théo", age: 26, origin: "Lille", since: "3 ans", job: "Journaliste sportif", interests: "basket, humour, food", languages: "Français, anglais", verified: true },
+        { name: "Noor", age: 24, origin: "Casablanca", since: "1 an", job: "Consultante communication", interests: "festivals, danse, voyages", languages: "Français, arabe, anglais", verified: true },
+        { name: "Amara", age: 24, origin: "Abidjan", since: "10 mois", job: "Étudiante en école de commerce · master finance", interests: "investissement, podcasts, afrobeats", languages: "Français, anglais, dioula", verified: true },
+        { name: "Diego", age: 26, origin: "Madrid", since: "1 an", job: "Analyste data", interests: "foot, cuisine, techno", languages: "Espagnol, anglais, français", verified: true },
+        { name: "Priya", age: 25, origin: "Bengaluru", since: "2 ans", job: "Product designer", interests: "cinéma, yoga, expositions", languages: "Anglais, hindi, français", verified: true },
+        { name: "Samir", age: 27, origin: "Tunis", since: "9 mois", job: "Entrepreneur social", interests: "stand-up, football, voyages", languages: "Arabe, français, anglais", verified: true },
+        { name: "Elena", age: 23, origin: "Bucarest", since: "5 mois", job: "Étudiante en marketing", interests: "mode, concerts, café", languages: "Roumain, anglais, français", verified: true },
+        { name: "Yuki", age: 24, origin: "Tokyo", since: "1 an", job: "Chargée de communication", interests: "photographie, pop culture, danse", languages: "Japonais, anglais, français", verified: true },
+        { name: "Kwame", age: 26, origin: "Accra", since: "2 ans", job: "Chef de projet sportif", interests: "basket, festivals, running", languages: "Anglais, twi, français", verified: true }
+      ];
+
+      var venues = {
+        Paris: "Accor Arena",
+        Lyon: "Halle Tony Garnier",
+        Marseille: "Dôme de Marseille",
+        Bordeaux: "Arkéa Arena",
+        Lille: "Zénith de Lille",
+        Nantes: "Zénith de Nantes",
+        Strasbourg: "Zénith de Strasbourg"
+      };
+
+      var state = {
+        screen: "explore",
+        history: [],
+        city: "Paris",
+        filter: "Tout",
+        eventIndex: 0,
+        memberIndex: 0,
+        liveMemberId: "",
+        agePreference: "all",
+        dark: false,
+        locale: "fr",
+        joinStatus: ""
+      };
+
+      var live = {
+        countsLoaded: false,
+        loadingCounts: false,
+        loadingEvent: {},
+        error: ""
+      };
+
+      var app = document.getElementById("app");
+      var introLead = document.querySelector(".intro p");
+      var sideNote = document.querySelector(".side");
+      var phone = document.querySelector(".phone");
+
+      function fitPhoneToViewport() {
+        if (!phone) return;
+        if (window.matchMedia("(max-width: 600px)").matches) {
+          phone.style.removeProperty("--phone-scale");
+          return;
+        }
+        var viewport = window.visualViewport;
+        var width = viewport ? viewport.width : window.innerWidth;
+        var height = viewport ? viewport.height : window.innerHeight;
+        var availableWidth = width <= 900 ? Math.max(1, width - 32) : 420;
+        var availableHeight = Math.max(1, height - 32);
+        var scale = Math.min(1, availableWidth / 420, availableHeight / 874);
+        phone.style.setProperty("--phone-scale", String(Math.max(.1, scale)));
+      }
+
+      window.addEventListener("resize", fitPhoneToViewport);
+      if (window.visualViewport) window.visualViewport.addEventListener("resize", fitPhoneToViewport);
+      fitPhoneToViewport();
+
+      var englishText = {
+        "Explorer": "Explore",
+        "⌂ Explorer": "⌂ Explore",
+        "⌂ Accueil": "⌂ Home",
+        "Mes groupes": "My groups",
+        "◷ Mes groupes": "◷ My groups",
+        "Mon profil": "My profile",
+        "Profil": "Profile",
+        "◉ Profil": "◉ Profile",
+        "Navigation principale": "Main navigation",
+        "Tout": "All",
+        "Sport": "Sports",
+        "Concerts": "Concerts",
+        "Théâtre": "Theatre",
+        "Humour": "Comedy",
+        "Changer ›": "Change ›",
+        "La sortie": "The event",
+        "Rendez-vous 30 min avant le début.": "Meet 30 minutes before it starts.",
+        "Une sortie à partager": "A plan to share",
+        "Découvre les profils intéressés, puis laisse tes coordonnées pour être recontacté·e au lancement de l’application.": "Discover interested profiles, then leave your details to be contacted when the app launches.",
+        "Fais connaissance, discute et propose un café avant de vous retrouver sur place.": "Get to know one another, chat and suggest coffee before meeting at the venue.",
+        "Prix transparent": "Straightforward pricing",
+        "Voir les profils intéressés": "See interested profiles",
+        "🔒 Discussion privée": "🔒 Private conversation",
+        "Les messages du groupe sont visibles après avoir rejoint la sortie.": "Group messages are visible after you join the event.",
+        "Voir mon groupe": "View my group",
+        "Rejoindre le groupe": "Join the group",
+        "Personnes intéressées": "Interested people",
+        "Profils visibles. La discussion reste privée tant que tu n'as pas rejoint le groupe.": "Profiles are visible. The chat stays private until you join the group.",
+        "Trier les profils par âge": "Filter profiles by age",
+        "Mettre en avant par âge": "Prioritise by age",
+        "Préférence d’âge": "Age preference",
+        "Le filtre est indicatif : il ne limite pas qui peut rejoindre le groupe.": "This filter is only a preference: it does not limit who can join the group.",
+        "Le tri change l’ordre des profils, sans en masquer aucun.": "This sorting changes the order of profiles without hiding anyone.",
+        "Préférence d’âge (facultative)": "Age preference (optional)",
+        "Elle t'aide à découvrir des profils qui te ressemblent. Elle ne bloque personne dans le groupe.": "It helps you discover profiles that feel right for you. It does not block anyone from joining the group.",
+        "Tous les âges": "All ages",
+        "18–23 ans": "Ages 18–23",
+        "24–26 ans": "Ages 24–26",
+        "27–30 ans": "Ages 27–30",
+        "Identité vérifiée": "Verified identity",
+        "✓ Identité vérifiée": "✓ Verified identity",
+        "identité vérifiée": "verified identity",
+        "Sortie du week-end": "Weekend outing",
+        "À Paris": "In Paris",
+        "Avec des amis": "With friends",
+        "Occupation vérifiée": "Verified occupation",
+        "Son arrivée à Paris": "Their move to Paris",
+        "Ses affinités": "Interests",
+        "Cheffe de projet culturel": "Cultural project manager",
+        "Ingénieur logiciel": "Software engineer",
+        "Étudiante en architecture": "Architecture student",
+        "Journaliste sportif": "Sports journalist",
+        "Consultante communication": "Communications consultant",
+        "Étudiante en école de commerce · master finance": "Business-school student · Master's in Finance",
+        "Analyste data": "Data analyst",
+        "Product designer": "Product designer",
+        "Entrepreneur social": "Social entrepreneur",
+        "Étudiante en marketing": "Marketing student",
+        "Chargée de communication": "Communications coordinator",
+        "Chef de projet sportif": "Sports project manager",
+        "concerts, photo, brunch": "concerts, photography, brunch",
+        "électro, cinéma, running": "electronic music, cinema, running",
+        "design, théâtre, expo": "design, theatre, exhibitions",
+        "basket, humour, food": "basketball, comedy, food",
+        "festivals, danse, voyages": "festivals, dance, travel",
+        "investissement, podcasts, afrobeats": "investing, podcasts, afrobeats",
+        "foot, cuisine, techno": "football, cooking, techno",
+        "cinéma, yoga, expositions": "cinema, yoga, exhibitions",
+        "stand-up, football, voyages": "stand-up, football, travel",
+        "mode, concerts, café": "fashion, concerts, coffee",
+        "photographie, pop culture, danse": "photography, pop culture, dance",
+        "basket, festivals, running": "basketball, festivals, running",
+        "Français, anglais": "French, English",
+        "Allemand, anglais, français": "German, English, French",
+        "Portugais, anglais, français": "Portuguese, English, French",
+        "Français, arabe, anglais": "French, Arabic, English",
+        "Français, anglais, dioula": "French, English, Dioula",
+        "Espagnol, anglais, français": "Spanish, English, French",
+        "Anglais, hindi, français": "English, Hindi, French",
+        "Arabe, français, anglais": "Arabic, French, English",
+        "Roumain, anglais, français": "Romanian, English, French",
+        "Japonais, anglais, français": "Japanese, English, French",
+        "Anglais, twi, français": "English, Twi, French",
+        "Ta place est réservée.": "Your spot is held.",
+        "0 € débité aujourd'hui. La confirmation et le prélèvement du billet n'interviennent qu'à J-7.": "$0 charged today. Your ticket is confirmed and charged only at D-7.",
+        "Numéro de carte fictif": "Fictional card number",
+        "Expiration": "Expiry",
+        "J'autorise le prélèvement seulement à J-7 si je confirme ma place.": "I authorize the charge at D-7 only if I confirm my spot.",
+        "✓ Carte enregistrée, sans débit aujourd'hui. Tu peux quitter le groupe avant le paiement.": "✓ Card saved, with no charge today. You can leave the group before payment.",
+        "Réserver ma place": "Reserve my spot",
+        "Le groupe": "The group",
+        "Discussion": "Chat",
+        "Membres": "Members",
+        "Tous les membres du groupe restent visibles, quelle que soit la préférence d’âge.": "All group members remain visible, whatever the age preference.",
+        "Billet": "Ticket",
+        "🍽 Se rencontrer avant": "🍽 Meet beforehand",
+        "Proposé ✓": "Suggested ✓",
+        "Proposer": "Suggest",
+        "Écrire au groupe…": "Write to the group…",
+        "Envoyer le message": "Send message",
+        "Intérêt enregistré": "Interest registered",
+        "Groupe lancé": "Group started",
+        "Confirmation à J-7": "Confirmation at D-7",
+        "Simuler la date": "Simulate the date",
+        "Le groupe peut choisir d'y aller même sans atteindre le tarif groupe.": "The group can decide to go even without reaching the group-price threshold.",
+        "✓ Billet confirmé. Rendez-vous 30 min avant l'événement.": "✓ Ticket confirmed. Meet 30 minutes before the event.",
+        "QR code fictif": "Fictional QR code",
+        "Le groupe est prêt : confirme ta place pour déclencher le paiement.": "The group is ready: confirm your spot to trigger payment.",
+        "Paiement disponible à J-7 seulement.": "Payment is available at D-7 only.",
+        "Quitter le groupe": "Leave the group",
+        "Avant de quitter": "Before leaving",
+        "Ton prochain plan t'attend.": "Your next plan is waiting.",
+        "Rejoins une sortie pour discuter avec le groupe et organiser un moment avant l'événement.": "Join an event to chat with the group and arrange a moment before it starts.",
+        "Discussion, membres, billet et rendez-vous avant la sortie.": "Chat, members, ticket and a meetup before the event.",
+        "Profil vérifié · carte fictive •••• 4242 enregistrée": "Verified profile · fictional card •••• 4242 saved",
+        "✦ Être averti·e du lancement": "✦ Get launch updates",
+        "Passer en mode clair": "Switch to light mode",
+        "Passer en mode sombre": "Switch to dark mode",
+        "Être averti·e": "Get updates",
+        "Tu veux rejoindre un groupe ?": "Want to join a group?",
+        "Tu nous dis que cette sortie t’intéresse. Nous te recontacterons quand l’application sera lancée.": "You are letting us know this event interests you. We will contact you when the app launches.",
+        "Tu veux être averti·e ?": "Want launch updates?",
+        "Laisse tes coordonnées ici, sans quitter le prototype.": "Leave your details here without leaving the prototype.",
+        "Les réponses sont collectées directement dans le Google Form du projet. Les alertes e-mail sont gérées dans ses paramètres Google Forms.": "Responses are collected directly in the project Google Form. Email alerts are managed in its Google Forms settings.",
+        "Chargement du formulaire…": "Loading the form…",
+        "Ne plus renoncer à une sortie.": "Never miss out on an event again.",
+        "Never Go Alone aide les jeunes adultes, les personnes nouvelles dans une ville et les étudiant·es internationaux à vivre les événements qui les tentent.": "Never Go Alone helps young adults, people who are new to a city and international students enjoy the events that interest them.",
+        "Notre idée": "Our idea",
+        "Un intérêt commun est une bonne première raison de se rencontrer. Le groupe permet de discuter, de se rassurer et de prévoir un rendez-vous simple avant l'événement.": "A shared interest is a good first reason to meet. The group lets people chat, feel reassured and arrange a simple meetup before the event.",
+        "Ce qui compte": "What matters",
+        "Des profils visibles, une identité vérifiée, des règles de paiement transparentes et le choix de maintenir une sortie même en petit groupe.": "Visible profiles, verified identity, transparent payment rules and the choice to keep an event on even as a small group.",
+        "Changer de ville": "Change city",
+        "Où veux-tu sortir ?": "Where do you want to go out?",
+        "Choisis une ville en France pour voir les sorties proposées.": "Choose a city in France to see available events.",
+        "Choisie ✓": "Selected ✓",
+        "Voir les sorties ›": "See events ›",
+        "Langue": "Language",
+        "Choisir la langue": "Choose language",
+        "À propos": "About us",
+        "Revenir en arrière": "Go back",
+        "Retourner à l’accueil": "Return to Home",
+        "Ouvrir mon profil": "Open my profile",
+        "Membres intéressés": "Interested members",
+        "Salut ! Hâte de vivre cette sortie avec vous 😊": "Hi! Can't wait to enjoy this event with you 😊",
+        "Partant pour se voir un peu avant.": "I'm up for meeting a little beforehand.",
+        "Très bonne idée, je suis partante !": "Great idea, I'm in!",
+        "Merci Alex, à très vite dans le groupe !": "Thanks Alex, see you soon in the group!",
+        "Tu peux quitter librement avant le paiement : aucun débit n'a été effectué.": "You can leave freely before payment: no charge has been made.",
+        "Avant J-7, le billet est remboursé hors frais de service.": "Before D-7, the ticket is refunded excluding the service fee.",
+        "Après la confirmation à J-7, le billet est non remboursable sauf si une personne reprend ta place.": "After confirmation at D-7, the ticket is non-refundable unless someone takes your spot.",
+        "Renseigne les 16 chiffres fictifs et ton accord pour réserver.": "Enter the 16 fictional digits and your consent to reserve.",
+        "Événements annoncés par les organisateurs · tarifs de groupe simulés.": "Events announced by organisers · group prices are simulated.",
+        "Voir la page officielle ↗": "View official page ↗",
+        "Voir l’événement ↗": "View event ↗",
+        "Tarifs affichés à titre de simulation pour le prototype.": "Prices shown are simulated for this prototype.",
+        "Tarifs affichés à titre indicatif pour le lancement.": "Prices are indicative for launch.",
+        "Profil vérifié · tes coordonnées servent uniquement à être recontacté·e.": "Verified profile · your details are only used to contact you.",
+        "Cette version permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.": "This version lets you find an event, discover interested profiles and register your interest.",
+        "Des profils visibles, une identité vérifiée et une façon simple de mesurer l’intérêt avant le lancement des groupes.": "Visible profiles, verified identity and a simple way to measure interest before groups launch.",
+        "Finaliser": "Finish",
+        "Découvre les profils intéressés, puis laisse tes coordonnées pour faire grandir ce groupe live.": "Discover the interested profiles, then leave your details to grow this live group.",
+        "Cette version live permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.": "This live version lets you find an event, discover interested profiles and register your interest.",
+        "Les profils affichent uniquement un prénom, une activité indiquée et un avatar illustré. Les coordonnées restent privées.": "Profiles show only a first name, stated activity and an illustrated avatar. Contact details remain private.",
+        "Une version de test": "A test version",
+        "Never Go Alone est encore en prototype. Après avoir rejoint une sortie, le formulaire de contact permet de recevoir les nouvelles du lancement.": "Never Go Alone is still a prototype. After joining an event, the contact form lets you receive launch updates."
+      };
+
+      function translateText(value) {
+        if (state.locale !== "en" || !value) return value;
+        var leading = (value.match(/^\s*/) || [""])[0];
+        var trailing = (value.match(/\s*$/) || [""])[0];
+        var text = value.trim();
+        var translated = englishText[text] || text;
+
+        translated = translated
+          .replace(/(\d+) sur (\d+) pour le tarif groupe/g, "$1 of $2 for group rate")
+          .replace(/^Billet groupe : ([\d,]+) € · Frais de service : ([\d,]+) €$/, "Group ticket: €$1 · Service fee: €$2")
+          .replace(/^Économie totale : ([\d,]+) €$/, "Total saving: €$1")
+          .replace(/^✓ (.+) · identité vérifiée$/, function (_, job) {
+            return "✓ " + (englishText[job] || job) + " · verified identity";
+          })
+          .replace(/^Originaire de (.+) · à Paris depuis (.+)$/, function (_, origin, duration) {
+            return "Originally from " + origin + " · in Paris for " + duration.replace(/(\d+) mois/g, "$1 months").replace(/1 an/g, "1 year").replace(/(\d+) ans/g, "$1 years");
+          })
+          .replace(/^Voir le profil de (.+)$/, "View profile of $1")
+          .replace(/^Trois photos de (.+)$/, "Three photos of $1")
+          .replace(/^Photo de (.+) à un événement$/, "Photo of $1 at an event")
+          .replace(/^Photo de (.+) en ville$/, "Photo of $1 in the city")
+          .replace(/^Photo de (.+) avec des amis$/, "Photo of $1 with friends")
+          .replace(/^Choisis un endroit près de (.+) pour discuter avant l'événement.$/, "Choose a place near $1 to chat before the event.")
+          .replace(/^Vous êtes (\d+) personnes intéressées\. Appuie sur un membre pour voir son profil.$/, "There are $1 interested people. Tap a member to see their profile.")
+          .replace(/^On maintient la sortie à (\d+)$/, "We'll go as a group of $1")
+          .replace(/^Confirmer et payer (.+)$/, "Confirm and pay $1")
+          .replace(/^Je propose (.+) avant la sortie 🍴$/, "I suggest $1 before the event 🍴")
+          .replace(/^(\d+) ans$/g, "$1 years")
+          .replace(/^(\d+) mois$/g, "$1 months")
+          .replace(/^1 an$/g, "1 year")
+          .replace(/(\d+) ans\b/g, "$1 years")
+          .replace(/^J-(\d+)$/, "D-$1");
+
+        return leading + translated + trailing;
+      }
+
+      function localizeElement(root) {
+        if (state.locale !== "en") return;
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        var textNodes = [];
+        var node;
+        while ((node = walker.nextNode())) textNodes.push(node);
+        textNodes.forEach(function (textNode) {
+          textNode.nodeValue = translateText(textNode.nodeValue);
+        });
+        root.querySelectorAll("[aria-label], [placeholder], [title]").forEach(function (element) {
+          ["aria-label", "placeholder", "title"].forEach(function (attribute) {
+            if (element.hasAttribute(attribute)) {
+              element.setAttribute(attribute, translateText(element.getAttribute(attribute)));
+            }
+          });
+        });
+      }
+
+      function applyLocale() {
+        var english = state.locale === "en";
+        document.documentElement.lang = english ? "en" : "fr";
+        document.title = english ? "Never Go Alone — Find your people" : "Never Go Alone";
+        introLead.textContent = english ? "Events and people to meet." : "Des événements et des personnes à rencontrer.";
+        sideNote.textContent = english ? "Interactive prototype — events and data are fictional." : "Prototype interactif — les événements et les données sont fictifs.";
+        phone.setAttribute("aria-label", english ? "Never Go Alone mobile prototype" : "Prototype mobile Never Go Alone");
+        localizeElement(app);
+      }
+
+      function esc(value) {
+        return String(value).replace(/[&<>"']/g, function (char) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char];
+        });
+      }
+
+      function i18n(french, english) {
+        return state.locale === "en" ? english : french;
+      }
+
+      function stableEventId(event) {
+        return ["nga", event.city, event.date, event.title].join("-").normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      }
+
+      function liveCount(event) {
+        var value = Number(event && event.liveCount);
+        return Number.isFinite(value) && value >= 0 ? value : 0;
+      }
+
+      function liveMembers(event) {
+        return event && Array.isArray(event.liveMembers) ? event.liveMembers : [];
+      }
+
+      function liveRefreshView() {
+        if (["explore", "event", "people", "member-profile", "contact"].indexOf(state.screen) >= 0) render();
+      }
+
+      async function apiRequest(path, options) {
+        var settings = options || {};
+        var headers = Object.assign({ "accept": "application/json" }, settings.headers || {});
+        var response = await fetch(path, Object.assign({}, settings, { headers: headers, credentials: "same-origin" }));
+        var body = null;
+        try { body = await response.json(); } catch (error) { body = null; }
+        if (!response.ok) throw new Error((body && body.error) || i18n("Le service live est indisponible. Réessaie dans un instant.", "The live service is unavailable. Please try again shortly."));
+        return body || {};
+      }
+
+      function applyLiveEvent(event, payload) {
+        if (!event || !payload) return;
+        event.liveCount = Math.max(0, Number(payload.count) || 0);
+        if (Array.isArray(payload.members)) event.liveMembers = payload.members;
+      }
+
+      async function loadLiveCounts() {
+        if (live.loadingCounts) return;
+        live.loadingCounts = true;
+        try {
+          var payload = await apiRequest("/api/interest-counts");
+          var counts = payload.counts || {};
+          events.forEach(function (event) {
+            event.liveCount = Math.max(0, Number(counts[event.id]) || 0);
+          });
+          live.countsLoaded = true;
+          live.error = "";
+        } catch (error) {
+          live.error = error && error.message ? error.message : "";
+        } finally {
+          live.loadingCounts = false;
+          liveRefreshView();
+        }
+      }
+
+      async function loadLiveEvent(event) {
+        if (!event || live.loadingEvent[event.id]) return;
+        live.loadingEvent[event.id] = true;
+        try {
+          var payload = await apiRequest("/api/events/" + encodeURIComponent(event.id) + "/interests");
+          applyLiveEvent(event, payload);
+          live.countsLoaded = true;
+          live.error = "";
+        } catch (error) {
+          live.error = error && error.message ? error.message : "";
+        } finally {
+          delete live.loadingEvent[event.id];
+          liveRefreshView();
+        }
+      }
+
+      function withdrawalStorageKey(event) {
+        return "never-go-alone:withdraw:" + event.id;
+      }
+
+      function rememberWithdrawal(event, memberId, token) {
+        try {
+          sessionStorage.setItem(withdrawalStorageKey(event), JSON.stringify({ memberId: memberId, token: token }));
+        } catch (error) { /* The live join remains valid if session storage is unavailable. */ }
+      }
+
+      function rememberedWithdrawal(event) {
+        try {
+          var raw = sessionStorage.getItem(withdrawalStorageKey(event));
+          return raw ? JSON.parse(raw) : null;
+        } catch (error) { return null; }
+      }
+
+      function clearRememberedWithdrawal(event) {
+        try { sessionStorage.removeItem(withdrawalStorageKey(event)); } catch (error) { /* no-op */ }
+      }
+
+      function selectedEvent() {
+        return events[state.eventIndex] || events[0];
+      }
+
+      function eventsForCity(city) {
+        return events.filter(function (event) { return event.city === city; });
+      }
+
+      function eventDate(event) {
+        var currentEvent = event || selectedEvent();
+        return state.locale === "en" && currentEvent.dateEn ? currentEvent.dateEn : currentEvent.date;
+      }
+
+      function eventVenue(event) {
+        var currentEvent = event || selectedEvent();
+        return (currentEvent && currentEvent.venue) || venues[state.city] || venues.Paris;
+      }
+
+      function officialSourceLink(event) {
+        if (!event || !/^https:\/\//.test(event.sourceUrl || "")) return "";
+        return "<a class='source-link' href='" + esc(event.sourceUrl) + "' target='_blank' rel='noopener noreferrer'>Voir l’événement ↗</a>";
+      }
+
+      function upcomingEventsNote(count) {
+        return state.locale === "en" ? count + " upcoming events announced by organisers · group prices are simulated." :
+          count + " sorties à venir annoncées par les organisateurs · tarifs de groupe simulés.";
+      }
+
+      function navigate(screen) {
+        if (screen !== state.screen) {
+          state.history.push(state.screen);
+          state.screen = screen;
+        }
+        render();
+      }
+
+      function back() {
+        state.screen = state.history.pop() || "explore";
+        render();
+      }
+
+      function selectCity(city) {
+        if (!Object.prototype.hasOwnProperty.call(venues, city)) return;
+        state.city = city;
+        state.filter = "Tout";
+        var firstEventIndex = events.findIndex(function (event) { return event.city === city; });
+        if (firstEventIndex >= 0) state.eventIndex = firstEventIndex;
+        state.history = [];
+        state.screen = "explore";
+        render();
+      }
+
+      function openMemberProfile(rawId) {
+        var id = String(rawId || "");
+        var person = liveMembers(selectedEvent()).filter(function (member) { return member.id === id; })[0];
+        if (!person) return;
+        state.liveMemberId = id;
+        navigate("member-profile");
+      }
+
+      function avatar(person, id) {
+        var avatarIndex = Number.isInteger(person && person.avatarKey) ? person.avatarKey : Number(id) || 0;
+        avatarIndex = Math.abs(avatarIndex) % 12;
+        var displayName = (person && (person.firstName || person.name)) || "?";
+        return "<span class='avatar avatar-" + avatarIndex + "' aria-hidden='true'>" + esc(displayName.charAt(0).toUpperCase()) + "</span>";
+      }
+
+      function agePreferencePicker(mode) {
+        var choices = [
+          ["all", "Tous les âges"],
+          ["18-23", "18–23 ans"],
+          ["24-26", "24–26 ans"],
+          ["27-30", "27–30 ans"]
+        ];
+        var isJoin = mode === "join";
+        return "<div class='age-preference'><b>" + (isJoin ? "Préférence d’âge (facultative)" : "Mettre en avant par âge") +
+          "</b><p>" + (isJoin ? "Elle t'aide à découvrir des profils qui te ressemblent. Elle ne bloque personne dans le groupe." : "Le tri change l’ordre des profils, sans en masquer aucun.") +
+          "</p><div class='filters' role='group' aria-label='Préférence d’âge'>" + choices.map(function (choice) {
+            return "<button type='button' class='chip " + (state.agePreference === choice[0] ? "active" : "") +
+              "' data-action='set-age-preference' data-age-preference='" + choice[0] + "' aria-pressed='" + (state.agePreference === choice[0]) + "'>" + choice[1] + "</button>";
+          }).join("") + "</div></div>";
+      }
+
+      function profilesForEvent(event) {
+        return liveMembers(event || selectedEvent()).slice();
+      }
+
+      function peopleMatchingAgePreference(list) {
+        var ranges = {
+          "18-23": [18, 23],
+          "24-26": [24, 26],
+          "27-30": [27, 30]
+        };
+        var range = ranges[state.agePreference];
+        var profiles = (list || profilesForEvent(selectedEvent())).slice();
+        if (!range) return profiles;
+        return profiles.map(function (person, index) {
+          return { person: person, index: index, matches: person.age >= range[0] && person.age <= range[1] };
+        }).sort(function (first, second) {
+          return Number(second.matches) - Number(first.matches) || first.index - second.index;
+        }).map(function (entry) { return entry.person; });
+      }
+
+      function header(title) {
+        return "<header class='screen-header'>" +
+          "<button type='button' class='icon-button' data-action='back' aria-label='Revenir en arrière'>‹</button>" +
+          "<strong>" + esc(title) + "</strong><span class='header-spacer'></span></header>";
+      }
+
+      function homeHeader(title) {
+        return "<header class='screen-header home-header'>" +
+          "<button type='button' class='home-button' data-action='home' aria-label='Retourner à l’accueil'>⌂ Accueil</button>" +
+          "<strong>" + esc(title) + "</strong><span class='header-spacer'></span></header>";
+      }
+
+      function rootHeader() {
+        return "<header class='explore-head'><div><span class='eyebrow'>" + esc(state.city.toUpperCase()) +
+          "</span><h1>Explorer</h1></div><button type='button' class='icon-button' data-action='profile' aria-label='Ouvrir mon profil'>A</button></header>";
+      }
+
+      function bottomNav(active) {
+        var items = [
+          ["explore", "⌂ Explorer"],
+          ["profile", "◉ Profil"]
+        ];
+        return "<nav class='bottom-nav' aria-label='Navigation principale'>" + items.map(function (item) {
+          return "<button type='button' data-action='nav' data-screen='" + item[0] + "' class='" +
+            (active === item[0] ? "active" : "") + "'>" + item[1] + "</button>";
+        }).join("") + "</nav>";
+      }
+
+      function poster(event, extraClass) {
+        var posterAlt = state.locale === "en" ? "Poster for " + event.title : "Affiche de " + event.title;
+        var imageLoading = extraClass ? "eager" : "lazy";
+        var artwork = event.secondaryImageUrl ? "<div class='matchup-artwork' aria-hidden='true'><img src='" + esc(event.imageUrl) + "' alt='' loading='" + imageLoading + "' decoding='async' referrerpolicy='no-referrer'><span>VS</span><img src='" + esc(event.secondaryImageUrl) + "' alt='' loading='" + imageLoading + "' decoding='async' referrerpolicy='no-referrer'></div>" :
+          event.imageUrl ? "<img class='event-artwork " + (event.imageFit === "contain" ? "contain" : "") + "' src='" + esc(event.imageUrl) + "' alt='" + esc(posterAlt) + "' loading='" + imageLoading + "' decoding='async' referrerpolicy='no-referrer' onerror='this.hidden=true'>" : "";
+        return "<div class='event-poster " + esc(event.theme) + " " + (extraClass || "") + "'>" +
+          artwork + "<small>" + esc(event.category) + "</small><b>" + esc(event.poster) + "</b></div>";
+      }
+
+      function eventCard(event, index) {
+        var count = liveCount(event);
+        var percentage = Math.min(100, Math.round((count / event.minimum) * 100));
+        var countLabel = count ? i18n(count + " intérêt" + (count > 1 ? "s" : "") + " en direct", count + " live interest" + (count > 1 ? "s" : "")) : i18n("Premier intérêt attendu", "Be the first to join");
+        var groupLabel = i18n(count + " sur " + event.minimum + " pour le tarif groupe", count + " of " + event.minimum + " for the group price");
+        var dots = count ? "● ".repeat(Math.min(3, count)).trim() : "○ ○ ○";
+        return "<button type='button' class='event-card' data-action='open-event' data-event-id='" + index + "'>" +
+          poster(event) +
+          "<div class='event-copy'><h3>" + esc(event.title) + "</h3>" +
+          "<p>" + esc(eventDate(event)) + " · " + esc(eventVenue(event)) + "</p>" +
+          "<div class='price-line'><b>" + event.groupPrice + " €</b><s>" + event.publicPrice + " €</s>" +
+          "<span class='tiny'>−" + Math.round((1 - event.groupPrice / event.publicPrice) * 100) + " %</span></div>" +
+          "<div class='progress'><span style='width:" + percentage + "%'></span></div>" +
+          "<div class='event-meta'><span>" + esc(groupLabel) + "</span>" +
+          "<span class='member-dots' aria-label='" + esc(countLabel) + "'>" + dots + "</span></div>" +
+          "<p class='live-count'>" + esc(countLabel) + "</p></div></button>";
+      }
+
+      function explore() {
+        var cityEvents = eventsForCity(state.city);
+        var categories = ["Tout"];
+        cityEvents.forEach(function (event) {
+          if (categories.indexOf(event.category) < 0) categories.push(event.category);
+        });
+        var listed = cityEvents.filter(function (event) { return state.filter === "Tout" || event.category === state.filter; });
+        return "<section class='view'>" + rootHeader() +
+          "<div class='location-bar'>⌖ <span>" + esc(state.city) + "</span>" +
+          "<button type='button' data-action='city'>Changer ›</button></div>" +
+          "<div class='scroll'><p class='live-note'>" + esc(upcomingEventsNote(cityEvents.length)) + "</p><div class='filters'>" + categories.map(function (category) {
+            return "<button type='button' class='chip " + (category === state.filter ? "active" : "") +
+              "' data-action='filter' data-filter='" + esc(category) + "'>" + esc(category) + "</button>";
+          }).join("") + "</div><div class='event-list'>" +
+          (listed.length ? listed.map(function (event) { return eventCard(event, events.indexOf(event)); }).join("") : "<div class='empty'><p>Aucune sortie dans ce filtre pour le moment.</p></div>") +
+          "</div></div>" + bottomNav("explore") + "</section>";
+      }
+
+      function eventDetail() {
+        var event = selectedEvent();
+        var saving = event.publicPrice - event.groupPrice;
+        var count = liveCount(event);
+        var liveLabel = count ? i18n(count + " personne" + (count > 1 ? "s ont" : " a") + " déjà signalé son intérêt.", count + " person" + (count > 1 ? "s have" : " has") + " already registered interest.") : i18n("Le groupe live est prêt à accueillir sa première personne.", "The live group is ready for its first person.");
+        var peopleLabel = count ? i18n("Voir les " + count + " profil" + (count > 1 ? "s" : "") + " intéressé" + (count > 1 ? "s" : ""), "See " + count + " interested profile" + (count > 1 ? "s" : "")) : i18n("Voir les profils intéressés", "See interested profiles");
+        return "<section class='view'>" + header("La sortie") +
+          "<div class='scroll'>" + poster(event, "hero-poster") +
+          "<h1>" + esc(event.title) + "</h1><p class='muted'>⌖ " + esc(eventVenue()) +
+          "<br>" + esc(eventDate(event)) + "<br>Rendez-vous 30 min avant le début.</p>" + officialSourceLink(event) +
+          "<div class='live-banner'>" + esc(liveLabel) + "</div>" +
+          "<div class='info-card'><b>Une sortie à partager</b><p>Découvre les profils intéressés, puis laisse tes coordonnées pour faire grandir ce groupe live.</p></div>" +
+          "<div class='info-card'><b>Prix transparent</b><p>Billet groupe : " + event.groupPrice +
+          " € · Frais de service : 2,50 €<br>Économie totale : " + saving + " €</p><p class='tiny'>Tarifs affichés à titre indicatif pour le lancement.</p></div>" +
+          "<button type='button' class='primary ghost' data-action='people'>" + esc(peopleLabel) + "</button>" +
+          "</div><div class='fixed-action'><button type='button' class='primary coral' data-action='join'>Rejoindre le groupe</button></div></section>";
+      }
+
+      function peoplePreview() {
+        var event = selectedEvent();
+        var profiles = profilesForEvent(event);
+        var count = liveCount(event);
+        var heading = i18n(count + " profil" + (count > 1 ? "s" : "") + " intéressé" + (count > 1 ? "s" : ""), count + " interested profile" + (count > 1 ? "s" : ""));
+        var detail = i18n("Liste mise à jour en direct pour « " + event.title + " ».", "Live list for “" + event.title + ".");
+        var status = live.loadingEvent[event.id] ? i18n("Mise à jour des profils…", "Updating profiles…") : i18n("Mise à jour en direct", "Live updates");
+        return "<section class='view'>" + header("Personnes intéressées") +
+          "<div class='scroll'><h1>" + esc(heading) + "</h1><p class='muted'>" + esc(event.title) + " · " + esc(detail) + "</p>" +
+          "<div class='live-banner'>" + esc(status) + "</div>" + memberList(profiles) + "</div></section>";
+      }
+
+      function memberList(list) {
+        var listedPeople = list || profilesForEvent(selectedEvent());
+        if (!listedPeople.length) {
+          return "<div class='live-empty'><b>" + esc(i18n("Le groupe commence ici.", "The group starts here.")) + "</b><br>" +
+            esc(i18n("Sois la première personne à signaler ton intérêt : ton prénom, ton activité et un avatar seront ajoutés à cette liste.", "Be the first to register interest: your first name, activity and avatar will be added to this list.")) + "</div>";
+        }
+        return "<div class='member-list'>" + listedPeople.map(function (person) {
+          var name = person.firstName || person.name || "Profil";
+          var activity = person.activity || person.job || "";
+          var id = person.id || "";
+          return "<button type='button' class='member-row' data-action='open-member' data-member-id='" + esc(id) +
+            "' aria-label='" + esc(i18n("Voir le profil de ", "View profile of ") + name) + "'>" + avatar(person, person.avatarKey) +
+            "<span class='live-member-copy'><b>" + esc(name) + "</b><p>" + esc(activity) + " · " + esc(i18n("profil renseigné", "profile provided")) +
+            "</p></span><span class='profile-arrow' aria-hidden='true'>›</span></button>";
+        }).join("") + "</div>";
+      }
+
+      function memberProfile() {
+        var person = liveMembers(selectedEvent()).filter(function (member) { return member.id === state.liveMemberId; })[0];
+        if (!person) return peoplePreview();
+        var name = person.firstName || "Profil";
+        return "<section class='view'>" + header("Profil") +
+          "<div class='scroll'><div class='profile-hero'>" + avatar(person, person.avatarKey) +
+          "<h1>" + esc(name) + "</h1><p class='verified'>" + esc(i18n("Profil renseigné pour cette sortie", "Profile provided for this event")) + "</p></div>" +
+          "<div class='profile-card'><b>" + esc(i18n("Activité indiquée", "Activity provided")) + "</b><p>" + esc(person.activity || "") + "</p></div>" +
+          "<div class='private-lock'><b>" + esc(i18n("Un profil respectueux de la vie privée", "A privacy-respecting profile")) + "</b><p>" + esc(i18n("Seuls le prénom, l’activité et un avatar illustré sont visibles. Aucun e-mail, nom complet ou genre n’est affiché.", "Only a first name, stated activity and illustrated avatar are visible. No email, full name or gender is displayed.")) + "</p></div>" +
+          "</div></section>";
+      }
+
+      function joinPage() {
+        return "<section class='view'>" + header("Rejoindre le groupe") + liveJoinForm(selectedEvent()) + "</section>";
+      }
+
+      function liveJoinForm(event) {
+        var count = liveCount(event);
+        var waiting = state.joinStatus === "sending";
+        var countNote = count ? i18n(count + " personne" + (count > 1 ? "s sont" : " est") + " déjà intéressée" + (count > 1 ? "s" : "") + ".", count + " person" + (count > 1 ? "s are" : " is") + " already interested.") : i18n("Tu peux lancer ce groupe live.", "You can start this live group.");
+        return "<div class='scroll live-form'><h1>" + esc(i18n("Ton profil pour cette sortie", "Your profile for this event")) + "</h1>" +
+          "<p class='muted'>" + esc(i18n("Renseigne ton profil : il sera ajouté aux personnes intéressées par « " + event.title + " ».", "Complete your profile: it will be added to the people interested in “" + event.title + ".")) + "</p>" +
+          "<div class='live-banner'>" + esc(countNote) + "</div>" +
+          "<form id='live-interest-form' novalidate>" +
+          "<div class='two-columns'><div class='field'><label for='live-first-name'>" + esc(i18n("Prénom", "First name")) + "</label><input id='live-first-name' name='firstName' maxlength='30' autocomplete='given-name' required></div>" +
+          "<div class='field'><label for='live-last-name'>" + esc(i18n("Nom", "Last name")) + "</label><input id='live-last-name' name='lastName' maxlength='50' autocomplete='family-name' required></div></div>" +
+          "<div class='field'><label for='live-email'>" + esc(i18n("E-mail", "Email")) + "</label><input id='live-email' name='email' type='email' maxlength='254' autocomplete='email' inputmode='email' required></div>" +
+          "<div class='two-columns'><div class='field'><label for='live-gender'>" + esc(i18n("Genre (privé)", "Gender (private)")) + "</label><select id='live-gender' name='gender'><option value='unspecified'>" + esc(i18n("Je préfère ne pas préciser", "Prefer not to say")) + "</option><option value='woman'>" + esc(i18n("Femme", "Woman")) + "</option><option value='man'>" + esc(i18n("Homme", "Man")) + "</option></select></div>" +
+          "<div class='field'><label for='live-activity'>" + esc(i18n("Activité", "Activity")) + "</label><input id='live-activity' name='activity' maxlength='80' autocomplete='organization-title' placeholder='" + esc(i18n("Ex. master finance", "E.g. master’s in finance")) + "' required></div></div>" +
+          "<p class='tiny'>" + esc(i18n("Le genre ne sert qu’à choisir un style d’avatar illustré et n’est ni affiché ni conservé. Aucune photo réelle n’est demandée.", "Gender is used only to choose an illustrated avatar style and is neither shown nor kept. No real photo is requested.")) + "</p>" +
+          "<div class='honeypot' aria-hidden='true'><label for='live-website'>Website</label><input id='live-website' name='website' tabindex='-1' autocomplete='off'></div>" +
+          "<label class='check'><input id='live-adult' type='checkbox' required><span>" + esc(i18n("J’ai au moins 18 ans.", "I am at least 18 years old.")) + "</span></label>" +
+          "<label class='check'><input id='live-public-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon prénom, mon activité et mon avatar illustré soient visibles sur la fiche de cet événement. Mon nom, mon e-mail et mon genre ne seront jamais affichés.", "I agree that my first name, activity and illustrated avatar can appear on this event page. My last name, email and gender will never be displayed.")) + "</span></label>" +
+          "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("Je souhaite être recontacté·e au lancement et je compléterai le formulaire de contact à l’étape suivante.", "I would like to be contacted at launch and will complete the contact form in the next step.")) + "</span></label>" +
+          "<p id='live-join-feedback' class='feedback' role='status' aria-live='polite'></p>" +
+          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Enregistrement…", "Saving…") : i18n("Ajouter mon profil au groupe", "Add my profile to the group")) + "</button></div>" +
+          "</form></div>";
+      }
+
+      function contactPage() {
+        var event = selectedEvent();
+        var count = liveCount(event);
+        var countNote = i18n("Le groupe compte maintenant " + count + " personne" + (count > 1 ? "s" : "") + " intéressée" + (count > 1 ? "s" : "") + ".", "The group now has " + count + " interested person" + (count > 1 ? "s" : "") + ".");
+        return "<section class='view'>" + homeHeader(i18n("Finaliser", "Finish")) + "<div class='scroll'>" +
+          "<h1>" + esc(i18n("Ton intérêt est enregistré", "Your interest is registered")) + "</h1>" +
+          "<div class='success-card'><b>✓ " + esc(i18n("Ton profil est visible dans ce groupe live.", "Your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
+          "<div class='form-note'><b>" + esc(i18n("Dernière étape", "Final step")) + "</b><br>" + esc(i18n("Complète ce formulaire de contact sans quitter Never Go Alone. Il permet à l’équipe de te recontacter au lancement. Google Forms ne peut pas confirmer automatiquement une réponse dans le prototype.", "Complete this contact form without leaving Never Go Alone. It lets the team contact you at launch. Google Forms cannot automatically confirm a response inside the prototype.")) + "</div>" +
+          googleFormEmbed() +
+          "<button type='button' class='primary' data-action='home'>" + esc(i18n("Retourner à l’accueil", "Return to Home")) + "</button>" +
+          (rememberedWithdrawal(event) ? "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button>" : "") +
+          "<p id='withdraw-feedback' class='feedback' role='status' aria-live='polite'></p>" +
+          "</div></section>";
+      }
+
+      function groupPage() {
+        var reservation = activeReservation();
+        if (!reservation) return eventDetail();
+        var content = reservation.groupTab === "chat" ? groupChat() : reservation.groupTab === "members" ? groupMembers() : ticketTab();
+        return "<section class='view'>" + homeHeader("Le groupe") +
+          "<div class='tabs'>" + [
+            ["chat", "Discussion"],
+            ["members", "Membres"],
+            ["ticket", "Billet"]
+          ].map(function (tab) {
+            return "<button type='button' data-action='group-tab' data-tab='" + tab[0] + "' class='" +
+              (reservation.groupTab === tab[0] ? "active" : "") + "'>" + tab[1] + "</button>";
+          }).join("") + "</div>" + content + "</section>";
+      }
+
+      function groupChat() {
+        var restaurants = ["Café du quartier", "Brasserie des amis", "Le Petit Bercy"];
+        var event = groupEvent();
+        var reservation = activeReservation();
+        return "<div class='scroll'>" + reservation.messages.map(function (message) {
+          return "<div class='message " + (message.mine ? "mine" : "") + "'>" +
+            "<span class='chat-author'>" + esc(message.author) + "</span>" + esc(message.text) + "</div>";
+        }).join("") +
+          "<div class='notice-card'><b>🍽 Se rencontrer avant</b><p>Choisis un endroit près de " + esc(eventVenue(event)) + " pour discuter avant l'événement.</p>" +
+          restaurants.map(function (restaurant) {
+            return "<button type='button' class='restaurant' data-action='restaurant' data-restaurant='" + esc(restaurant) + "'>" +
+              "<span>🍴 " + esc(restaurant) + "</span><span>" +
+              (reservation.restaurant === restaurant ? "Proposé ✓" : "Proposer") + "</span></button>";
+          }).join("") + "</div><div class='chat-composer'><input id='chat-input' maxlength='160' placeholder='Écrire au groupe…'>" +
+          "<button type='button' data-action='send-message' aria-label='Envoyer le message'>↑</button></div></div>";
+      }
+
+      function groupMembers() {
+        return "<div class='scroll'><p class='muted'>Vous êtes " + groupEvent().current +
+          " personnes intéressées. Appuie sur un membre pour voir son profil.</p><p class='muted'>Tous les membres du groupe restent visibles, quelle que soit la préférence d’âge.</p>" + memberList() + "</div>";
+      }
+
+      function ticketTab() {
+        var event = groupEvent();
+        var reservation = activeReservation();
+        var confirmed = reservation.keepSmallGroup || event.current >= event.minimum;
+        var paymentAvailable = confirmed && reservation.day === "J-7" && !reservation.paid;
+        var steps = [
+          ["Intérêt enregistré", true],
+          ["Groupe lancé", confirmed],
+          ["Confirmation à J-7", reservation.day === "J-7"],
+          ["Billet", reservation.paid]
+        ];
+        var html = "<div class='scroll'><div class='timeline'>" + steps.map(function (step) {
+          return "<div class='timeline-step " + (step[1] ? "done" : "") + "'>" + step[0] + "</div>";
+        }).join("") + "</div><div class='field'><label for='simulation-day'>Simuler la date</label>" +
+          "<select id='simulation-day'><option value='J-14'" + (reservation.day === "J-14" ? " selected" : "") + ">J-14</option>" +
+          "<option value='J-7'" + (reservation.day === "J-7" ? " selected" : "") + ">J-7</option></select></div>";
+
+        if (!confirmed) {
+          html += "<div class='status neutral'>Le groupe peut choisir d'y aller même sans atteindre le tarif groupe.</div>" +
+            "<button type='button' class='primary' data-action='keep-small'>On maintient la sortie à " + event.current + "</button>";
+        } else if (reservation.paid) {
+          html += "<div class='status'>✓ Billet confirmé. Rendez-vous 30 min avant l'événement.</div>" +
+            "<div class='qr' aria-label='QR code fictif'>NGA-2026</div>";
+        } else if (paymentAvailable) {
+          html += "<div class='status'>Le groupe est prêt : confirme ta place pour déclencher le paiement.</div>" +
+            "<button type='button' class='primary' data-action='pay'>Confirmer et payer " +
+            (event.groupPrice + 2.5).toFixed(2).replace(".", ",") + " €</button>";
+        } else {
+          html += "<div class='status neutral'>Paiement disponible à J-7 seulement.</div>";
+        }
+
+        html += "<button type='button' class='primary ghost' style='margin-top:10px' data-action='leave'>Quitter le groupe</button>";
+        if (reservation.leaveMessage) html += "<div class='notice-card'><b>Avant de quitter</b><p>" + esc(reservation.leaveMessage) + "</p></div>";
+        return html + "</div>";
+      }
+
+      function groups() {
+        var joinedIndexes = joinedEventIndexes();
+        if (!joinedIndexes.length) {
+          return "<section class='view'>" + header("Mes groupes") + "<div class='scroll'><div class='empty'><h2>Ton prochain plan t'attend.</h2>" +
+            "<p>Rejoins une sortie pour discuter avec le groupe et organiser un moment avant l'événement.</p>" +
+            "<button type='button' class='primary' data-action='explore'>Explorer</button></div></div>" + bottomNav("groups") + "</section>";
+        }
+        return "<section class='view'>" + header("Mes groupes") + "<div class='scroll'><div class='event-list'>" + joinedIndexes.map(function (index) {
+          var event = events[index];
+          return "<button type='button' class='event-card' data-action='open-group' data-event-id='" + index + "'>" +
+            poster(event) + "<div class='event-copy'><h3>" + esc(event.title) +
+            "</h3><p>Discussion, membres, billet et rendez-vous avant la sortie.</p></div></button>";
+        }).join("") + "</div></div>" + bottomNav("groups") + "</section>";
+      }
+
+      function profile() {
+        return "<section class='view'>" + header("Mon profil") + "<div class='scroll'><div class='profile-hero'>" +
+          "<span class='avatar avatar-4' aria-hidden='true'>A</span><h1>Alex Martin</h1><p class='muted'>24 ans · " + esc(state.city) + "</p></div>" +
+          "<div class='profile-card'><b>Identité vérifiée</b><p>Profil vérifié · tes coordonnées servent uniquement à être recontacté·e.</p></div>" +
+          "<div class='language-picker' aria-label='Choisir la langue'><span>Langue</span>" +
+          "<button type='button' data-action='set-locale' data-locale='fr' aria-pressed='" + (state.locale === "fr") + "' class='" + (state.locale === "fr" ? "active" : "") + "'>Français</button>" +
+          "<button type='button' data-action='set-locale' data-locale='en' aria-pressed='" + (state.locale === "en") + "' class='" + (state.locale === "en" ? "active" : "") + "'>English</button></div>" +
+          "<button type='button' class='primary gold' data-action='waitlist'>✦ Être averti·e du lancement</button>" +
+          "<div style='height:8px'></div><button type='button' class='primary' data-action='about'>À propos</button>" +
+          "<div style='height:8px'></div><button type='button' class='primary ghost' data-action='toggle-dark'>" +
+          (state.dark ? "Passer en mode clair" : "Passer en mode sombre") + "</button></div>" + bottomNav("profile") + "</section>";
+      }
+
+      function waitlist() {
+        return "<section class='view'>" + header("Être averti·e") + interestForm() + "</section>";
+      }
+
+      function googleFormEmbed() {
+        var googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeoXqtJ7WOj_NkDK2kqRJa8Fey_msSvvU62978PLLdd5iaNNg/viewform";
+        var embeddedFormUrl = googleFormUrl + "?embedded=true";
+        return "<iframe class='google-form' title='Formulaire Never Go Alone' src='" + embeddedFormUrl + "' loading='lazy'>Chargement du formulaire…</iframe>";
+      }
+
+      function interestForm(event) {
+        var selectedEventNote = event ? "<div class='info-card'><b>" + esc(event.title) + "</b><p>Tu nous dis que cette sortie t’intéresse. Nous te recontacterons quand l’application sera lancée.</p></div>" : "";
+        return "<div class='scroll'><h1>Tu veux être averti·e ?</h1>" +
+          "<p class='muted'>Laisse tes coordonnées ici, sans quitter le prototype.</p>" + selectedEventNote +
+          "<div class='form-note'>Les réponses sont collectées directement dans le Google Form du projet. " +
+          "Les alertes e-mail sont gérées dans ses paramètres Google Forms.</div>" +
+          googleFormEmbed() +
+          "</div>";
+      }
+
+      function about() {
+        return "<section class='view'>" + header("À propos") + "<div class='scroll'><h1>Ne plus renoncer à une sortie.</h1>" +
+          "<p class='muted'>Never Go Alone aide les jeunes adultes, les personnes nouvelles dans une ville et les étudiant·es internationaux à vivre les événements qui les tentent.</p>" +
+          "<div class='info-card'><b>Notre idée</b><p>Un intérêt commun est une bonne première raison de se rencontrer. " +
+          "Cette version live permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.</p></div>" +
+          "<div class='info-card'><b>Ce qui compte</b><p>Les profils affichent uniquement un prénom, une activité indiquée et un avatar illustré. Les coordonnées restent privées.</p></div>" +
+          "<div class='private-lock'><b>Une version de test</b><p>Never Go Alone est encore en prototype. Après avoir rejoint une sortie, le formulaire de contact permet de recevoir les nouvelles du lancement.</p></div>" +
+          "</div></section>";
+      }
+
+      function cityPage() {
+        return "<section class='view'>" + header("Changer de ville") + "<div class='scroll'><h1>Où veux-tu sortir ?</h1>" +
+          "<p class='muted'>Choisis une ville en France pour voir les sorties proposées.</p>" +
+          Object.keys(venues).map(function (city) {
+            return "<button type='button' class='city-row' data-action='select-city' data-city='" + esc(city) + "'>" +
+              "<b>" + esc(city) + "</b><span>" + (city === state.city ? "Choisie ✓" : "Voir les sorties ›") + "</span></button>";
+          }).join("") + "</div></section>";
+      }
+
+      function render() {
+        document.body.classList.toggle("dark", state.dark);
+        var views = {
+          explore: explore,
+          event: eventDetail,
+          people: peoplePreview,
+          "member-profile": memberProfile,
+          join: joinPage,
+          contact: contactPage,
+          profile: profile,
+          waitlist: waitlist,
+          about: about,
+          city: cityPage
+        };
+        app.innerHTML = (views[state.screen] || explore)();
+        applyLocale();
+      }
+
+      app.addEventListener("click", function (event) {
+        var control = event.target.closest("[data-action]");
+        if (!control) return;
+        var action = control.dataset.action;
+
+        if (action === "back") back();
+        if (action === "home") {
+          state.history = [];
+          state.screen = "explore";
+          render();
+        }
+        if (action === "nav") navigate(control.dataset.screen);
+        if (action === "explore") navigate("explore");
+        if (action === "profile") navigate("profile");
+        if (action === "city") navigate("city");
+        if (action === "select-city") selectCity(control.dataset.city);
+        if (action === "filter") { state.filter = control.dataset.filter || "Tout"; render(); }
+        if (action === "open-event") {
+          var eventId = Number(control.dataset.eventId);
+          if (Number.isInteger(eventId) && events[eventId]) {
+            state.eventIndex = eventId;
+            navigate("event");
+            loadLiveEvent(selectedEvent());
+          }
+        }
+        if (action === "people") {
+          navigate("people");
+          loadLiveEvent(selectedEvent());
+        }
+        if (action === "open-member") openMemberProfile(control.dataset.memberId);
+        if (action === "set-age-preference") {
+          var selectedAgePreference = control.dataset.agePreference || "all";
+          state.agePreference = ["all", "18-23", "24-26", "27-30"].indexOf(selectedAgePreference) >= 0 ? selectedAgePreference : "all";
+          render();
+        }
+        if (action === "join") navigate("join");
+        if (action === "withdraw") withdrawLiveInterest();
+        if (action === "waitlist") navigate("waitlist");
+        if (action === "about") navigate("about");
+        if (action === "toggle-dark") { state.dark = !state.dark; render(); }
+        if (action === "set-locale") {
+          state.locale = control.dataset.locale === "en" ? "en" : "fr";
+          render();
+        }
+      });
+
+      app.addEventListener("input", function (event) {
+        var input = event.target;
+        if (input.id === "card-number") {
+          input.value = input.value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+        }
+        if (input.id === "card-expiry") {
+          var expiry = input.value.replace(/\D/g, "").slice(0, 4);
+          input.value = expiry.length > 2 ? expiry.slice(0, 2) + "/" + expiry.slice(2) : expiry;
+        }
+        if (input.id === "card-cvc") input.value = input.value.replace(/\D/g, "").slice(0, 3);
+      });
+
+      app.addEventListener("change", function (event) {
+        if (event.target.id === "simulation-day") {
+          var ticketGroup = activeReservation();
+          if (!ticketGroup) return;
+          ticketGroup.day = event.target.value;
+          ticketGroup.leaveMessage = "";
+          render();
+        }
+      });
+
+      app.addEventListener("submit", function (event) {
+        if (event.target && event.target.id === "live-interest-form") {
+          event.preventDefault();
+          submitLiveInterest();
+        }
+      });
+
+      function joinFieldValue(id) {
+        var input = app.querySelector("#" + id);
+        return input ? String(input.value || "").trim() : "";
+      }
+
+      function setJoinFeedback(message) {
+        var feedback = app.querySelector("#live-join-feedback");
+        if (feedback) feedback.textContent = message || "";
+      }
+
+      async function submitLiveInterest() {
+        var form = app.querySelector("#live-interest-form");
+        if (!form || state.joinStatus === "sending") return;
+        var firstName = joinFieldValue("live-first-name");
+        var lastName = joinFieldValue("live-last-name");
+        var email = joinFieldValue("live-email").toLowerCase();
+        var activity = joinFieldValue("live-activity");
+        var gender = joinFieldValue("live-gender") || "unspecified";
+        var website = joinFieldValue("live-website");
+        var adult = !!(app.querySelector("#live-adult") || {}).checked;
+        var publicConsent = !!(app.querySelector("#live-public-consent") || {}).checked;
+        var contactConsent = !!(app.querySelector("#live-contact-consent") || {}).checked;
+        var emailLooksValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (!firstName || !lastName || !activity || !emailLooksValid) {
+          setJoinFeedback(i18n("Renseigne ton prénom, ton nom, ton e-mail et ton activité.", "Enter your first name, last name, email and activity."));
+          return;
+        }
+        if (!adult || !publicConsent || !contactConsent) {
+          setJoinFeedback(i18n("Confirme les trois cases pour ajouter ton profil au groupe.", "Confirm all three checkboxes to add your profile to the group."));
+          return;
+        }
+
+        state.joinStatus = "sending";
+        setJoinFeedback(i18n("Enregistrement de ton intérêt…", "Saving your interest…"));
+        var submitButton = form.querySelector("button[type='submit']");
+        if (submitButton) submitButton.disabled = true;
+        try {
+          var event = selectedEvent();
+          var payload = await apiRequest("/api/interests", {
+            method: "POST",
+            headers: { "content-type": "application/json", "accept": "application/json" },
+            body: JSON.stringify({
+              eventId: event.id,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              gender: gender,
+              activity: activity,
+              adult: adult,
+              publicConsent: publicConsent,
+              contactConsent: contactConsent,
+              website: website
+            })
+          });
+          applyLiveEvent(event, payload);
+          if (payload.member && payload.withdrawToken) rememberWithdrawal(event, payload.member.id, payload.withdrawToken);
+          state.joinStatus = "";
+          state.history = [];
+          state.screen = "contact";
+          render();
+        } catch (error) {
+          state.joinStatus = "";
+          setJoinFeedback(error && error.message ? error.message : i18n("Impossible d’enregistrer ton intérêt pour le moment.", "We could not save your interest right now."));
+          if (submitButton) submitButton.disabled = false;
+        }
+      }
+
+      async function withdrawLiveInterest() {
+        var event = selectedEvent();
+        var remembered = rememberedWithdrawal(event);
+        var feedback = app.querySelector("#withdraw-feedback");
+        if (!remembered || !remembered.token) {
+          if (feedback) feedback.textContent = i18n("Cette session ne peut plus retirer ce profil. Contacte l’équipe si besoin.", "This session can no longer remove this profile. Contact the team if needed.");
+          return;
+        }
+        if (feedback) feedback.textContent = i18n("Retrait de ton intérêt…", "Removing your interest…");
+        try {
+          var payload = await apiRequest("/api/interests/withdraw", {
+            method: "POST",
+            headers: { "content-type": "application/json", "accept": "application/json" },
+            body: JSON.stringify({ eventId: event.id, token: remembered.token })
+          });
+          applyLiveEvent(event, payload);
+          clearRememberedWithdrawal(event);
+          state.history = [];
+          state.screen = "event";
+          render();
+          loadLiveEvent(event);
+        } catch (error) {
+          if (feedback) feedback.textContent = error && error.message ? error.message : i18n("Impossible de retirer ton intérêt pour le moment.", "We could not remove your interest right now.");
+        }
+      }
+
+      function reservePlace() {
+        var card = app.querySelector("#card-number");
+        var consent = app.querySelector("#payment-consent");
+        var feedback = app.querySelector("#reservation-feedback");
+        var digits = card ? card.value.replace(/\D/g, "") : "";
+        if (digits.length !== 16 || !consent || !consent.checked) {
+          if (feedback) feedback.textContent = "Renseigne les 16 chiffres fictifs et ton accord pour réserver.";
+          return;
+        }
+        var event = selectedEvent();
+        if (!hasJoinedEvent(state.eventIndex)) {
+          createReservation(state.eventIndex);
+          event.current += 1;
+        }
+        state.history = [];
+        state.screen = "group";
+        render();
+      }
+
+      function nextResponder(reservation) {
+        var responders = ["Maya", "Jonas", "Sofia"];
+        var group = reservation || activeReservation() || newReservation();
+        var ownMessageCount = group.messages.filter(function (message) { return message.mine; }).length;
+        return responders[Math.max(0, ownMessageCount - 1) % responders.length];
+      }
+
+      function normalizeForReply(value) {
+        return String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      }
+
+      function messageExcerpt(value) {
+        var excerpt = String(value || "").replace(/\s+/g, " ").trim();
+        return excerpt.length > 54 ? excerpt.slice(0, 51) + "…" : excerpt;
+      }
+
+      function contextualReply(message, event) {
+        var text = normalizeForReply(message);
+        var currentEvent = event || groupEvent();
+        var venue = eventVenue(currentEvent);
+        var date = eventDate(currentEvent);
+        var english = state.locale === "en";
+        if (/(restaurant|resto|brunch|cafe|bar|manger|diner|dejeuner)/.test(text)) {
+          return english ? "Great idea — I’m up for meeting near " + venue + " before " + currentEvent.title + "." : "Très bonne idée — je suis partant·e pour se retrouver près de " + venue + " avant " + currentEvent.title + ".";
+        }
+        if (/(heure|horaire|quand|rendez[ -]?vous|rdv|arriv)/.test(text)) {
+          return english ? "That works for me. Shall we meet 30 minutes before at " + venue + "?" : "Ça me va. On se retrouve 30 min avant à " + venue + " ?";
+        }
+        if (/(metro|transport|train|bus|voiture|covoiturage|trajet)/.test(text)) {
+          return english ? "I’ll check the route to " + venue + ". We can meet at the entrance and go in together." : "Je regarde aussi l’itinéraire vers " + venue + ". On peut se retrouver à l’entrée et y aller ensemble.";
+        }
+        if (/(billet|payer|paiement|prix|reservation|reserver)/.test(text)) {
+          return english ? "For tickets, nothing is charged today; confirmation happens at D-7. We can sort the details out here." : "Côté billet, rien n’est débité aujourd’hui ; la confirmation se fait à J-7. On peut régler les détails ici.";
+        }
+        if (/(salut|bonjour|hello|coucou)/.test(text)) {
+          return english ? "Hi! Welcome to the group for " + currentEvent.title + ". Looking forward to planning it together." : "Salut ! Bienvenue dans le groupe pour " + currentEvent.title + ". Hâte de préparer ça ensemble.";
+        }
+        if (/\?$/.test(String(message || "").trim())) {
+          return english ? "Good question. Let’s decide together in the chat before " + date + "." : "Bonne question. On peut en décider ensemble ici avant " + date + ".";
+        }
+        return english ? "I like that idea: “" + messageExcerpt(message) + "”. We can organise it together before " + date + "." : "J’aime bien cette idée : « " + messageExcerpt(message) + " ». On peut s’organiser ensemble avant " + date + ".";
+      }
+
+      function sendMessage() {
+        var input = app.querySelector("#chat-input");
+        if (!input || !input.value.trim()) return;
+        var reservation = activeReservation();
+        if (!reservation) return;
+        var message = input.value.trim();
+        reservation.messages.push({ author: "Alex", text: message, mine: true });
+        reservation.messages.push({ author: nextResponder(reservation), text: contextualReply(message, groupEvent()), mine: false });
+        render();
+      }
+
+      function showLeaveRule() {
+        var reservation = activeReservation();
+        if (!reservation) return;
+        if (!reservation.paid) {
+          reservation.leaveMessage = "Tu peux quitter librement avant le paiement : aucun débit n'a été effectué.";
+        } else if (reservation.day === "J-14") {
+          reservation.leaveMessage = "Avant J-7, le billet est remboursé hors frais de service.";
+        } else {
+          reservation.leaveMessage = "Après la confirmation à J-7, le billet est non remboursable sauf si une personne reprend ta place.";
+        }
+        render();
+      }
+
+      render();
+      loadLiveCounts();
+      window.addEventListener("focus", function () {
+        loadLiveCounts();
+        if (state.screen === "event" || state.screen === "people" || state.screen === "member-profile" || state.screen === "contact") {
+          loadLiveEvent(selectedEvent());
+        }
+      });
+    }());
+  </script>
+</body>
+</html>
