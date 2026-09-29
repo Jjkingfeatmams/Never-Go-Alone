@@ -849,16 +849,16 @@
     .empty { padding: 100px 7px 0; text-align: center; }
     .empty p { color: var(--muted); line-height: 1.45; }
 
-    .google-form {
-      display: block;
-      width: 100%;
-      min-height: 570px;
-      margin: 14px 0 0;
-      border: 0;
-      border-radius: 12px;
-      background: #fff;
+    .launch-feedback {
+      margin: 18px 0 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--card) 88%, var(--brand-soft));
     }
-    .form-note { padding: 12px; border-radius: 12px; background: #fff3d6; color: #5c4105; font-size: 11px; line-height: 1.45; }
+    .launch-feedback h2 { margin: 0 0 5px; font-size: 16px; }
+    .launch-feedback > p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .launch-feedback .field { margin: 14px 0 0; }
 
     .live-banner {
       display: flex;
@@ -1062,7 +1062,7 @@
     body.dark .chat-composer input { border-color: #5d5066; }
     body.dark .bottom-nav { background: color-mix(in srgb, var(--paper) 94%, transparent); }
     body.dark .private-lock { background: #37315a; border-color: #665b9f; color: #f3efff; }
-    body.dark .form-note { background: #4e3910; color: #ffe6a8; }
+    body.dark .launch-feedback { border-color: #5d5066; background: #2b2635; }
     body.dark .live-banner { border-color: #396c57; background: #193b30; color: #b9efd1; }
     body.dark .live-empty { border-color: #63596b; }
     body.dark .welcome-screen {
@@ -1610,7 +1610,7 @@
         "Cette version live permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.": "This live version lets you find an event, discover interested profiles and register your interest.",
         "Les profils affichent uniquement un prénom, une activité indiquée et un avatar illustré. Les coordonnées restent privées.": "Profiles show only a first name, stated activity and an illustrated avatar. Contact details remain private.",
         "Une version de test": "A test version",
-        "Never Go Alone est encore en prototype. Après avoir rejoint une sortie, le formulaire de contact permet de recevoir les nouvelles du lancement.": "Never Go Alone is still a prototype. After joining an event, the contact form lets you receive launch updates."
+        "Never Go Alone est encore en prototype. Le formulaire de participation permet de signaler ton intérêt et de recevoir les nouvelles du lancement.": "Never Go Alone is still a prototype. The participation form lets you register your interest and receive launch updates."
       };
 
       function translateText(value) {
@@ -2232,8 +2232,8 @@
         var personal = state.personalProfile || normalisePersonalProfile({});
         var savedGender = ["woman", "man"].indexOf(personal.gender) >= 0 ? personal.gender : "unspecified";
         var countNote = count ? i18n(count + " personne" + (count > 1 ? "s sont" : " est") + " déjà intéressée" + (count > 1 ? "s" : "") + ".", count + " person" + (count > 1 ? "s are" : " is") + " already interested.") : i18n("Tu peux lancer ce groupe live.", "You can start this live group.");
-        return "<div class='scroll live-form'><h1>" + esc(i18n("Ton formulaire pour cette sortie", "Your form for this event")) + "</h1>" +
-          "<p class='muted'>" + esc(i18n("Envoie ce formulaire : ton profil sera ajouté automatiquement au groupe. Il n’y aura aucune étape « Ajouter au groupe » ensuite.", "Send this form: your profile will be added to the group automatically. There will be no separate “Add to group” step afterwards.")) + "</p>" +
+        return "<div class='scroll live-form'><h1>" + esc(i18n("Rejoins ce groupe", "Join this group")) + "</h1>" +
+          "<p class='muted'>" + esc(i18n("Remplis ce seul formulaire. En cliquant sur « Envoyer », ta réponse est transmise et ton profil est ajouté automatiquement au groupe.", "Complete this single form. When you press “Send”, your response is sent and your profile is automatically added to the group.")) + "</p>" +
           "<div class='live-banner'>" + esc(countNote) + "</div>" +
           "<form id='live-interest-form' novalidate autocomplete='off'>" +
           "<p class='tiny'>✨ " + esc(i18n("Les informations de ton profil sont préremplies. Tu peux les modifier pour cette sortie.", "Your profile details are pre-filled. You can edit them for this event.")) + "</p>" +
@@ -2249,12 +2249,21 @@
           "<div class='field'><label for='live-passions'>" + esc(i18n("Tes passions (facultatif)", "Your passions (optional)")) + "</label><input id='live-passions' name='passions' maxlength='180' placeholder='" + esc(i18n("Ex. basket, cinéma, cuisine, voyages", "E.g. basketball, cinema, cooking, travel")) + "'></div>" +
           "<p class='tiny'>" + esc(i18n("Le sexe choisi apparaît sur ton profil. Tu peux choisir « Je préfère ne pas préciser » ; aucune photo réelle n’est demandée.", "Your selected sex appears on your profile. You can select “Prefer not to say”; no real photo is requested.")) + "</p>" +
           "<p class='tiny'>🪪 " + esc(i18n("Au lancement, les profils seront vérifiés avec une pièce d’identité. Ce prototype ne demande aucun document.", "At launch, profiles will be verified with government-issued ID. This prototype does not request any document.")) + "</p>" +
+          "<section class='launch-feedback' aria-labelledby='launch-feedback-heading'><h2 id='launch-feedback-heading'>💬 " + esc(i18n("Ton retour sur l’application", "Your feedback about the app")) + "</h2><p>" + esc(i18n("Ces réponses sont envoyées au formulaire de lancement. Elles ne sont jamais visibles dans le groupe.", "These answers are sent to the launch questionnaire. They are never visible in the group.")) + "</p>" +
+          "<div class='field'><label>" + esc(i18n("À quel point aimerais-tu utiliser Never Go Alone ?", "How interested are you in using Never Go Alone?")) + "</label>" +
+          "<label class='check'><input type='radio' name='live-launch-interest' value='very' required><span>" + esc(i18n("Très intéressé·e — je l’utiliserais dès son lancement", "Very interested — I would use it right away")) + "</span></label>" +
+          "<label class='check'><input type='radio' name='live-launch-interest' value='interested'><span>" + esc(i18n("Intéressé·e — j’aimerais l’essayer", "Interested — I would like to try it")) + "</span></label>" +
+          "<label class='check'><input type='radio' name='live-launch-interest' value='curious'><span>" + esc(i18n("Curieux·se, mais pas encore sûr·e", "Curious, but not sure yet")) + "</span></label></div>" +
+          "<div class='field'><label for='live-launch-feedback'>" + esc(i18n("Qu’aimerais-tu le plus retrouver ou voir ajouté ?", "What did you like most, or what would you like to see added?")) + "</label><textarea id='live-launch-feedback' name='launchFeedback' maxlength='600' required placeholder='" + esc(i18n("Ton idée ou ton retour…", "Your idea or feedback…")) + "'></textarea></div>" +
+          "<div class='field'><label>" + esc(i18n("Serais-tu disponible pour un échange de 10 minutes ?", "Would you be open to a quick 10-minute chat?")) + "</label>" +
+          "<label class='check'><input type='radio' name='live-launch-chat' value='yes' required><span>" + esc(i18n("Oui, vous pouvez me contacter", "Yes, feel free to contact me")) + "</span></label>" +
+          "<label class='check'><input type='radio' name='live-launch-chat' value='no'><span>" + esc(i18n("Non, merci", "No, thanks")) + "</span></label></div></section>" +
           "<div class='honeypot' aria-hidden='true'><label for='live-website'>Website</label><input id='live-website' name='website' tabindex='-1' autocomplete='off'></div>" +
           "<label class='check'><input id='live-adult' type='checkbox' required><span>" + esc(i18n("J’ai au moins 18 ans.", "I am at least 18 years old.")) + "</span></label>" +
           "<label class='check'><input id='live-public-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon prénom, mon âge, ma nationalité, mon genre renseigné, mon activité, ma description, mes passions et mon avatar illustré soient visibles sur la fiche de cet événement. Mon nom et mon e-mail ne seront jamais affichés.", "I agree that my first name, age, nationality, chosen gender, activity, introduction, passions and illustrated avatar can appear on this event page. My last name and email will never be displayed.")) + "</span></label>" +
-          "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("J’accepte d’être recontacté·e au lancement de l’application.", "I agree to be contacted when the app launches.")) + "</span></label>" +
+          "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon e-mail et mes réponses ci-dessus soient transmis au formulaire de lancement. Ils restent privés et ne seront jamais affichés dans le groupe.", "I agree that my email and answers above are sent to the launch questionnaire. They remain private and will never be displayed in the group.")) + "</span></label>" +
           "<p id='live-join-feedback' class='feedback' role='status' aria-live='polite'></p>" +
-          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Envoi du formulaire…", "Sending form…") : i18n("Envoyer mon formulaire", "Send my form")) + "</button></div>" +
+          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Envoi…", "Sending…") : i18n("Envoyer", "Send")) + "</button></div>" +
           "</form></div>";
       }
 
@@ -2262,11 +2271,10 @@
         var event = selectedEvent();
         var count = liveCount(event);
         var countNote = i18n("Le groupe compte maintenant " + count + " personne" + (count > 1 ? "s" : "") + " intéressée" + (count > 1 ? "s" : "") + ".", "The group now has " + count + " interested person" + (count > 1 ? "s" : "") + ".");
-        return "<section class='view'>" + homeHeader(i18n("C’est fait", "Done")) + "<div class='scroll'>" +
+        return "<section class='view'>" + homeHeader(i18n("C’est envoyé", "Sent")) + "<div class='scroll'>" +
           "<h1>" + esc(i18n("Ton profil a été ajouté", "Your profile has been added")) + "</h1>" +
-          "<div class='success-card'><b>✓ " + esc(i18n("Ton profil est maintenant visible dans ce groupe live.", "Your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
-          "<div class='form-note'><b>" + esc(i18n("Formulaire de contact", "Contact form")) + "</b><br>" + esc(i18n("Complète ce formulaire sans quitter Never Go Alone pour être recontacté·e au lancement. Ton profil est déjà ajouté : il n’y a aucun bouton « Ajouter au groupe » à cliquer après l’envoi.", "Complete this form without leaving Never Go Alone to hear from us at launch. Your profile is already added: there is no “Add to group” button to click after sending it.")) + "</div>" +
-          googleFormEmbed() +
+          "<div class='success-card'><b>✓ " + esc(i18n("Ton formulaire a été envoyé et ton profil est maintenant visible dans ce groupe live.", "Your form was sent and your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
+          "<p class='muted'>" + esc(i18n("Merci pour ton retour. Il n’y a aucune confirmation ni aucun bouton supplémentaire à cliquer.", "Thanks for your feedback. There is no confirmation or extra button to click.")) + "</p>" +
           "<button type='button' class='primary' data-action='home'>" + esc(i18n("Retourner à l’accueil", "Return to Home")) + "</button>" +
           "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button>" +
           "<p id='withdraw-feedback' class='feedback' role='status' aria-live='polite'></p>" +
@@ -2376,13 +2384,6 @@
           "<div style='height:8px'></div><button type='button' class='primary ghost' data-action='toggle-dark'>" +
           (state.dark ? "Passer en mode clair" : "Passer en mode sombre") + "</button></div>" + bottomNav("profile") + "</section>";
       }
-
-      function googleFormEmbed() {
-        var googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeoXqtJ7WOj_NkDK2kqRJa8Fey_msSvvU62978PLLdd5iaNNg/viewform";
-        var embeddedFormUrl = googleFormUrl + "?embedded=true";
-        return "<iframe class='google-form' title='Formulaire Never Go Alone' src='" + embeddedFormUrl + "' loading='lazy'>Chargement du formulaire…</iframe>";
-      }
-
 
       function aboutStory(isLanding) {
         var chapters = [
@@ -2619,6 +2620,11 @@
         return input ? String(input.value || "").trim() : "";
       }
 
+      function joinCheckedValue(name) {
+        var input = app.querySelector("input[name='" + name + "']:checked");
+        return input ? String(input.value || "").trim() : "";
+      }
+
       function setJoinFeedback(message) {
         var feedback = app.querySelector("#live-join-feedback");
         if (feedback) feedback.textContent = message || "";
@@ -2636,6 +2642,9 @@
         var description = joinFieldValue("live-description");
         var passions = joinFieldValue("live-passions");
         var gender = joinFieldValue("live-gender") || "unspecified";
+        var launchInterest = joinCheckedValue("live-launch-interest");
+        var launchFeedback = joinFieldValue("live-launch-feedback");
+        var launchChat = joinCheckedValue("live-launch-chat");
         var website = joinFieldValue("live-website");
         var adult = !!(app.querySelector("#live-adult") || {}).checked;
         var publicConsent = !!(app.querySelector("#live-public-consent") || {}).checked;
@@ -2644,6 +2653,10 @@
 
         if (!firstName || !lastName || !activity || !emailLooksValid || !Number.isInteger(age) || age < 18 || age > 30 || !nationality) {
           setJoinFeedback(i18n("Renseigne ton prénom, ton nom, ton e-mail, ton âge (18–30 ans), ta nationalité et ton activité.", "Enter your first name, last name, email, age (18–30), nationality and activity."));
+          return;
+        }
+        if (!launchInterest || !launchFeedback || !launchChat) {
+          setJoinFeedback(i18n("Réponds aux trois questions sur le lancement pour envoyer le formulaire.", "Answer the three launch questions to send the form."));
           return;
         }
         if (!adult || !publicConsent || !contactConsent) {
@@ -2671,6 +2684,9 @@
               activity: activity,
               description: description,
               passions: passions,
+              launchInterest: launchInterest,
+              launchFeedback: launchFeedback,
+              launchChat: launchChat,
               adult: adult,
               publicConsent: publicConsent,
               contactConsent: contactConsent,
@@ -2693,7 +2709,7 @@
           render();
         } catch (error) {
           state.joinStatus = "";
-          setJoinFeedback(error && error.message ? error.message : i18n("Impossible d’ajouter ton intérêt pour le moment.", "We could not add your interest right now."));
+          setJoinFeedback(error && error.message ? error.message : i18n("Impossible d’envoyer le formulaire pour le moment.", "We could not send your form right now."));
           if (submitButton) submitButton.disabled = false;
         }
       }
