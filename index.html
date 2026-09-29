@@ -6,21 +6,21 @@
   <meta name="color-scheme" content="light dark">
   <title>Never Go Alone</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
     :root {
-      --ink: #292530;
-      --muted: #706775;
-      --paper: #fffaf6;
-      --card: #ffffff;
-      --line: #e8dfd9;
-      --brand: #554abb;
-      --brand-soft: #eeebff;
-      --coral: #e66d56;
-      --green: #247852;
-      --green-soft: #dff3e7;
-      --gold: #c98d21;
-      --shadow: 0 18px 48px rgba(52, 37, 30, .18);
+      --ink: #f8f6fb;
+      --muted: #b9b4c2;
+      --paper: #111117;
+      --card: #1b1b24;
+      --line: #343440;
+      --brand: #ad99ff;
+      --brand-soft: #2d2941;
+      --coral: #ff7365;
+      --green: #6fe0a0;
+      --green-soft: #173d31;
+      --gold: #f0c664;
+      --shadow: 0 24px 64px rgba(0, 0, 0, .42);
     }
 
     * { box-sizing: border-box; }
@@ -34,17 +34,18 @@
       min-width: 0;
       margin: 0;
       overflow-x: hidden;
-      background: #f2ece7;
+      background: #09090d;
       color: var(--ink);
       font-family: "DM Sans", system-ui, sans-serif;
     }
 
-    button, input, select { font: inherit; }
+    button, input, select, textarea { font: inherit; }
     button { cursor: pointer; }
 
     button:focus-visible,
     input:focus-visible,
     select:focus-visible,
+    textarea:focus-visible,
     a:focus-visible {
       outline: 3px solid #f2a64a;
       outline-offset: 3px;
@@ -61,15 +62,18 @@
       gap: 48px;
       padding: 24px;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 35%, #e8e0ff, #f2ece7 56%);
+      background:
+        radial-gradient(circle at 52% 22%, rgba(128, 96, 255, .22), transparent 31%),
+        radial-gradient(circle at 77% 72%, rgba(255, 107, 94, .11), transparent 28%),
+        #09090d;
     }
 
     .intro { max-width: 290px; justify-self: end; }
     .intro small { color: var(--brand); font-weight: 800; letter-spacing: .12em; }
     .intro h1 {
       margin: 10px 0;
-      font: 700 48px/.93 "Fraunces", Georgia, serif;
-      letter-spacing: -.08em;
+      font: 720 48px/.9 "Bricolage Grotesque", system-ui, sans-serif;
+      letter-spacing: -.065em;
     }
     .intro em { color: var(--brand); font-style: normal; }
     .intro p, .side { color: var(--muted); line-height: 1.55; }
@@ -80,9 +84,9 @@
       width: 420px;
       height: 874px;
       padding: 5px;
-      border: 10px solid #181820;
+      border: 10px solid #24242d;
       border-radius: 54px;
-      background: #181820;
+      background: #24242d;
       box-shadow: var(--shadow);
       transform: scale(var(--phone-scale, 1));
       transform-origin: center;
@@ -96,7 +100,7 @@
       width: 126px;
       height: 28px;
       border-radius: 0 0 18px 18px;
-      background: #181820;
+      background: #24242d;
     }
 
     #app {
@@ -163,11 +167,11 @@
     h1, h2, h3, p { margin-top: 0; }
     h1 {
       margin-bottom: 8px;
-      font: 700 25px/1.04 "Fraunces", Georgia, serif;
+      font: 720 26px/1.02 "Bricolage Grotesque", system-ui, sans-serif;
       letter-spacing: -.045em;
     }
-    h2 { margin-bottom: 7px; font-size: 16px; }
-    h3 { margin-bottom: 5px; font-size: 15px; }
+    h2 { margin-bottom: 7px; font: 680 17px/1.1 "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -.025em; }
+    h3 { margin-bottom: 5px; font: 650 16px/1.12 "Bricolage Grotesque", system-ui, sans-serif; letter-spacing: -.02em; }
     .muted { color: var(--muted); line-height: 1.45; }
     .tiny { font-size: 11px; }
 
@@ -203,6 +207,150 @@
       overscroll-behavior: contain;
     }
     .scroll::-webkit-scrollbar { display: none; }
+
+    .welcome-screen {
+      background:
+        radial-gradient(circle at 95% 2%, rgba(255, 115, 101, .28), transparent 28%),
+        radial-gradient(circle at 5% 22%, rgba(173, 153, 255, .27), transparent 35%),
+        var(--paper);
+    }
+    .welcome-scroll { padding: 48px 20px 32px; }
+    .welcome-screen .screen-header + .welcome-scroll { padding-top: 16px; }
+    .welcome-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--brand);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .11em;
+    }
+    .welcome-screen h1 { margin: 18px 0 11px; font-size: 37px; line-height: .93; }
+    .welcome-lead { margin-bottom: 17px; color: var(--muted); font-size: 14px; line-height: 1.52; }
+    .welcome-language { margin: 15px 0 0; }
+    .welcome-steps { display: grid; gap: 9px; margin: 17px 0; }
+    .welcome-step {
+      display: grid;
+      grid-template-columns: 29px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+    }
+    .welcome-step-number {
+      display: grid;
+      width: 29px;
+      height: 29px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .welcome-step b { display: block; font-size: 12px; }
+    .welcome-step p { margin: 2px 0 0; color: var(--muted); font-size: 11px; line-height: 1.38; }
+    .welcome-cta { margin-top: 15px; }
+    .welcome-secondary { margin-top: 9px; }
+
+    .onboarding-profile {
+      position: relative;
+      margin: 18px 0 16px;
+      padding: 16px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--brand) 38%, var(--line));
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255, 115, 101, .15), transparent 33%),
+        linear-gradient(145deg, color-mix(in srgb, var(--brand-soft) 86%, var(--card)), var(--card));
+    }
+    .onboarding-profile-head { display: flex; gap: 10px; align-items: flex-start; }
+    .onboarding-profile-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--brand) 22%, var(--card));
+      font-size: 18px;
+    }
+    .onboarding-profile h2 { margin: 1px 0 3px; font-size: 19px; }
+    .onboarding-profile-head p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.42; }
+    .onboarding-profile .field { margin: 12px 0 0; }
+    .onboarding-profile .two-columns { margin-top: 1px; }
+    .onboarding-feedback { min-height: 18px; margin: 6px 0 0; color: #e78e84; font-size: 11px; font-weight: 700; }
+
+    .interest-picker {
+      margin: 21px 0 14px;
+      padding: 15px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--brand) 38%, var(--line));
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255, 115, 101, .16), transparent 33%),
+        linear-gradient(145deg, color-mix(in srgb, var(--brand-soft) 86%, var(--card)), var(--card));
+    }
+    .interest-picker-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+    .interest-picker h2 { margin: 0; font-size: 20px; }
+    .interest-picker p { margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.42; }
+    .interest-count {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 6px 8px;
+      background: rgba(255, 255, 255, .08);
+      color: var(--brand);
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .interest-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+    .interest-choice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 49px;
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(8, 8, 12, .22);
+      color: var(--ink);
+      text-align: left;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .interest-choice:hover { transform: translateY(-1px); border-color: var(--brand); }
+    .interest-choice:active { transform: scale(.98); }
+    .interest-choice.selected {
+      border-color: var(--brand);
+      background: color-mix(in srgb, var(--brand) 19%, var(--card));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 40%, transparent);
+    }
+    .interest-choice .interest-icon {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--brand) 22%, var(--card));
+      font-size: 15px;
+    }
+    .interest-choice b { font-size: 11px; line-height: 1.15; }
+    .interest-choice small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+    .interest-footnote { margin: 12px 0 0; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .welcome-skip {
+      display: block;
+      width: 100%;
+      margin: 10px 0 0;
+      border: 0;
+      background: none;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
 
     .filters {
       display: flex;
@@ -246,20 +394,23 @@
     .event-card {
       width: 100%;
       overflow: hidden;
-      border: 0;
-      border-radius: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
       background: var(--card);
       color: var(--ink);
       text-align: left;
-      box-shadow: 0 4px 14px rgba(56, 41, 26, .08);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, .15);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
+    .event-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--brand) 70%, var(--line)); box-shadow: 0 18px 31px rgba(0, 0, 0, .25); }
+    .event-card:active { transform: scale(.99); }
 
     .event-poster {
       position: relative;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      min-height: 110px;
+      min-height: 145px;
       padding: 13px;
       overflow: hidden;
       color: #fff;
@@ -302,8 +453,8 @@
     }
     .event-poster b {
       max-width: 230px;
-      font: 700 25px/.95 "Fraunces", Georgia, serif;
-      letter-spacing: -.06em;
+      font: 720 27px/.93 "Bricolage Grotesque", system-ui, sans-serif;
+      letter-spacing: -.055em;
       text-align: right;
     }
 
@@ -333,7 +484,19 @@
       background-image: linear-gradient(110deg, rgba(48, 26, 12, .79), rgba(99, 43, 15, .1), rgba(29, 15, 8, .55)), url("assets/comedy-night.png");
     }
 
-    .event-copy { padding: 12px 13px 13px; }
+    .event-copy { padding: 13px 14px 14px; }
+    .event-match {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0 0 6px;
+      border-radius: 999px;
+      padding: 4px 7px;
+      background: color-mix(in srgb, var(--brand) 20%, var(--card));
+      color: var(--brand);
+      font-size: 9px;
+      font-weight: 800;
+    }
     .event-copy p { margin-bottom: 8px; color: var(--muted); font-size: 11px; }
     .price-line { display: flex; align-items: baseline; gap: 7px; }
     .price-line b { color: var(--brand); }
@@ -343,12 +506,52 @@
       margin: 10px 0 7px;
       overflow: hidden;
       border-radius: 999px;
-      background: #f3e3dd;
+      background: color-mix(in srgb, var(--coral) 16%, var(--card));
     }
     .progress > span { display: block; height: 100%; border-radius: inherit; background: var(--coral); }
     .event-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 10px; }
     .member-dots { color: var(--brand); letter-spacing: -2px; }
     .live-note { margin: -3px 0 14px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .discover-hero {
+      position: relative;
+      margin: 0 0 16px;
+      padding: 16px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--brand) 44%, var(--line));
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 92% 10%, rgba(255, 115, 101, .30), transparent 30%),
+        radial-gradient(circle at 15% 100%, rgba(173, 153, 255, .31), transparent 38%),
+        linear-gradient(135deg, #252139, #161622 70%);
+      isolation: isolate;
+    }
+    .discover-hero::after {
+      position: absolute;
+      z-index: -1;
+      right: -52px;
+      bottom: -66px;
+      width: 164px;
+      height: 164px;
+      border: 20px solid rgba(255, 255, 255, .08);
+      border-radius: 50%;
+      content: "";
+    }
+    .discover-eyebrow { display: block; margin-bottom: 6px; color: #d7ccff; font-size: 10px; font-weight: 900; letter-spacing: .1em; }
+    .discover-hero h2 { max-width: 235px; margin: 0; color: #fff; font-size: 23px; }
+    .discover-hero p { max-width: 285px; margin: 7px 0 0; color: #d1cbd7; font-size: 11px; line-height: 1.42; }
+    .discover-hero button {
+      margin-top: 13px;
+      border: 1px solid rgba(255, 255, 255, .24);
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(10, 10, 16, .22);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .explore-section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 2px 0 10px; }
+    .explore-section-title h2 { margin: 0; }
+    .explore-section-title span { color: var(--muted); font-size: 10px; }
     .source-link { display: inline-flex; margin: -2px 0 5px; color: var(--brand); font-size: 11px; font-weight: 800; text-decoration: none; }
     .source-link:hover { text-decoration: underline; }
 
@@ -384,6 +587,16 @@
       background: #f1ebe6;
     }
     .info-card p, .notice-card p, .profile-card p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .profile-inline-action {
+      margin-top: 10px;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      padding: 0 0 2px;
+      background: none;
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+    }
     .private-lock { border: 1px solid #ddd3ff; background: var(--brand-soft); color: #39306f; }
     .private-lock p { margin: 4px 0 0; font-size: 12px; line-height: 1.4; }
 
@@ -417,6 +630,42 @@
     .member-row > span:nth-child(2) { min-width: 0; flex: 1; }
     .member-row b { display: block; font-size: 13px; }
     .member-row p { margin: 3px 0 0; overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+    .live-member-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .verified-badge {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      padding: 3px 6px;
+      border: 1px solid rgba(79, 140, 255, .35);
+      background: rgba(79, 140, 255, .13);
+      color: #2a6cc7;
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .verification-icon, .profile-verification-icon {
+      display: inline-grid;
+      width: 14px;
+      height: 14px;
+      place-items: center;
+      border-radius: 50%;
+      background: #3e83f3;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .profile-verification-icon {
+      width: 19px;
+      height: 19px;
+      margin-left: 3px;
+      font-size: 12px;
+      transform: translateY(-1px);
+    }
+    body.dark .verified-badge { color: #acd0ff; }
     .profile-arrow { color: var(--brand); font-size: 18px; }
 
     .avatar {
@@ -457,6 +706,8 @@
     .profile-hero { text-align: center; }
     .profile-hero .avatar { width: 78px; height: 78px; font-size: 27px; }
     .verified { margin: 6px 0 0; color: var(--green); font-size: 12px; font-weight: 800; }
+    .verification-pending { color: var(--brand); }
+    .verification-card { border: 1px solid rgba(79, 140, 255, .35); }
     .photo-grid {
       display: grid;
       grid-template-columns: 1.35fr 1fr;
@@ -489,7 +740,7 @@
 
     .field { display: grid; gap: 6px; margin: 14px 0; }
     .field label { font-size: 11px; font-weight: 800; }
-    .field input, .field select {
+    .field input, .field select, .field textarea {
       width: 100%;
       padding: 12px;
       border: 1px solid #dcd1cb;
@@ -497,6 +748,7 @@
       background: var(--card);
       color: var(--ink);
     }
+    .field textarea { min-height: 78px; resize: vertical; line-height: 1.4; }
     .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .check { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
     .check input { margin-top: 2px; }
@@ -667,6 +919,106 @@
       color: #fff;
     }
 
+    .about-scroll { padding-bottom: 28px; scroll-behavior: smooth; }
+    .about-scroll.with-bottom-nav { padding-bottom: 88px; }
+    .about-story-hero {
+      position: relative;
+      min-height: 292px;
+      margin: 0 -20px 21px;
+      padding: 44px 20px 25px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 92% 18%, rgba(255, 115, 101, .35), transparent 24%),
+        radial-gradient(circle at 10% 88%, rgba(173, 153, 255, .32), transparent 36%),
+        #1b1924;
+    }
+    .about-story-hero.landing-hero { min-height: 349px; padding-top: 23px; }
+    .about-story-hero::after {
+      position: absolute;
+      right: -27px;
+      bottom: -31px;
+      width: 168px;
+      height: 168px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 46% 54% 48% 52%;
+      content: "";
+      transform: rotate(28deg);
+    }
+    .about-story-kicker { position: relative; z-index: 1; color: #d7ccff; font-size: 10px; font-weight: 900; letter-spacing: .11em; }
+    .landing-language {
+      position: relative;
+      z-index: 2;
+      max-width: 230px;
+      margin: 0 0 19px;
+      border-color: rgba(255, 255, 255, .18);
+      background: rgba(16, 13, 27, .37);
+      backdrop-filter: blur(8px);
+    }
+    .landing-language > span { color: #e5e0ec; }
+    .landing-language button { border-color: rgba(255, 255, 255, .18); color: #e5e0ec; }
+    .about-story-hero h1 { position: relative; z-index: 1; max-width: 288px; margin: 13px 0 10px; color: #fff; font-size: 37px; }
+    .about-story-hero p { position: relative; z-index: 1; max-width: 276px; margin: 0; color: #d0cbd7; font-size: 13px; line-height: 1.48; }
+    .scroll-hint { position: absolute; z-index: 1; bottom: 20px; left: 20px; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .03em; }
+    .about-chapter {
+      position: relative;
+      min-height: 194px;
+      margin: 15px 0;
+      padding: 18px 16px 18px 73px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      opacity: .26;
+      transform: translateY(24px);
+      transition: opacity .5s ease, transform .5s cubic-bezier(.2, .7, .2, 1), border-color .3s ease;
+    }
+    .about-chapter.is-visible { border-color: color-mix(in srgb, var(--brand) 46%, var(--line)); opacity: 1; transform: translateY(0); }
+    .about-number {
+      position: absolute;
+      top: 17px;
+      left: 16px;
+      display: grid;
+      width: 41px;
+      height: 41px;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font: 700 17px/1 "Bricolage Grotesque", system-ui, sans-serif;
+    }
+    .about-chapter[data-tone='coral'] .about-number { background: color-mix(in srgb, var(--coral) 21%, var(--card)); color: var(--coral); }
+    .about-chapter[data-tone='green'] .about-number { background: var(--green-soft); color: var(--green); }
+    .about-chapter h2 { max-width: 225px; margin: 3px 0 7px; font-size: 22px; }
+    .about-chapter p { max-width: 255px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.48; }
+    .about-chapter .about-orb {
+      position: absolute;
+      right: -32px;
+      bottom: -38px;
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--brand) 26%, transparent);
+      filter: blur(1px);
+    }
+    .about-chapter[data-tone='coral'] .about-orb { background: color-mix(in srgb, var(--coral) 25%, transparent); }
+    .about-chapter[data-tone='green'] .about-orb { background: color-mix(in srgb, var(--green) 22%, transparent); }
+    .about-final { margin-top: 21px; }
+
+    body:not(.dark) {
+      --ink: #272330;
+      --muted: #6f6876;
+      --paper: #fffaf6;
+      --card: #ffffff;
+      --line: #e8dfd9;
+      --brand: #554abb;
+      --brand-soft: #eeebff;
+      --coral: #e66d56;
+      --green: #247852;
+      --green-soft: #dff3e7;
+      background: #f2ece7;
+    }
+    body:not(.dark) .stage { background: radial-gradient(circle at 50% 35%, #e8e0ff, #f2ece7 56%); }
+
     body.dark {
       --ink: #f6f0f5;
       --muted: #cbbfca;
@@ -675,9 +1027,14 @@
       --line: #4d4452;
       --brand-soft: #3a345e;
       --green-soft: #1c4738;
-      background: #17151b;
+      background: #09090d;
     }
-    body.dark .stage { background: radial-gradient(circle at 50% 35%, #332a4d, #17151b 56%); }
+    body.dark .stage {
+      background:
+        radial-gradient(circle at 52% 22%, rgba(128, 96, 255, .22), transparent 31%),
+        radial-gradient(circle at 77% 72%, rgba(255, 107, 94, .11), transparent 28%),
+        #09090d;
+    }
     body.dark .info-card,
     body.dark .notice-card,
     body.dark .profile-card,
@@ -701,12 +1058,20 @@
     body.dark .source-link { color: #cfc9ff; }
     body.dark .field input,
     body.dark .field select,
+    body.dark .field textarea,
     body.dark .chat-composer input { border-color: #5d5066; }
     body.dark .bottom-nav { background: color-mix(in srgb, var(--paper) 94%, transparent); }
     body.dark .private-lock { background: #37315a; border-color: #665b9f; color: #f3efff; }
     body.dark .form-note { background: #4e3910; color: #ffe6a8; }
     body.dark .live-banner { border-color: #396c57; background: #193b30; color: #b9efd1; }
     body.dark .live-empty { border-color: #63596b; }
+    body.dark .welcome-screen {
+      background:
+        radial-gradient(circle at 92% 4%, rgba(230, 109, 86, .20), transparent 29%),
+        radial-gradient(circle at 8% 26%, rgba(124, 111, 234, .21), transparent 34%),
+        var(--paper);
+    }
+    body.dark .welcome-step { border-color: #554a60; background: #342d37; }
 
     @media (max-width: 900px) {
       .stage { grid-template-columns: 1fr; padding: 0; justify-items: center; }
@@ -736,7 +1101,7 @@
     }
   </style>
 </head>
-<body>
+<body class="dark">
   <main class="stage">
     <aside class="intro">
       <small>PROTOTYPE · FRANCE</small>
@@ -772,6 +1137,8 @@
         { city: "Lyon", title: "Legend Tour by Trade Republic", poster: "Legend Tour", category: "Humour", date: "jeu. 29 oct. · 20h", dateEn: "Thu. 29 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 49, groupPrice: 42, current: 6, minimum: 7, theme: "humour", sourceUrl: "https://www.ldlcarena.com/evenement/legend-tour-lyon-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/04/Legend_29-octobre-2026_LDLCArena_SansTexte_1920x1080.jpg" },
         { city: "Lyon", title: "LDLC ASVEL vs Baskonia", poster: "ASVEL · Baskonia", category: "Sport", date: "ven. 30 oct. · 20h", dateEn: "Fri. 30 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 42, groupPrice: 36, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.ldlcarena.com/evenement/ldlc-asvel-baskonia-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/09/asvel-baskonia-1920x1080-1.png" },
         { city: "Lyon", title: "Dabeull Live Band", poster: "Dabeull", category: "Concerts", date: "sam. 31 oct. · 20h", dateEn: "Sat. 31 Oct. · 20:00", venue: "LDLC Arena · Décines", publicPrice: 45, groupPrice: 38, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.ldlcarena.com/evenement/dabeull-live-band-lyon-octobre-2026/", imageUrl: "https://www.ldlcarena.com/wp-content/uploads/2026/05/Dabeull_31-octobre-2026_LDLCArena_SansTexte_1920x1080_1.jpg" },
+        { city: "Lyon", title: "NUIT ENCORE × 23:59", poster: "Encore · 23:59", category: "Clubs", date: "sam. 24 oct. · 22h", dateEn: "Sat. 24 Oct. · 22:00", venue: "Halle Tony Garnier · Lyon 7e", publicPrice: 43, groupPrice: 37, current: 6, minimum: 8, theme: "club", sourceUrl: "https://www.halle-tony-garnier.fr/fr/programmation/nuit-encore-x-23-59", imageUrl: "https://www.halle-tony-garnier.fr/storage/144802/conversions/2026-10-24-NUIT-ENCORE-X-23-59-carre-4-20260703-170839-square.jpg" },
+        { city: "Lyon", title: "Josman — DPC Tour", poster: "Josman", category: "Concerts", date: "sam. 7 nov. · 20h", dateEn: "Sat. 7 Nov. · 20:00", venue: "Halle Tony Garnier · Lyon 7e", publicPrice: 52, groupPrice: 45, current: 5, minimum: 8, theme: "concert", sourceUrl: "https://www.halle-tony-garnier.fr/fr/programmation/josman-2", imageUrl: "https://www.halle-tony-garnier.fr/storage/142169/conversions/2026-11-07-JOSMAN-carre-josma-20260210-152457-square.jpg" },
 
         { city: "Lille", title: "M Pokora — Adrénaline Tour", poster: "M Pokora", category: "Concerts", date: "ven. 25 sept. · 20h", dateEn: "Fri. 25 Sep. · 20:00", venue: "Zénith de Lille", publicPrice: 65, groupPrice: 55, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://www.zenithdelille.com/evenement/m-pokora-5/", imageUrl: "https://www.zenithdelille.com/wp-content/uploads/sites/2/2025/11/affiche-adrenaline-e1764517185454.jpg" },
         { city: "Lille", title: "Zed", poster: "Zed", category: "Clubs", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "Le Flow · Lille", publicPrice: 25, groupPrice: 22, current: 4, minimum: 6, theme: "club", sourceUrl: "https://shotgun.live/fr/events/zed-lille", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Car_16%3A9%2Cw_3840/fl_lossy/f_auto/q_auto/c_limit%2Cf_auto%2Cfl_lossy%2Cq_auto%2Cw_1920/v1780912745/production/artworks/Fichier_2MONTAGE_cdranw" },
@@ -790,6 +1157,8 @@
         { city: "Marseille", title: "FOREVER NU!", poster: "Forever Nu", category: "Clubs", date: "dim. 11 oct. · 20h30", dateEn: "Sun. 11 Oct. · 20:30", venue: "Le Molotov", publicPrice: 26, groupPrice: 22, current: 3, minimum: 5, theme: "club", sourceUrl: "https://lemolotov.com/events/forever-nu/", imageUrl: "https://api.cloudly.space/resize/cropratio/640/640/75/aHR0cHM6Ly9zdGF0aWMuYXBpZGFlLXRvdXJpc21lLmNvbS9maWxlc3RvcmUvb2JqZXRzLXRvdXJpc3RpcXVlcy9pbWFnZXMvMjQwLzEwMy8zODEwMzAyNC5qcGc%3D/image.webp" },
         { city: "Marseille", title: "Autechre", poster: "Autechre", category: "Clubs", date: "mar. 13 oct. · 19h30", dateEn: "Tue. 13 Oct. · 19:30", venue: "Cabaret Aléatoire", publicPrice: 30, groupPrice: 26, current: 4, minimum: 6, theme: "club", sourceUrl: "https://www.fnacspectacles.com/event/autechre-cabaret-aleatoire-marseille-03-21008056/", imageUrl: "https://images.ra.co/f2a76e86db21bc5f31d27f20b985f9af4c47d9cc.jpg" },
         { city: "Marseille", title: "Syndrome 81 + Orgueil", poster: "Syndrome 81", category: "Concerts", date: "jeu. 22 oct. · 20h30", dateEn: "Thu. 22 Oct. · 20:30", venue: "Le Molotov", publicPrice: 25, groupPrice: 22, current: 5, minimum: 6, theme: "concert", sourceUrl: "https://lemolotov.com/events/syndrome-81-guest/", imageUrl: "https://www.myprovence.fr/sites/default/files/poi/7688716/35788038_2026-02-19T15343409400038103424.jpg" },
+        { city: "Marseille", title: "Amine Radi — La Suivette", poster: "Amine Radi", category: "Humour", date: "sam. 17 oct. · 20h30", dateEn: "Sat. 17 Oct. · 20:30", venue: "Cepac Silo · Marseille 2e", publicPrice: 45, groupPrice: 38, current: 5, minimum: 7, theme: "humour", sourceUrl: "https://www.cepacsilo-marseille.fr/evenement/amine-radi/", imageUrl: "https://www.cepacsilo-marseille.fr/wp/wp-content/uploads/sites/6/2024/05/V2-AFFICHE-AMINE-RADI-350x524.jpg" },
+        { city: "Marseille", title: "Tina Arena — En concert", poster: "Tina Arena", category: "Concerts", date: "mer. 21 oct. · 20h", dateEn: "Wed. 21 Oct. · 20:00", venue: "Cepac Silo · Marseille 2e", publicPrice: 59, groupPrice: 54, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://www.cepacsilo-marseille.fr/evenement/tina-arena/", imageUrl: "https://www.cepacsilo-marseille.fr/wp/wp-content/uploads/sites/6/2025/02/TINA-ARENA-VISUEL-DEF-VIERGE-40X60-350x524.jpg" },
 
         { city: "Bordeaux", title: "INTERSPORT HYROX Bordeaux", poster: "HYROX", category: "Sport", date: "mer. 30 sept.–dim. 4 oct.", dateEn: "Wed. 30 Sep.–Sun. 4 Oct.", venue: "Parc des Expositions Bordeaux-Lac", publicPrice: 70, groupPrice: 60, current: 7, minimum: 8, theme: "sport", sourceUrl: "https://hyroxfrance.com/fr/event/intersport-hyrox-bordeaux/", imageUrl: "https://maintain.hyrox.com/wp-content/uploads/2025/03/Bordeaux_City_Logo_White_Intersport.png", imageFit: "contain" },
         { city: "Bordeaux", title: "UBB vs Lyon", poster: "UBB · Lyon", category: "Sport", date: "sam. 3 oct. · 14h30", dateEn: "Sat. 3 Oct. · 14:30", venue: "Stade Chaban-Delmas", publicPrice: 35, groupPrice: 30, current: 6, minimum: 8, theme: "sport", sourceUrl: "https://www.ubbrugby.com/equipes/equipe-premiere/calendrier-resultats.html", imageUrl: "https://www.ubbrugby.com/application/assets/img/logo-ubb-footer-240x174.png?2025=", secondaryImageUrl: "https://media.api.idalgo.info/Sport/Rugby/Team/Logo/150x150/logo_171.png" },
@@ -797,6 +1166,8 @@
         { city: "Bordeaux", title: "Lynda Lemay & Jean-Félix Lalanne", poster: "Lynda Lemay", category: "Concerts", date: "mar. 13 oct. · 20h30", dateEn: "Tue. 13 Oct. · 20:30", venue: "Théâtre Fémina", publicPrice: 48, groupPrice: 41, current: 5, minimum: 6, theme: "concert", sourceUrl: "https://theatrefemina.com/evenement/lynda-lemay-et-jean-felix-lalanne/", imageUrl: "https://theatrefemina.com/wp-content/uploads/11bf9c93-64db-48c7-9c1d-3ae1fa170c5e-scaled.jpeg" },
         { city: "Bordeaux", title: "Sonora Bordeaux Anniversary", poster: "Sonora", category: "Festivals", date: "ven. 16–sam. 17 oct.", dateEn: "Fri. 16–Sat. 17 Oct.", venue: "Parc des Expositions", publicPrice: 55, groupPrice: 47, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://shotgun.live/fr/events/sonora-bordeaux", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/production/artworks/SONORA_BORDEAUX_-_1920x1080_wytexl.jpg" },
         { city: "Bordeaux", title: "Pink Martini", poster: "Pink Martini", category: "Concerts", date: "ven. 23 oct. · 20h30", dateEn: "Fri. 23 Oct. · 20:30", venue: "Théâtre Fémina", publicPrice: 55, groupPrice: 47, current: 5, minimum: 7, theme: "concert", sourceUrl: "https://theatrefemina.com/evenement/pink-martini/", imageUrl: "https://theatrefemina.com/wp-content/uploads/22_0504_Pink_Martini-1171_v1a-web-scaled.jpg" },
+        { city: "Bordeaux", title: "Malik Bentalha — Nouveau Monde", poster: "Malik Bentalha", category: "Humour", date: "ven. 16 oct. · 20h30", dateEn: "Fri. 16 Oct. · 20:30", venue: "Arkéa Arena · Floirac", publicPrice: 49, groupPrice: 42, current: 5, minimum: 7, theme: "humour", sourceUrl: "https://www.arkeaarena.com/evenements/malik-bentalha-nouveau-monde-16-octobre-2026-billetterie-bordeaux", imageUrl: "https://www.arkeaarena.com/_next/image?q=75&url=https%3A%2F%2Fcontent.arkeaarena.com%2Fuploads%2FAA_Banner_Malik_8aa1b81189.jpg&w=3840" },
+        { city: "Bordeaux", title: "OrelSan — En concert", poster: "OrelSan", category: "Concerts", date: "lun. 26 oct. · 19h30", dateEn: "Mon. 26 Oct. · 19:30", venue: "Arkéa Arena · Floirac", publicPrice: 55, groupPrice: 47, current: 7, minimum: 8, theme: "concert", sourceUrl: "https://www.arkeaarena.com/evenements/orelsan-en-concert-26-octobre-au-27-octobre-2026-billetterie-bordeaux", imageUrl: "https://www.arkeaarena.com/_next/image?q=75&url=https%3A%2F%2Fcontent.arkeaarena.com%2Fuploads%2Fbanner_orelsan_2_f1512a61d5.jpg&w=3840" },
 
         { city: "Nantes", title: "Nantes Basket Hermine vs Quimper", poster: "Nantes · Quimper", category: "Sport", date: "ven. 2 oct. · 20h", dateEn: "Fri. 2 Oct. · 20:00", venue: "La Trocardière · Rezé", publicPrice: 18, groupPrice: 15, current: 5, minimum: 6, theme: "sport", sourceUrl: "https://billetterie.nantes-basket.com/fr", imageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Nantes/logo.png", secondaryImageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Quimper/logo.png" },
         { city: "Nantes", title: "FAT FREDDY'S DROP", poster: "Fat Freddy's Drop", category: "Concerts", date: "ven. 9 oct. · 20h", dateEn: "Fri. 9 Oct. · 20:00", venue: "Zénith Nantes Métropole", publicPrice: 45, groupPrice: 39, current: 6, minimum: 8, theme: "concert", sourceUrl: "https://www.zenith-nantesmetropole.com/shows/FAT%20FREDDY%27S%20DROP-21003", imageUrl: "https://www.reggae.fr/uploads/agenda_photos/DAT_24315.jpg" },
@@ -805,6 +1176,8 @@
         { city: "Nantes", title: "Autechre", poster: "Autechre", category: "Clubs", date: "jeu. 15 oct. · 20h", dateEn: "Thu. 15 Oct. · 20:00", venue: "Le Lieu Unique", publicPrice: 32, groupPrice: 27, current: 4, minimum: 6, theme: "club", sourceUrl: "https://fr.ra.co/events/2321979", imageUrl: "https://images.ra.co/1a9f21e98c2981acb4e2c24d5dfaec2a72403f0a.png" },
         { city: "Nantes", title: "Nantes Basket Hermine vs Rouen", poster: "Nantes · Rouen", category: "Sport", date: "ven. 16 oct. · 20h", dateEn: "Fri. 16 Oct. · 20:00", venue: "La Trocardière · Rezé", publicPrice: 18, groupPrice: 15, current: 5, minimum: 6, theme: "sport", sourceUrl: "https://billetterie.nantes-basket.com/fr", imageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Nantes/logo.png", secondaryImageUrl: "https://wiremind-evy-public-data.s3.eu-west-3.amazonaws.com/team-data/basketball/FR/Rouen/logo.png" },
         { city: "Nantes", title: "Folie's + Blou Feet", poster: "Folie's", category: "Concerts", date: "mer. 21 oct. · 20h", dateEn: "Wed. 21 Oct. · 20:00", venue: "Stereolux", publicPrice: 22, groupPrice: 19, current: 4, minimum: 6, theme: "concert", sourceUrl: "https://stereolux.org/agenda/folies", imageUrl: "https://stereolux.org/sites/stereolux/files/styles/auto_1920/public/2025-09/folies.png?itok=pytnImHh" },
+        { city: "Nantes", title: "Gaïa + DJ set Sarah Lapin", poster: "Gaïa", category: "Festivals", date: "ven. 23 oct.", dateEn: "Fri. 23 Oct.", venue: "Les Nefs · Île de Nantes", publicPrice: 20, groupPrice: 16, current: 5, minimum: 7, theme: "festival", sourceUrl: "https://metropole.nantes.fr/que-faire-a-nantes/agenda/39014963_lete-indien-aux-nefs-2026", imageUrl: "https://img.openagenda.com/u/715x0/main/8abaa4d858cf49a580764ba31437708e.base.image.jpg" },
+        { city: "Nantes", title: "Les Utopiales 2026", poster: "Les Utopiales", category: "Festivals", date: "jeu. 29 oct.–dim. 1 nov.", dateEn: "Thu. 29 Oct.–Sun. 1 Nov.", venue: "Cité des Congrès · Nantes", publicPrice: 18, groupPrice: 15, current: 6, minimum: 8, theme: "festival", sourceUrl: "https://metropole.nantes.fr/que-faire-a-nantes/agenda/74273531_les-utopiales-2026" },
 
         { city: "Strasbourg", title: "SIG Strasbourg vs Boulazac", poster: "SIG · Boulazac", category: "Sport", date: "sam. 3 oct. · 18h", dateEn: "Sat. 3 Oct. · 18:00", venue: "Rhenus Sport", publicPrice: 22, groupPrice: 18, current: 6, minimum: 7, theme: "sport", sourceUrl: "https://sigstrasbourg.fr/2026/09/prenez-vos-places-pour-les-premiers-matchs-de-la-saison", imageUrl: "https://sigstrasbourg.fr/sites/default/files/styles/tunnel/public/2026-09/BILLETTERIE%20SITE.png?itok=dXLY8Ign" },
         { city: "Strasbourg", title: "Marathon Électronique Festival", poster: "Marathon", category: "Festivals", date: "sam. 3–dim. 4 oct.", dateEn: "Sat. 3–Sun. 4 Oct.", venue: "Lieux multiples · Strasbourg", publicPrice: 50, groupPrice: 43, current: 8, minimum: 10, theme: "festival", sourceUrl: "https://shotgun.live/fr/events/marathon-electronique-festival", imageUrl: "https://res.cloudinary.com/shotgun/image/upload/c_limit%2Cw_384/fl_lossy/f_auto/q_5/production/artworks/SHOTGUN_lodyfn.png" },
@@ -884,6 +1257,57 @@
         { city: "Paris", title: "World Championships Breaking & Hip-Hop Freestyle", poster: "Breaking Worlds", category: "Sport", date: "sam. 5–dim. 6 déc.", dateEn: "Sat. 5–Sun. 6 Dec.", venue: "adidas arena · Paris 18e", publicPrice: 38, groupPrice: 33, current: 8, minimum: 10, theme: "sport", sourceUrl: "https://www.adidasarena.com/programmation", imageUrl: "https://www.accorarena.com/uploads/aha/generated/w800%2Ch800%2Cfcrop%2Cq85/13256755-a8fe-4df8-ba9d-ea74ebbe71c8.jpg" }
       ]);
 
+      // A tighter Paris catalogue avoids splitting early interest across too
+      // many outings. It deliberately keeps a balanced mix of sport, music,
+      // culture, clubs, festivals and humour.
+      var featuredParisEventTitles = new Set([
+        "Internationaux de France de Gymnastique",
+        "A$AP Rocky — Don't Be Dumb World Tour",
+        "Le Plus Grand Château Hanté de Paris",
+        "L’Arc Paris — Saturday Night",
+        "Paris Basketball vs Partizan Belgrade",
+        "Bérengère Krief — Sexe",
+        "Shrek, le musical",
+        "MaMA Festival & Convention 2026",
+        "Paris Saint-Germain vs FC Barcelone",
+        "Paris Games Week 2026",
+        "Art Basel Paris 2026",
+        "Hexagone MMA",
+        "Asake — In God We Trust World Tour",
+        "Salon du Chocolat & de la Pâtisserie",
+        "Dream Nation Festival 2026",
+        "La Cage aux Folles",
+        "Rolex Paris Masters",
+        "Paris FC vs AS Monaco",
+        "The World of Hans Zimmer — A New Dimension",
+        "J. Cole — The Fall-Off Tour"
+      ]);
+      events = events.filter(function (event) {
+        return event.city !== "Paris" || featuredParisEventTitles.has(event.title);
+      });
+
+      // The prototype is planned to be shared around 2 October. Keeping a
+      // seven-day lead time after that avoids offering outings that a new
+      // visitor cannot realistically organise with a group.
+      var minimumPrototypeEventDate = new Date(2026, 9, 9);
+      var frenchMonthIndexes = {
+        "janv": 0, "févr": 1, "mars": 2, "avr": 3, "mai": 4, "juin": 5,
+        "juil": 6, "août": 7, "sept": 8, "oct": 9, "nov": 10, "déc": 11
+      };
+      function prototypeEventStartDate(event) {
+        var value = String(event.date || "").toLowerCase();
+        var dayMatch = value.match(/\b(\d{1,2})\b/);
+        var monthKey = Object.keys(frenchMonthIndexes).filter(function (key) {
+          return value.indexOf(key) >= 0;
+        })[0];
+        if (!dayMatch || !monthKey) return null;
+        return new Date(2026, frenchMonthIndexes[monthKey], Number(dayMatch[1]));
+      }
+      events = events.filter(function (event) {
+        var startsAt = prototypeEventStartDate(event);
+        return startsAt && startsAt >= minimumPrototypeEventDate;
+      });
+
       // A stable key makes a live interest follow its event even when the
       // catalogue is filtered or its visual position changes.
       events.forEach(function (event) {
@@ -917,8 +1341,69 @@
         Strasbourg: "Zénith de Strasbourg"
       };
 
+      // Preferences only last for the current visit. They influence the order
+      // of the catalogue but are never put in a shared link or browser storage.
+      var interestOptions = [
+        { id: "music", categories: ["Concerts"], icon: "🎵", fr: "Concerts", en: "Concerts", detailFr: "live & DJ sets", detailEn: "live & DJ sets" },
+        { id: "sport", categories: ["Sport"], icon: "⚽", fr: "Sport", en: "Sport", detailFr: "matchs & défis", detailEn: "matches & more" },
+        { id: "stage", categories: ["Théâtre"], icon: "🎭", fr: "Scène & culture", en: "Stage & culture", detailFr: "théâtre & shows", detailEn: "theatre & shows" },
+        { id: "clubs", categories: ["Clubs"], icon: "🪩", fr: "Clubbing", en: "Clubbing", detailFr: "nuits qui dansent", detailEn: "nights to dance" },
+        { id: "festivals", categories: ["Festivals"], icon: "🎪", fr: "Festivals", en: "Festivals", detailFr: "grands formats", detailEn: "big weekends" },
+        { id: "humour", categories: ["Humour"], icon: "😂", fr: "Humour", en: "Comedy", detailFr: "stand-up & rires", detailEn: "stand-up & laughs" }
+      ];
+
+      var personalProfileStorageKey = "never-go-alone:personal-profile";
+      var interestsStorageKey = "never-go-alone:interests";
+
+      // Earlier prototype versions saved these values in localStorage. That
+      // storage is shared by every tab of the same browser/profile, which can
+      // make a copied link appear to carry someone's details. Remove only the
+      // legacy local profile keys; new values remain in memory for this visit.
+      function clearLegacyProfileStorage() {
+        try {
+          localStorage.removeItem(personalProfileStorageKey);
+          localStorage.removeItem(interestsStorageKey);
+        } catch (error) { /* The prototype is still private without storage access. */ }
+      }
+
+      clearLegacyProfileStorage();
+
+      function cleanPersonalText(value, maximumLength) {
+        return typeof value === "string" ? value.replace(/\s+/g, " ").trim().slice(0, maximumLength) : "";
+      }
+
+      function normalisePersonalProfile(value) {
+        var source = value && typeof value === "object" ? value : {};
+        var age = Number(source.age);
+        var gender = ["woman", "man", "unspecified"].indexOf(source.gender) >= 0 ? source.gender : "unspecified";
+        return {
+          firstName: cleanPersonalText(source.firstName, 30),
+          lastName: cleanPersonalText(source.lastName, 50),
+          age: Number.isInteger(age) && age >= 18 && age <= 30 ? age : "",
+          gender: gender
+        };
+      }
+
+      function storedPersonalProfile() {
+        return normalisePersonalProfile({});
+      }
+
+      function persistPersonalProfile() {
+        // Personal details intentionally stay in memory only for this visit.
+        clearLegacyProfileStorage();
+      }
+
+      function storedInterests() {
+        return [];
+      }
+
+      function persistInterests() {
+        // Interests are also reset when the page is reopened or reloaded.
+        clearLegacyProfileStorage();
+      }
+
       var state = {
-        screen: "explore",
+        screen: "landing",
         history: [],
         city: "Paris",
         filter: "Tout",
@@ -926,7 +1411,10 @@
         memberIndex: 0,
         liveMemberId: "",
         agePreference: "all",
-        dark: false,
+        interests: storedInterests(),
+        personalProfile: storedPersonalProfile(),
+        profileDraft: storedPersonalProfile(),
+        dark: true,
         locale: "fr",
         joinStatus: ""
       };
@@ -1002,9 +1490,9 @@
         "18–23 ans": "Ages 18–23",
         "24–26 ans": "Ages 24–26",
         "27–30 ans": "Ages 27–30",
-        "Identité vérifiée": "Verified identity",
-        "✓ Identité vérifiée": "✓ Verified identity",
-        "identité vérifiée": "verified identity",
+        "Identité à vérifier au lancement": "Identity verification at launch",
+        "✓ Vérification au lancement": "✓ Verification at launch",
+        "vérification d’identité prévue": "identity verification planned",
         "Sortie du week-end": "Weekend outing",
         "À Paris": "In Paris",
         "Avec des amis": "With friends",
@@ -1077,23 +1565,18 @@
         "Ton prochain plan t'attend.": "Your next plan is waiting.",
         "Rejoins une sortie pour discuter avec le groupe et organiser un moment avant l'événement.": "Join an event to chat with the group and arrange a moment before it starts.",
         "Discussion, membres, billet et rendez-vous avant la sortie.": "Chat, members, ticket and a meetup before the event.",
-        "Profil vérifié · carte fictive •••• 4242 enregistrée": "Verified profile · fictional card •••• 4242 saved",
-        "✦ Être averti·e du lancement": "✦ Get launch updates",
+        "Profil · carte fictive •••• 4242 enregistrée": "Profile · fictional card •••• 4242 saved",
         "Passer en mode clair": "Switch to light mode",
         "Passer en mode sombre": "Switch to dark mode",
-        "Être averti·e": "Get updates",
         "Tu veux rejoindre un groupe ?": "Want to join a group?",
         "Tu nous dis que cette sortie t’intéresse. Nous te recontacterons quand l’application sera lancée.": "You are letting us know this event interests you. We will contact you when the app launches.",
-        "Tu veux être averti·e ?": "Want launch updates?",
-        "Laisse tes coordonnées ici, sans quitter le prototype.": "Leave your details here without leaving the prototype.",
-        "Les réponses sont collectées directement dans le Google Form du projet. Les alertes e-mail sont gérées dans ses paramètres Google Forms.": "Responses are collected directly in the project Google Form. Email alerts are managed in its Google Forms settings.",
         "Chargement du formulaire…": "Loading the form…",
         "Ne plus renoncer à une sortie.": "Never miss out on an event again.",
-        "Never Go Alone aide les jeunes adultes, les personnes nouvelles dans une ville et les étudiant·es internationaux à vivre les événements qui les tentent.": "Never Go Alone helps young adults, people who are new to a city and international students enjoy the events that interest them.",
+        "Never Go Alone aide les personnes qui ont envie de sortir, de rencontrer du monde et de partager un événement.": "Never Go Alone helps people who want to go out, meet others and share an event.",
         "Notre idée": "Our idea",
         "Un intérêt commun est une bonne première raison de se rencontrer. Le groupe permet de discuter, de se rassurer et de prévoir un rendez-vous simple avant l'événement.": "A shared interest is a good first reason to meet. The group lets people chat, feel reassured and arrange a simple meetup before the event.",
         "Ce qui compte": "What matters",
-        "Des profils visibles, une identité vérifiée, des règles de paiement transparentes et le choix de maintenir une sortie même en petit groupe.": "Visible profiles, verified identity, transparent payment rules and the choice to keep an event on even as a small group.",
+        "Des profils visibles, une vérification d’identité prévue au lancement, des règles de paiement transparentes et le choix de maintenir une sortie même en petit groupe.": "Visible profiles, identity verification planned at launch, transparent payment rules and the choice to keep an event on even as a small group.",
         "Changer de ville": "Change city",
         "Où veux-tu sortir ?": "Where do you want to go out?",
         "Choisis une ville en France pour voir les sorties proposées.": "Choose a city in France to see available events.",
@@ -1109,7 +1592,7 @@
         "Salut ! Hâte de vivre cette sortie avec vous 😊": "Hi! Can't wait to enjoy this event with you 😊",
         "Partant pour se voir un peu avant.": "I'm up for meeting a little beforehand.",
         "Très bonne idée, je suis partante !": "Great idea, I'm in!",
-        "Merci Alex, à très vite dans le groupe !": "Thanks Alex, see you soon in the group!",
+        "Merci, à très vite dans le groupe !": "Thanks, see you soon in the group!",
         "Tu peux quitter librement avant le paiement : aucun débit n'a été effectué.": "You can leave freely before payment: no charge has been made.",
         "Avant J-7, le billet est remboursé hors frais de service.": "Before D-7, the ticket is refunded excluding the service fee.",
         "Après la confirmation à J-7, le billet est non remboursable sauf si une personne reprend ta place.": "After confirmation at D-7, the ticket is non-refundable unless someone takes your spot.",
@@ -1119,9 +1602,9 @@
         "Voir l’événement ↗": "View event ↗",
         "Tarifs affichés à titre de simulation pour le prototype.": "Prices shown are simulated for this prototype.",
         "Tarifs affichés à titre indicatif pour le lancement.": "Prices are indicative for launch.",
-        "Profil vérifié · tes coordonnées servent uniquement à être recontacté·e.": "Verified profile · your details are only used to contact you.",
+        "Profil · tes coordonnées servent uniquement à être recontacté·e.": "Profile · your details are only used to contact you.",
         "Cette version permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.": "This version lets you find an event, discover interested profiles and register your interest.",
-        "Des profils visibles, une identité vérifiée et une façon simple de mesurer l’intérêt avant le lancement des groupes.": "Visible profiles, verified identity and a simple way to measure interest before groups launch.",
+        "Des profils visibles, une vérification d’identité prévue au lancement et une façon simple de mesurer l’intérêt avant le lancement des groupes.": "Visible profiles, identity verification planned at launch and a simple way to measure interest before groups launch.",
         "Finaliser": "Finish",
         "Découvre les profils intéressés, puis laisse tes coordonnées pour faire grandir ce groupe live.": "Discover the interested profiles, then leave your details to grow this live group.",
         "Cette version live permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.": "This live version lets you find an event, discover interested profiles and register your interest.",
@@ -1141,8 +1624,8 @@
           .replace(/(\d+) sur (\d+) pour le tarif groupe/g, "$1 of $2 for group rate")
           .replace(/^Billet groupe : ([\d,]+) € · Frais de service : ([\d,]+) €$/, "Group ticket: €$1 · Service fee: €$2")
           .replace(/^Économie totale : ([\d,]+) €$/, "Total saving: €$1")
-          .replace(/^✓ (.+) · identité vérifiée$/, function (_, job) {
-            return "✓ " + (englishText[job] || job) + " · verified identity";
+          .replace(/^✓ (.+) · vérification d’identité prévue$/, function (_, job) {
+            return "✓ " + (englishText[job] || job) + " · identity verification planned";
           })
           .replace(/^Originaire de (.+) · à Paris depuis (.+)$/, function (_, origin, duration) {
             return "Originally from " + origin + " · in Paris for " + duration.replace(/(\d+) mois/g, "$1 months").replace(/1 an/g, "1 year").replace(/(\d+) ans/g, "$1 years");
@@ -1204,6 +1687,73 @@
         return state.locale === "en" ? english : french;
       }
 
+      function profileGenderLabel(value) {
+        if (value === "woman") return i18n("Femme", "Woman");
+        if (value === "man") return i18n("Homme", "Man");
+        return "";
+      }
+
+      // A small on-device glossary translates common role titles without
+      // sending anyone's free-text profile data to a third-party service.
+      // Specific roles and company names remain exactly as their owner wrote
+      // them rather than risking an inaccurate automatic translation.
+      var activityTranslationPairs = [
+        { fr: "Étudiant·e", en: "Student", frAliases: ["Étudiant", "Étudiante", "Étudiant·e"] },
+        { fr: "Étudiant·e en master de finance", en: "Master's student in Finance", frAliases: ["Étudiant en master de finance", "Étudiante en master de finance", "Master finance", "Master en finance"] },
+        { fr: "Étudiant·e en école de commerce · master finance", en: "Business-school student · Master's in Finance", frAliases: ["Étudiant en école de commerce · master finance", "Étudiante en école de commerce · master finance"] },
+        { fr: "Ingénieur·e logiciel", en: "Software engineer", frAliases: ["Ingénieur logiciel", "Ingénieure logiciel"] },
+        { fr: "Développeur·se", en: "Developer", frAliases: ["Développeur", "Développeuse"] },
+        { fr: "Consultant·e", en: "Consultant", frAliases: ["Consultant", "Consultante"] },
+        { fr: "Chef·fe de projet", en: "Project manager", frAliases: ["Chef de projet", "Cheffe de projet"] },
+        { fr: "Chef·fe de projet culturel", en: "Cultural project manager", frAliases: ["Chef de projet culturel", "Cheffe de projet culturel"] },
+        { fr: "Analyste data", en: "Data analyst", frAliases: ["Analyste data"] },
+        { fr: "Analyste financier·ère", en: "Financial analyst", frAliases: ["Analyste financier", "Analyste financière"] },
+        { fr: "Journaliste sportif·ve", en: "Sports journalist", frAliases: ["Journaliste sportif", "Journaliste sportive"] },
+        { fr: "Chargé·e de communication", en: "Communications coordinator", frAliases: ["Chargé de communication", "Chargée de communication"] },
+        { fr: "Designer produit", en: "Product designer", frAliases: ["Designer produit"] },
+        { fr: "Entrepreneur·e", en: "Entrepreneur", frAliases: ["Entrepreneur", "Entrepreneure"] },
+        { fr: "Entrepreneur·e social·e", en: "Social entrepreneur", frAliases: ["Entrepreneur social", "Entrepreneure sociale"] }
+      ];
+
+      function activityTranslationKey(value) {
+        return cleanPersonalText(value, 120).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          .replace(/[’']/g, "'").replace(/\s+/g, " ").toLowerCase();
+      }
+
+      function activityForDisplay(value) {
+        var original = cleanPersonalText(value, 120);
+        if (!original) return "";
+        var key = activityTranslationKey(original);
+        for (var index = 0; index < activityTranslationPairs.length; index += 1) {
+          var pair = activityTranslationPairs[index];
+          var frenchTitles = pair.frAliases || [pair.fr];
+          if (state.locale === "en" && frenchTitles.some(function (title) { return key === activityTranslationKey(title); })) return pair.en;
+          if (state.locale === "fr" && key === activityTranslationKey(pair.en)) return pair.fr;
+        }
+        return original;
+      }
+
+      function userFirstName() {
+        return cleanPersonalText((state.personalProfile || {}).firstName, 30);
+      }
+
+      function userDisplayName() {
+        var profileData = state.personalProfile || {};
+        var name = [cleanPersonalText(profileData.firstName, 30), cleanPersonalText(profileData.lastName, 50)].filter(Boolean).join(" ");
+        return name || i18n("Mon profil", "My profile");
+      }
+
+      function userInitial() {
+        return (userFirstName() || "?").charAt(0).toUpperCase();
+      }
+
+      function userProfileSummary() {
+        var profileData = state.personalProfile || {};
+        var age = Number(profileData.age);
+        var ageLabel = Number.isInteger(age) ? age + " " + i18n("ans", "years old") : "";
+        return [ageLabel, profileGenderLabel(profileData.gender), state.city].filter(Boolean).join(" · ");
+      }
+
       function stableEventId(event) {
         return ["nga", event.city, event.date, event.title].join("-").normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
@@ -1222,7 +1772,10 @@
       }
 
       function liveRefreshView() {
-        if (["explore", "event", "people", "member-profile", "contact"].indexOf(state.screen) >= 0) render();
+        // The contact view contains a cross-origin Google Form iframe. Do not
+        // re-render it after a background live refresh or its entered state
+        // would be reset.
+        if (["explore", "event", "people", "member-profile"].indexOf(state.screen) >= 0) render();
       }
 
       async function apiRequest(path, options) {
@@ -1282,19 +1835,31 @@
 
       function rememberWithdrawal(event, memberId, token) {
         try {
-          sessionStorage.setItem(withdrawalStorageKey(event), JSON.stringify({ memberId: memberId, token: token }));
-        } catch (error) { /* The live join remains valid if session storage is unavailable. */ }
+          // A withdrawal token is sensitive. Keep it for this browser tab
+          // only, never across a copied link or a future browser session.
+          var key = withdrawalStorageKey(event);
+          localStorage.removeItem(key);
+          sessionStorage.setItem(key, JSON.stringify({ memberId: memberId, token: token }));
+        } catch (error) { /* The live join remains valid if browser storage is unavailable. */ }
       }
 
       function rememberedWithdrawal(event) {
         try {
-          var raw = sessionStorage.getItem(withdrawalStorageKey(event));
+          var key = withdrawalStorageKey(event);
+          // Delete a persistent token left by an older version. It must not
+          // be reused if someone opens the same URL later.
+          localStorage.removeItem(key);
+          var raw = sessionStorage.getItem(key);
           return raw ? JSON.parse(raw) : null;
         } catch (error) { return null; }
       }
 
       function clearRememberedWithdrawal(event) {
-        try { sessionStorage.removeItem(withdrawalStorageKey(event)); } catch (error) { /* no-op */ }
+        try {
+          var key = withdrawalStorageKey(event);
+          localStorage.removeItem(key);
+          sessionStorage.removeItem(key);
+        } catch (error) { /* no-op */ }
       }
 
       function selectedEvent() {
@@ -1303,6 +1868,54 @@
 
       function eventsForCity(city) {
         return events.filter(function (event) { return event.city === city; });
+      }
+
+      function selectedInterestOptions() {
+        return state.interests.map(function (id) {
+          return interestOptions.filter(function (option) { return option.id === id; })[0];
+        }).filter(Boolean);
+      }
+
+      function interestLabel(option) {
+        return state.locale === "en" ? option.en : option.fr;
+      }
+
+      function eventInterestMatches(event) {
+        return selectedInterestOptions().filter(function (option) {
+          return option.categories.indexOf(event.category) >= 0;
+        });
+      }
+
+      function eventInterestBadge(event) {
+        var match = eventInterestMatches(event)[0];
+        if (!match) return "";
+        return "<span class='event-match'>✨ " + esc(i18n("Pour toi · ", "For you · ") + interestLabel(match)) + "</span>";
+      }
+
+      function rankedEvents(list) {
+        return list.map(function (event, index) {
+          var matches = eventInterestMatches(event);
+          var firstMatch = matches[0];
+          var preferenceIndex = firstMatch ? state.interests.indexOf(firstMatch.id) : Number.MAX_SAFE_INTEGER;
+          return {
+            event: event,
+            index: index,
+            score: firstMatch ? 100 - preferenceIndex * 5 : 0,
+            live: liveCount(event)
+          };
+        }).sort(function (left, right) {
+          return right.score - left.score || right.live - left.live || left.index - right.index;
+        }).map(function (entry) { return entry.event; });
+      }
+
+      function toggleInterest(id) {
+        var option = interestOptions.filter(function (item) { return item.id === id; })[0];
+        if (!option) return;
+        var index = state.interests.indexOf(id);
+        if (index >= 0) state.interests.splice(index, 1);
+        else state.interests.push(id);
+        persistInterests();
+        render();
       }
 
       function eventDate(event) {
@@ -1321,8 +1934,8 @@
       }
 
       function upcomingEventsNote(count) {
-        return state.locale === "en" ? count + " upcoming events announced by organisers · group prices are simulated." :
-          count + " sorties à venir annoncées par les organisateurs · tarifs de groupe simulés.";
+        return state.locale === "en" ? count + " upcoming events from 9 October · group prices are simulated." :
+          count + " sorties à venir à partir du 9 octobre · tarifs de groupe simulés.";
       }
 
       function navigate(screen) {
@@ -1330,6 +1943,20 @@
           state.history.push(state.screen);
           state.screen = screen;
         }
+        render();
+      }
+
+      function switchMainScreen(screen) {
+        if (["explore", "about", "profile"].indexOf(screen) < 0) return;
+        state.history = [];
+        state.screen = screen;
+        render();
+      }
+
+      function startExploring() {
+        // Onboarding is complete; later Back actions should stay within the catalogue.
+        state.history = [];
+        state.screen = "explore";
         render();
       }
 
@@ -1414,13 +2041,14 @@
 
       function rootHeader() {
         return "<header class='explore-head'><div><span class='eyebrow'>" + esc(state.city.toUpperCase()) +
-          "</span><h1>Explorer</h1></div><button type='button' class='icon-button' data-action='profile' aria-label='Ouvrir mon profil'>A</button></header>";
+          "</span><h1>✨ " + esc(i18n("Explorer", "Explore")) + "</h1></div><button type='button' class='icon-button' data-action='profile' aria-label='Ouvrir mon profil'>" + esc(userInitial()) + "</button></header>";
       }
 
       function bottomNav(active) {
         var items = [
-          ["explore", "⌂ Explorer"],
-          ["profile", "◉ Profil"]
+          ["explore", "🏠 " + i18n("Explorer", "Explore")],
+          ["about", "📖 " + i18n("À propos", "About")],
+          ["profile", "👤 " + i18n("Profil", "Profile")]
         ];
         return "<nav class='bottom-nav' aria-label='Navigation principale'>" + items.map(function (item) {
           return "<button type='button' data-action='nav' data-screen='" + item[0] + "' class='" +
@@ -1445,7 +2073,7 @@
         var dots = count ? "● ".repeat(Math.min(3, count)).trim() : "○ ○ ○";
         return "<button type='button' class='event-card' data-action='open-event' data-event-id='" + index + "'>" +
           poster(event) +
-          "<div class='event-copy'><h3>" + esc(event.title) + "</h3>" +
+          "<div class='event-copy'>" + eventInterestBadge(event) + "<h3>" + esc(event.title) + "</h3>" +
           "<p>" + esc(eventDate(event)) + " · " + esc(eventVenue(event)) + "</p>" +
           "<div class='price-line'><b>" + event.groupPrice + " €</b><s>" + event.publicPrice + " €</s>" +
           "<span class='tiny'>−" + Math.round((1 - event.groupPrice / event.publicPrice) * 100) + " %</span></div>" +
@@ -1456,29 +2084,73 @@
       }
 
       function explore() {
-        var cityEvents = eventsForCity(state.city);
+        var cityEvents = rankedEvents(eventsForCity(state.city));
         var categories = ["Tout"];
         cityEvents.forEach(function (event) {
           if (categories.indexOf(event.category) < 0) categories.push(event.category);
         });
         var listed = cityEvents.filter(function (event) { return state.filter === "Tout" || event.category === state.filter; });
+        var selected = selectedInterestOptions();
+        var matchingCount = cityEvents.filter(function (event) { return eventInterestMatches(event).length; }).length;
+        var selectionLabel = selected.map(interestLabel).join(", ");
+        var discovery = selected.length ?
+          "<section class='discover-hero'><span class='discover-eyebrow'>✨ " + esc(i18n("SÉLECTION PERSONNALISÉE", "PERSONALISED PICKS")) + "</span><h2>" + esc(i18n("Des sorties qui te ressemblent.", "Events that feel like you.")) + "</h2><p>" + esc(i18n(matchingCount + " sorties en priorité selon tes envies : " + selectionLabel + ". Tout le catalogue reste accessible.", matchingCount + " events prioritised for: " + selectionLabel + ". The full catalogue stays available.")) + "</p><button type='button' data-action='edit-interests'>" + esc(i18n("Modifier mon profil et mes envies", "Edit my profile and interests")) + "</button></section>" :
+          "<section class='discover-hero'><span class='discover-eyebrow'>🧭 " + esc(i18n("DÉCOUVERTE", "DISCOVERY")) + "</span><h2>" + esc(i18n("La ville est à toi.", "The city is yours.")) + "</h2><p>" + esc(i18n("Choisis tes envies pour faire remonter les sorties qui te parlent le plus.", "Choose your interests to bring the events you will like most to the top.")) + "</p><button type='button' data-action='edit-interests'>" + esc(i18n("Compléter mon profil et mes envies", "Complete my profile and interests")) + "</button></section>";
+        var listHeading = selected.length ? i18n("À découvrir en priorité", "Prioritised for you") : i18n("Toutes les sorties", "All events");
         return "<section class='view'>" + rootHeader() +
-          "<div class='location-bar'>⌖ <span>" + esc(state.city) + "</span>" +
+          "<div class='location-bar'>📍 <span>" + esc(state.city) + "</span>" +
           "<button type='button' data-action='city'>Changer ›</button></div>" +
-          "<div class='scroll'><p class='live-note'>" + esc(upcomingEventsNote(cityEvents.length)) + "</p><div class='filters'>" + categories.map(function (category) {
+          "<div class='scroll'><p class='live-note'>" + esc(upcomingEventsNote(cityEvents.length)) + "</p>" + discovery + "<div class='filters'>" + categories.map(function (category) {
             return "<button type='button' class='chip " + (category === state.filter ? "active" : "") +
               "' data-action='filter' data-filter='" + esc(category) + "'>" + esc(category) + "</button>";
-          }).join("") + "</div><div class='event-list'>" +
+          }).join("") + "</div><div class='explore-section-title'><h2>" + esc(listHeading) + "</h2><span>" + esc(i18n(listed.length + " sorties", listed.length + " events")) + "</span></div><div class='event-list'>" +
           (listed.length ? listed.map(function (event) { return eventCard(event, events.indexOf(event)); }).join("") : "<div class='empty'><p>Aucune sortie dans ce filtre pour le moment.</p></div>") +
           "</div></div>" + bottomNav("explore") + "</section>";
+      }
+
+      function languagePicker(extraClass) {
+        return "<div class='language-picker " + esc(extraClass || "") + "' aria-label='" + esc(i18n("Choisir la langue", "Choose language")) + "'><span>" + esc(i18n("Langue", "Language")) + "</span>" +
+          "<button type='button' data-action='set-locale' data-locale='fr' aria-pressed='" + (state.locale === "fr") + "' class='" + (state.locale === "fr" ? "active" : "") + "'>Français</button>" +
+          "<button type='button' data-action='set-locale' data-locale='en' aria-pressed='" + (state.locale === "en") + "' class='" + (state.locale === "en" ? "active" : "") + "'>English</button></div>";
+      }
+
+      function welcome() {
+        var draft = state.profileDraft || normalisePersonalProfile({});
+        var selectedCount = state.interests.length;
+        var selectedGender = ["woman", "man", "unspecified"].indexOf(draft.gender) >= 0 ? draft.gender : "unspecified";
+        var interestChoices = interestOptions.map(function (option) {
+          var selected = state.interests.indexOf(option.id) >= 0;
+          return "<button type='button' class='interest-choice " + (selected ? "selected" : "") + "' data-action='toggle-interest' data-interest-id='" + esc(option.id) + "' aria-pressed='" + selected + "'><span class='interest-icon' aria-hidden='true'>" + esc(option.icon) + "</span><span><b>" + esc(interestLabel(option)) + "</b><small>" + esc(state.locale === "en" ? option.detailEn : option.detailFr) + "</small></span></button>";
+        }).join("");
+        return "<section class='view welcome-screen'>" + header(i18n("Ton profil", "Your profile")) + "<div class='scroll welcome-scroll'>" +
+          "<span class='welcome-kicker'>🧭 " + esc(i18n("NEVER GO ALONE · PROTOTYPE LIVE", "NEVER GO ALONE · LIVE PROTOTYPE")) + "</span>" +
+          languagePicker("welcome-language") +
+          "<h1>" + esc(i18n("Avant de sortir, parlons un peu de toi.", "Before going out, let’s get to know you.")) + "</h1>" +
+          "<p class='welcome-lead'>" + esc(i18n("Ces informations personnalisent cette visite uniquement. Elles ne sont ni ajoutées au lien, ni enregistrées dans ton navigateur, et ne deviennent visibles dans un groupe qu’après une participation finalisée.", "These details personalise this visit only. They are neither added to the link nor stored in your browser, and only become visible in a group after participation is completed.")) + "</p>" +
+          "<form id='onboarding-form' novalidate autocomplete='off'><section class='onboarding-profile' aria-label='" + esc(i18n("Tes informations", "Your details")) + "'><div class='onboarding-profile-head'><span class='onboarding-profile-icon' aria-hidden='true'>👋</span><div><h2>" + esc(i18n("On commence par toi.", "Let’s start with you.")) + "</h2><p>" + esc(i18n("Prénom, nom et âge sont nécessaires pour créer ton profil. Le sexe est facultatif.", "First name, last name and age are needed to create your profile. Sex is optional.")) + "</p></div></div>" +
+          "<div class='two-columns'><div class='field'><label for='onboarding-first-name'>" + esc(i18n("Prénom", "First name")) + "</label><input id='onboarding-first-name' name='firstName' maxlength='30' autocomplete='off' value='" + esc(draft.firstName || "") + "' required></div>" +
+          "<div class='field'><label for='onboarding-last-name'>" + esc(i18n("Nom", "Last name")) + "</label><input id='onboarding-last-name' name='lastName' maxlength='50' autocomplete='off' value='" + esc(draft.lastName || "") + "' required></div></div>" +
+          "<div class='two-columns'><div class='field'><label for='onboarding-age'>" + esc(i18n("Âge", "Age")) + "</label><input id='onboarding-age' name='age' type='number' min='18' max='30' step='1' inputmode='numeric' autocomplete='off' value='" + esc(draft.age === "" ? "" : draft.age) + "' placeholder='24' required></div>" +
+          "<div class='field'><label for='onboarding-gender'>" + esc(i18n("Sexe (facultatif)", "Sex (optional)")) + "</label><select id='onboarding-gender' name='gender'><option value='unspecified'" + (selectedGender === "unspecified" ? " selected" : "") + ">" + esc(i18n("Je préfère ne pas préciser", "Prefer not to say")) + "</option><option value='woman'" + (selectedGender === "woman" ? " selected" : "") + ">" + esc(i18n("Femme", "Woman")) + "</option><option value='man'" + (selectedGender === "man" ? " selected" : "") + ">" + esc(i18n("Homme", "Man")) + "</option></select></div></div></section>" +
+          "<section class='interest-picker' aria-label='" + esc(i18n("Tes centres d’intérêt", "Your interests")) + "'><div class='interest-picker-head'><div><h2>" + esc(i18n("Tes envies", "Your interests")) + "</h2><p>" + esc(i18n("Choisis autant de thèmes que tu veux.", "Choose as many themes as you like.")) + "</p></div><span class='interest-count'>" + esc(selectedCount ? i18n(selectedCount + " choisi" + (selectedCount > 1 ? "s" : ""), selectedCount + " selected") : i18n("facultatif", "optional")) + "</span></div><div class='interest-grid' role='group' aria-label='" + esc(i18n("Choisir des centres d’intérêt", "Choose interests")) + "'>" + interestChoices + "</div><p class='interest-footnote'>" + esc(i18n("Cette sélection sert uniquement à organiser cette visite et disparaît quand la page est rouverte.", "This selection only organises this visit and disappears when the page is reopened.")) + "</p></section>" +
+          "<p id='onboarding-feedback' class='onboarding-feedback' role='status' aria-live='polite'></p><button type='submit' class='primary coral welcome-cta'>" + esc(i18n("✨ Voir mes sorties", "✨ See my events")) + "</button>" +
+          "<button type='button' class='welcome-skip' data-action='skip-interests'>" + esc(i18n("Effacer mes envies", "Clear my interests")) + "</button></form>" +
+          "<div class='welcome-steps' aria-label='" + esc(i18n("Comment fonctionne Never Go Alone", "How Never Go Alone works")) + "'>" +
+          "<div class='welcome-step'><span class='welcome-step-number' aria-hidden='true'>🎟️</span><div><b>" + esc(i18n("Une sortie qui te parle", "An event that feels right")) + "</b><p>" + esc(i18n("On place tes envies en premier, puis tu gardes la main sur tout le catalogue.", "Your interests come first, while the whole catalogue stays in your hands.")) + "</p></div></div>" +
+          "<div class='welcome-step'><span class='welcome-step-number' aria-hidden='true'>🤝</span><div><b>" + esc(i18n("Des personnes partantes", "People who are up for it")) + "</b><p>" + esc(i18n("Découvre les profils, puis signale ton intérêt pour faire grandir le groupe.", "Discover profiles, then register your interest to grow the group.")) + "</p></div></div>" +
+          "</div></div></section>";
       }
 
       function eventDetail() {
         var event = selectedEvent();
         var saving = event.publicPrice - event.groupPrice;
         var count = liveCount(event);
+        var hasRegisteredInterest = !!rememberedWithdrawal(event);
         var liveLabel = count ? i18n(count + " personne" + (count > 1 ? "s ont" : " a") + " déjà signalé son intérêt.", count + " person" + (count > 1 ? "s have" : " has") + " already registered interest.") : i18n("Le groupe live est prêt à accueillir sa première personne.", "The live group is ready for its first person.");
         var peopleLabel = count ? i18n("Voir les " + count + " profil" + (count > 1 ? "s" : "") + " intéressé" + (count > 1 ? "s" : ""), "See " + count + " interested profile" + (count > 1 ? "s" : "")) : i18n("Voir les profils intéressés", "See interested profiles");
+        var interestManager = hasRegisteredInterest ?
+          "<div class='success-card'><b>✓ " + esc(i18n("Ton intérêt est enregistré", "Your interest is registered")) + "</b><p>" + esc(i18n("Tu peux retirer ton profil de ce groupe à tout moment.", "You can remove your profile from this group at any time.")) + "</p></div>" +
+          "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button><p id='withdraw-feedback' class='feedback' role='status' aria-live='polite'></p>" : "";
         return "<section class='view'>" + header("La sortie") +
           "<div class='scroll'>" + poster(event, "hero-poster") +
           "<h1>" + esc(event.title) + "</h1><p class='muted'>⌖ " + esc(eventVenue()) +
@@ -1488,7 +2160,8 @@
           "<div class='info-card'><b>Prix transparent</b><p>Billet groupe : " + event.groupPrice +
           " € · Frais de service : 2,50 €<br>Économie totale : " + saving + " €</p><p class='tiny'>Tarifs affichés à titre indicatif pour le lancement.</p></div>" +
           "<button type='button' class='primary ghost' data-action='people'>" + esc(peopleLabel) + "</button>" +
-          "</div><div class='fixed-action'><button type='button' class='primary coral' data-action='join'>Rejoindre le groupe</button></div></section>";
+          interestManager +
+          "</div><div class='fixed-action'><button type='button' class='primary " + (hasRegisteredInterest ? "ghost" : "coral") + "' data-action='" + (hasRegisteredInterest ? "people" : "join") + "'>" + esc(hasRegisteredInterest ? peopleLabel : i18n("Rejoindre le groupe", "Join the group")) + "</button></div></section>";
       }
 
       function peoplePreview() {
@@ -1507,15 +2180,18 @@
         var listedPeople = list || profilesForEvent(selectedEvent());
         if (!listedPeople.length) {
           return "<div class='live-empty'><b>" + esc(i18n("Le groupe commence ici.", "The group starts here.")) + "</b><br>" +
-            esc(i18n("Sois la première personne à signaler ton intérêt : ton prénom, ton activité et un avatar seront ajoutés à cette liste.", "Be the first to register interest: your first name, activity and avatar will be added to this list.")) + "</div>";
+            esc(i18n("Sois la première personne à signaler ton intérêt : ton prénom, ton âge, ta nationalité, ton activité, une courte description, tes passions et un avatar seront ajoutés à cette liste.", "Be the first to register interest: your first name, age, nationality, activity, a short introduction, passions and an avatar will be added to this list.")) + "</div>";
         }
         return "<div class='member-list'>" + listedPeople.map(function (person) {
           var name = person.firstName || person.name || "Profil";
-          var activity = person.activity || person.job || "";
+          var activity = activityForDisplay(person.activity || person.job || "");
+          var age = typeof person.age === "number" ? person.age : Number.NaN;
+          var ageLabel = Number.isInteger(age) ? age + " " + i18n("ans", "years old") : "";
+          var summary = [activity, ageLabel].filter(Boolean).join(" · ");
           var id = person.id || "";
           return "<button type='button' class='member-row' data-action='open-member' data-member-id='" + esc(id) +
             "' aria-label='" + esc(i18n("Voir le profil de ", "View profile of ") + name) + "'>" + avatar(person, person.avatarKey) +
-            "<span class='live-member-copy'><b>" + esc(name) + "</b><p>" + esc(activity) + " · " + esc(i18n("profil renseigné", "profile provided")) +
+            "<span class='live-member-copy'><span class='live-member-name'><b>" + esc(name) + "</b><span class='verified-badge' title='" + esc(i18n("Vérification d’identité prévue au lancement", "Identity verification planned at launch")) + "'><span class='verification-icon' aria-hidden='true'>✓</span><span>" + esc(i18n("Vérif. au lancement", "Verification at launch")) + "</span></span></span><p>" + esc(summary) +
             "</p></span><span class='profile-arrow' aria-hidden='true'>›</span></button>";
         }).join("") + "</div>";
       }
@@ -1524,11 +2200,25 @@
         var person = liveMembers(selectedEvent()).filter(function (member) { return member.id === state.liveMemberId; })[0];
         if (!person) return peoplePreview();
         var name = person.firstName || "Profil";
+        var age = typeof person.age === "number" ? person.age : Number.NaN;
+        var ageLabel = Number.isInteger(age) ? age + " " + i18n("ans", "years old") : "";
+        var nationality = String(person.nationality || "").trim();
+        var gender = String(person.gender || "");
+        var genderLabel = profileGenderLabel(gender);
+        var description = String(person.description || "").trim();
+        var passions = String(person.passions || "").trim();
+        var identityCard = (ageLabel || nationality || genderLabel) ? "<div class='profile-card'><b>" + esc(i18n("À savoir", "At a glance")) + "</b><p>" + esc([ageLabel, nationality, genderLabel].filter(Boolean).join(" · ")) + "</p></div>" : "";
+        var translatedActivity = activityForDisplay(person.activity);
+        var activityCard = translatedActivity ? "<div class='profile-card'><b>" + esc(i18n("Activité indiquée", "Activity provided")) + "</b><p>" + esc(translatedActivity) + "</p></div>" : "";
+        var profileExtras = (description ? "<div class='profile-card'><b>" + esc(i18n("À propos", "About")) + "</b><p>" + esc(description) + "</p></div>" : "") +
+          (passions ? "<div class='profile-card'><b>" + esc(i18n("Passions", "Passions")) + "</b><p>" + esc(passions) + "</p></div>" : "");
         return "<section class='view'>" + header("Profil") +
           "<div class='scroll'><div class='profile-hero'>" + avatar(person, person.avatarKey) +
-          "<h1>" + esc(name) + "</h1><p class='verified'>" + esc(i18n("Profil renseigné pour cette sortie", "Profile provided for this event")) + "</p></div>" +
-          "<div class='profile-card'><b>" + esc(i18n("Activité indiquée", "Activity provided")) + "</b><p>" + esc(person.activity || "") + "</p></div>" +
-          "<div class='private-lock'><b>" + esc(i18n("Un profil respectueux de la vie privée", "A privacy-respecting profile")) + "</b><p>" + esc(i18n("Seuls le prénom, l’activité et un avatar illustré sont visibles. Aucun e-mail, nom complet ou genre n’est affiché.", "Only a first name, stated activity and illustrated avatar are visible. No email, full name or gender is displayed.")) + "</p></div>" +
+          "<h1>" + esc(name) + " <span class='profile-verification-icon' role='img' aria-label='" + esc(i18n("Vérification d’identité prévue au lancement", "Identity verification planned at launch")) + "'>✓</span></h1>" + (ageLabel ? "<p class='muted'>" + esc(ageLabel) + "</p>" : "") + "<p class='verified verification-pending'>🪪 " + esc(i18n("Vérification d’identité prévue au lancement", "Identity verification planned at launch")) + "</p></div>" +
+          identityCard + activityCard +
+          profileExtras +
+          "<div class='profile-card verification-card'><b>🪪 " + esc(i18n("Une vérification avant le lancement", "Verification before launch")) + "</b><p>" + esc(i18n("Dans la version finale, l’identité sera vérifiée avec une pièce d’identité. Aucune pièce d’identité n’est demandée ni vérifiée dans ce prototype.", "In the final version, identity will be verified with government-issued ID. No identity document is requested or verified in this prototype.")) + "</p></div>" +
+          "<div class='private-lock'><b>" + esc(i18n("Un profil respectueux de la vie privée", "A privacy-respecting profile")) + "</b><p>" + esc(i18n("Seuls le prénom, l’âge, la nationalité, le genre renseigné, l’activité, la description, les passions et un avatar illustré sont visibles après consentement. Aucun e-mail ou nom complet n’est affiché.", "Only a first name, age, nationality, chosen gender, activity, introduction, passions and an illustrated avatar are visible after consent. No email or full name is displayed.")) + "</p></div>" +
           "</div></section>";
       }
 
@@ -1539,23 +2229,32 @@
       function liveJoinForm(event) {
         var count = liveCount(event);
         var waiting = state.joinStatus === "sending";
+        var personal = state.personalProfile || normalisePersonalProfile({});
+        var savedGender = ["woman", "man"].indexOf(personal.gender) >= 0 ? personal.gender : "unspecified";
         var countNote = count ? i18n(count + " personne" + (count > 1 ? "s sont" : " est") + " déjà intéressée" + (count > 1 ? "s" : "") + ".", count + " person" + (count > 1 ? "s are" : " is") + " already interested.") : i18n("Tu peux lancer ce groupe live.", "You can start this live group.");
         return "<div class='scroll live-form'><h1>" + esc(i18n("Ton profil pour cette sortie", "Your profile for this event")) + "</h1>" +
-          "<p class='muted'>" + esc(i18n("Renseigne ton profil : il sera ajouté aux personnes intéressées par « " + event.title + " ».", "Complete your profile: it will be added to the people interested in “" + event.title + ".")) + "</p>" +
+          "<p class='muted'>" + esc(i18n("Envoie ce formulaire pour ajouter ton profil au groupe. Tu pourras ensuite compléter le formulaire de contact.", "Send this form to add your profile to the group. You can then complete the contact form.")) + "</p>" +
           "<div class='live-banner'>" + esc(countNote) + "</div>" +
-          "<form id='live-interest-form' novalidate>" +
-          "<div class='two-columns'><div class='field'><label for='live-first-name'>" + esc(i18n("Prénom", "First name")) + "</label><input id='live-first-name' name='firstName' maxlength='30' autocomplete='given-name' required></div>" +
-          "<div class='field'><label for='live-last-name'>" + esc(i18n("Nom", "Last name")) + "</label><input id='live-last-name' name='lastName' maxlength='50' autocomplete='family-name' required></div></div>" +
-          "<div class='field'><label for='live-email'>" + esc(i18n("E-mail", "Email")) + "</label><input id='live-email' name='email' type='email' maxlength='254' autocomplete='email' inputmode='email' required></div>" +
-          "<div class='two-columns'><div class='field'><label for='live-gender'>" + esc(i18n("Genre (privé)", "Gender (private)")) + "</label><select id='live-gender' name='gender'><option value='unspecified'>" + esc(i18n("Je préfère ne pas préciser", "Prefer not to say")) + "</option><option value='woman'>" + esc(i18n("Femme", "Woman")) + "</option><option value='man'>" + esc(i18n("Homme", "Man")) + "</option></select></div>" +
-          "<div class='field'><label for='live-activity'>" + esc(i18n("Activité", "Activity")) + "</label><input id='live-activity' name='activity' maxlength='80' autocomplete='organization-title' placeholder='" + esc(i18n("Ex. master finance", "E.g. master’s in finance")) + "' required></div></div>" +
-          "<p class='tiny'>" + esc(i18n("Le genre ne sert qu’à choisir un style d’avatar illustré et n’est ni affiché ni conservé. Aucune photo réelle n’est demandée.", "Gender is used only to choose an illustrated avatar style and is neither shown nor kept. No real photo is requested.")) + "</p>" +
+          "<form id='live-interest-form' novalidate autocomplete='off'>" +
+          "<p class='tiny'>✨ " + esc(i18n("Les informations de ton profil sont préremplies. Tu peux les modifier pour cette sortie.", "Your profile details are pre-filled. You can edit them for this event.")) + "</p>" +
+          "<div class='two-columns'><div class='field'><label for='live-first-name'>" + esc(i18n("Prénom", "First name")) + "</label><input id='live-first-name' name='firstName' maxlength='30' autocomplete='off' value='" + esc(personal.firstName || "") + "' required></div>" +
+          "<div class='field'><label for='live-last-name'>" + esc(i18n("Nom", "Last name")) + "</label><input id='live-last-name' name='lastName' maxlength='50' autocomplete='off' value='" + esc(personal.lastName || "") + "' required></div></div>" +
+          "<div class='field'><label for='live-email'>" + esc(i18n("E-mail", "Email")) + "</label><input id='live-email' name='email' type='email' maxlength='254' autocomplete='off' inputmode='email' required></div>" +
+          "<div class='two-columns'><div class='field'><label for='live-age'>" + esc(i18n("Âge", "Age")) + "</label><input id='live-age' name='age' type='number' min='18' max='30' step='1' inputmode='numeric' autocomplete='off' value='" + esc(personal.age === "" ? "" : personal.age) + "' placeholder='24' required></div>" +
+          "<div class='field'><label for='live-nationality'>" + esc(i18n("Nationalité", "Nationality")) + "</label><input id='live-nationality' name='nationality' maxlength='70' autocomplete='off' placeholder='" + esc(i18n("Ex. française, ivoirienne", "E.g. French, Ivorian")) + "' required></div></div>" +
+          "<div class='field'><label for='live-activity'>" + esc(i18n("Activité", "Activity")) + "</label><input id='live-activity' name='activity' maxlength='80' autocomplete='off' placeholder='" + esc(i18n("Ex. master finance", "E.g. master’s in finance")) + "' required></div>" +
+          "<p class='tiny'>🌐 " + esc(i18n("Les intitulés d’activité courants sont affichés dans la langue de l’application. Les intitulés très spécifiques restent inchangés.", "Common activity titles are displayed in the app language. Highly specific titles stay unchanged.")) + "</p>" +
+          "<div class='field'><label for='live-gender'>" + esc(i18n("Sexe", "Sex")) + "</label><select id='live-gender' name='gender'><option value='unspecified'" + (savedGender === "unspecified" ? " selected" : "") + ">" + esc(i18n("Je préfère ne pas préciser", "Prefer not to say")) + "</option><option value='woman'" + (savedGender === "woman" ? " selected" : "") + ">" + esc(i18n("Femme", "Woman")) + "</option><option value='man'" + (savedGender === "man" ? " selected" : "") + ">" + esc(i18n("Homme", "Man")) + "</option></select></div>" +
+          "<div class='field'><label for='live-description'>" + esc(i18n("Décris-toi en quelques mots (facultatif)", "Tell us about yourself (optional)")) + "</label><textarea id='live-description' name='description' maxlength='320' placeholder='" + esc(i18n("Ex. toujours partant·e pour découvrir des sorties et rencontrer du monde.", "E.g. always up for discovering events and meeting new people.")) + "'></textarea></div>" +
+          "<div class='field'><label for='live-passions'>" + esc(i18n("Tes passions (facultatif)", "Your passions (optional)")) + "</label><input id='live-passions' name='passions' maxlength='180' placeholder='" + esc(i18n("Ex. basket, cinéma, cuisine, voyages", "E.g. basketball, cinema, cooking, travel")) + "'></div>" +
+          "<p class='tiny'>" + esc(i18n("Le sexe choisi apparaît sur ton profil. Tu peux choisir « Je préfère ne pas préciser » ; aucune photo réelle n’est demandée.", "Your selected sex appears on your profile. You can select “Prefer not to say”; no real photo is requested.")) + "</p>" +
+          "<p class='tiny'>🪪 " + esc(i18n("Au lancement, les profils seront vérifiés avec une pièce d’identité. Ce prototype ne demande aucun document.", "At launch, profiles will be verified with government-issued ID. This prototype does not request any document.")) + "</p>" +
           "<div class='honeypot' aria-hidden='true'><label for='live-website'>Website</label><input id='live-website' name='website' tabindex='-1' autocomplete='off'></div>" +
           "<label class='check'><input id='live-adult' type='checkbox' required><span>" + esc(i18n("J’ai au moins 18 ans.", "I am at least 18 years old.")) + "</span></label>" +
-          "<label class='check'><input id='live-public-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon prénom, mon activité et mon avatar illustré soient visibles sur la fiche de cet événement. Mon nom, mon e-mail et mon genre ne seront jamais affichés.", "I agree that my first name, activity and illustrated avatar can appear on this event page. My last name, email and gender will never be displayed.")) + "</span></label>" +
+          "<label class='check'><input id='live-public-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon prénom, mon âge, ma nationalité, mon genre renseigné, mon activité, ma description, mes passions et mon avatar illustré soient visibles sur la fiche de cet événement. Mon nom et mon e-mail ne seront jamais affichés.", "I agree that my first name, age, nationality, chosen gender, activity, introduction, passions and illustrated avatar can appear on this event page. My last name and email will never be displayed.")) + "</span></label>" +
           "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("Je souhaite être recontacté·e au lancement et je compléterai le formulaire de contact à l’étape suivante.", "I would like to be contacted at launch and will complete the contact form in the next step.")) + "</span></label>" +
           "<p id='live-join-feedback' class='feedback' role='status' aria-live='polite'></p>" +
-          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Enregistrement…", "Saving…") : i18n("Ajouter mon profil au groupe", "Add my profile to the group")) + "</button></div>" +
+          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Ajout du profil…", "Adding profile…") : i18n("Ajouter mon profil au groupe", "Add my profile to the group")) + "</button></div>" +
           "</form></div>";
       }
 
@@ -1566,10 +2265,10 @@
         return "<section class='view'>" + homeHeader(i18n("Finaliser", "Finish")) + "<div class='scroll'>" +
           "<h1>" + esc(i18n("Ton intérêt est enregistré", "Your interest is registered")) + "</h1>" +
           "<div class='success-card'><b>✓ " + esc(i18n("Ton profil est visible dans ce groupe live.", "Your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
-          "<div class='form-note'><b>" + esc(i18n("Dernière étape", "Final step")) + "</b><br>" + esc(i18n("Complète ce formulaire de contact sans quitter Never Go Alone. Il permet à l’équipe de te recontacter au lancement. Google Forms ne peut pas confirmer automatiquement une réponse dans le prototype.", "Complete this contact form without leaving Never Go Alone. It lets the team contact you at launch. Google Forms cannot automatically confirm a response inside the prototype.")) + "</div>" +
+          "<div class='form-note'><b>" + esc(i18n("Formulaire de contact", "Contact form")) + "</b><br>" + esc(i18n("Complète ce formulaire sans quitter Never Go Alone pour être recontacté·e au lancement. Il n’y a aucune étape supplémentaire après son envoi.", "Complete this form without leaving Never Go Alone to hear from us at launch. There is no additional step after you send it.")) + "</div>" +
           googleFormEmbed() +
           "<button type='button' class='primary' data-action='home'>" + esc(i18n("Retourner à l’accueil", "Return to Home")) + "</button>" +
-          (rememberedWithdrawal(event) ? "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button>" : "") +
+          "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button>" +
           "<p id='withdraw-feedback' class='feedback' role='status' aria-live='polite'></p>" +
           "</div></section>";
       }
@@ -1663,20 +2362,19 @@
       }
 
       function profile() {
+        var chosenInterests = selectedInterestOptions();
+        var interestsSummary = chosenInterests.length ? chosenInterests.map(interestLabel).join(", ") : i18n("Aucune envie choisie pour le moment.", "No interests chosen yet.");
+        var personal = state.personalProfile || normalisePersonalProfile({});
+        var summary = userProfileSummary();
         return "<section class='view'>" + header("Mon profil") + "<div class='scroll'><div class='profile-hero'>" +
-          "<span class='avatar avatar-4' aria-hidden='true'>A</span><h1>Alex Martin</h1><p class='muted'>24 ans · " + esc(state.city) + "</p></div>" +
-          "<div class='profile-card'><b>Identité vérifiée</b><p>Profil vérifié · tes coordonnées servent uniquement à être recontacté·e.</p></div>" +
-          "<div class='language-picker' aria-label='Choisir la langue'><span>Langue</span>" +
-          "<button type='button' data-action='set-locale' data-locale='fr' aria-pressed='" + (state.locale === "fr") + "' class='" + (state.locale === "fr" ? "active" : "") + "'>Français</button>" +
-          "<button type='button' data-action='set-locale' data-locale='en' aria-pressed='" + (state.locale === "en") + "' class='" + (state.locale === "en" ? "active" : "") + "'>English</button></div>" +
-          "<button type='button' class='primary gold' data-action='waitlist'>✦ Être averti·e du lancement</button>" +
-          "<div style='height:8px'></div><button type='button' class='primary' data-action='about'>À propos</button>" +
+          avatar({ firstName: personal.firstName || "?" }, 4) + "<h1>👋 " + esc(userDisplayName()) + " <span class='profile-verification-icon' role='img' aria-label='" + esc(i18n("Vérification d’identité prévue au lancement", "Identity verification planned at launch")) + "'>✓</span></h1><p class='muted'>" + esc(summary || state.city) + "</p></div>" +
+          "<div class='profile-card'><b>🔒 " + esc(i18n("Informations de cette visite", "Details for this visit")) + "</b><p>" + esc(i18n("Ton prénom, ton nom, ton âge et ton sexe servent à personnaliser ce prototype. Ils ne sont pas enregistrés dans le navigateur et deviennent visibles dans un groupe seulement après une participation finalisée.", "Your first name, last name, age and sex personalise this prototype. They are not stored in the browser and only become visible in a group after participation is completed.")) + "</p><button type='button' class='profile-inline-action' data-action='edit-profile'>" + esc(i18n("Modifier mes informations", "Edit my details")) + "</button></div>" +
+          "<div class='profile-card verification-card'><b>🪪 " + esc(i18n("Vérification d’identité au lancement", "Identity verification at launch")) + "</b><p>" + esc(i18n("Dans la version finale, chaque profil sera vérifié avec une pièce d’identité. Ce prototype ne demande, ne collecte et ne conserve aucun document d’identité.", "In the final version, every profile will be verified with government-issued ID. This prototype does not request, collect or retain any identity document.")) + "</p></div>" +
+          "<div class='profile-card'><b>✨ " + esc(i18n("Mes envies", "My interests")) + "</b><p>" + esc(interestsSummary) + "</p><button type='button' class='profile-inline-action' data-action='edit-interests'>" + esc(i18n("Modifier ma sélection", "Edit my selection")) + "</button></div>" +
+          languagePicker("") +
+          "<button type='button' class='primary' data-action='about'>" + esc(i18n("📖 Découvrir Never Go Alone", "📖 Discover Never Go Alone")) + "</button>" +
           "<div style='height:8px'></div><button type='button' class='primary ghost' data-action='toggle-dark'>" +
           (state.dark ? "Passer en mode clair" : "Passer en mode sombre") + "</button></div>" + bottomNav("profile") + "</section>";
-      }
-
-      function waitlist() {
-        return "<section class='view'>" + header("Être averti·e") + interestForm() + "</section>";
       }
 
       function googleFormEmbed() {
@@ -1685,24 +2383,56 @@
         return "<iframe class='google-form' title='Formulaire Never Go Alone' src='" + embeddedFormUrl + "' loading='lazy'>Chargement du formulaire…</iframe>";
       }
 
-      function interestForm(event) {
-        var selectedEventNote = event ? "<div class='info-card'><b>" + esc(event.title) + "</b><p>Tu nous dis que cette sortie t’intéresse. Nous te recontacterons quand l’application sera lancée.</p></div>" : "";
-        return "<div class='scroll'><h1>Tu veux être averti·e ?</h1>" +
-          "<p class='muted'>Laisse tes coordonnées ici, sans quitter le prototype.</p>" + selectedEventNote +
-          "<div class='form-note'>Les réponses sont collectées directement dans le Google Form du projet. " +
-          "Les alertes e-mail sont gérées dans ses paramètres Google Forms.</div>" +
-          googleFormEmbed() +
-          "</div>";
+
+      function aboutStory(isLanding) {
+        var chapters = [
+          {
+            emoji: "🎟️",
+            tone: "violet",
+            title: i18n("Une envie ne devrait pas rester dans tes favoris.", "An event should not stay in your saved list."),
+            text: i18n("Trop de sorties passent à la trappe faute de compagnie. Never Go Alone part d’une idée simple : l’intérêt commun est déjà une bonne raison de se parler.", "Too many plans are skipped for lack of company. Never Go Alone starts with a simple idea: a shared interest is already a good reason to talk."),
+            orb: ""
+          },
+          {
+            emoji: "🧭",
+            tone: "coral",
+            title: i18n("Trouve la sortie qui te ressemble.", "Find the event that feels like you."),
+            text: i18n("Tu choisis tes envies au début. Elles organisent simplement la découverte : les concerts, matchs ou festivals qui te parlent remontent en premier, sans enfermer ta curiosité.", "You choose your interests first. They simply organise discovery: the concerts, matches or festivals you like rise to the top, without limiting your curiosity."),
+            orb: ""
+          },
+          {
+            emoji: "🤝",
+            tone: "green",
+            title: i18n("Vois qui a envie d’y aller aussi.", "See who else wants to go."),
+            text: i18n("Les profils intéressés rendent le premier pas moins intimidant. Tu découvres les personnes, puis tu peux signaler ton intérêt pour faire grandir le groupe autour de la même sortie.", "Interested profiles make the first step less intimidating. Discover people, then register your interest to grow a group around the same event."),
+            orb: ""
+          },
+          {
+            emoji: "☕",
+            tone: "violet",
+            title: i18n("Le vrai plan : se retrouver avant d’y aller.", "The real plan: meet before you go."),
+            text: i18n("Au lancement, le groupe pourra discuter et proposer un café ou un restaurant près du lieu. L’événement devient le prétexte pour créer une vraie sortie partagée.", "When the app launches, the group will be able to chat and suggest coffee or a restaurant nearby. The event becomes a reason for a genuinely shared plan."),
+            orb: ""
+          }
+        ];
+        var finalAction = isLanding ? "start-onboarding" : "edit-profile";
+        var finalLabel = isLanding ? i18n("✨ Créer mon profil", "✨ Create my profile") : i18n("✨ Créer ou modifier mon profil", "✨ Create or edit my profile");
+        return "<section class='view " + (isLanding ? "landing-screen" : "") + "'>" + (isLanding ? "" : header(i18n("À propos", "About"))) + "<div class='scroll about-scroll" + (isLanding ? "" : " with-bottom-nav") + "'>" +
+          "<section class='about-story-hero " + (isLanding ? "landing-hero" : "") + "'>" + (isLanding ? languagePicker("landing-language") : "") + "<span class='about-story-kicker'>✨ " + esc(i18n("NOTRE HISTOIRE", "OUR STORY")) + "</span><h1>" + esc(i18n("Une sortie, des gens qui ont envie d’y aller aussi.", "One event, people who want to go too.")) + "</h1><p>" + esc(i18n("Never Go Alone s’adresse aux personnes qui ont envie de sortir, de rencontrer du monde et de partager un événement sans y aller seules.", "Never Go Alone is for people who want to go out, meet others and share an event without going alone.")) + "</p><span class='scroll-hint'>↓ " + esc(i18n("Fais défiler", "Keep scrolling")) + "</span></section>" +
+          chapters.map(function (chapter) {
+            return "<article class='about-chapter' data-reveal data-tone='" + esc(chapter.tone) + "'><span class='about-number' aria-hidden='true'>" + esc(chapter.emoji) + "</span><h2>" + esc(chapter.title) + "</h2><p>" + esc(chapter.text) + "</p><span class='about-orb' aria-hidden='true'></span></article>";
+          }).join("") +
+          "<div class='private-lock'><b>🔒 " + esc(i18n("Un prototype qui écoute", "A prototype that listens")) + "</b><p>" + esc(i18n("Cette version sert à mesurer l’intérêt avant le lancement. Les coordonnées ne sont demandées qu’au moment où tu rejoins une sortie, jamais pour explorer.", "This version measures interest before launch. Contact details are requested only when you join an event, never while you explore.")) + "</p></div>" +
+          "<div class='private-lock verification-card'><b>🪪 " + esc(i18n("Une identité vérifiée au lancement", "Identity verification at launch")) + "</b><p>" + esc(i18n("Dans la version finale, les profils seront vérifiés avec une pièce d’identité. Ce prototype n’en demande ni n’en conserve aucune.", "In the final version, profiles will be verified with government-issued ID. This prototype neither requests nor stores any identity document.")) + "</p></div>" +
+          "<button type='button' class='primary coral about-final' data-action='" + finalAction + "'>" + esc(finalLabel) + "</button></div>" + (isLanding ? "" : bottomNav("about")) + "</section>";
+      }
+
+      function landing() {
+        return aboutStory(true);
       }
 
       function about() {
-        return "<section class='view'>" + header("À propos") + "<div class='scroll'><h1>Ne plus renoncer à une sortie.</h1>" +
-          "<p class='muted'>Never Go Alone aide les jeunes adultes, les personnes nouvelles dans une ville et les étudiant·es internationaux à vivre les événements qui les tentent.</p>" +
-          "<div class='info-card'><b>Notre idée</b><p>Un intérêt commun est une bonne première raison de se rencontrer. " +
-          "Cette version live permet de repérer une sortie, de découvrir les profils intéressés et de signaler son intérêt.</p></div>" +
-          "<div class='info-card'><b>Ce qui compte</b><p>Les profils affichent uniquement un prénom, une activité indiquée et un avatar illustré. Les coordonnées restent privées.</p></div>" +
-          "<div class='private-lock'><b>Une version de test</b><p>Never Go Alone est encore en prototype. Après avoir rejoint une sortie, le formulaire de contact permet de recevoir les nouvelles du lancement.</p></div>" +
-          "</div></section>";
+        return aboutStory(false);
       }
 
       function cityPage() {
@@ -1714,9 +2444,30 @@
           }).join("") + "</div></section>";
       }
 
+      function revealAboutChapters() {
+        var chapters = Array.prototype.slice.call(app.querySelectorAll("[data-reveal]"));
+        if (!chapters.length) return;
+        if (!("IntersectionObserver" in window)) {
+          chapters.forEach(function (chapter) { chapter.classList.add("is-visible"); });
+          return;
+        }
+        var scrollRoot = app.querySelector(".about-scroll");
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { root: scrollRoot, threshold: .16 });
+        chapters.forEach(function (chapter) { observer.observe(chapter); });
+      }
+
       function render() {
         document.body.classList.toggle("dark", state.dark);
         var views = {
+          landing: landing,
+          welcome: welcome,
           explore: explore,
           event: eventDetail,
           people: peoplePreview,
@@ -1724,12 +2475,12 @@
           join: joinPage,
           contact: contactPage,
           profile: profile,
-          waitlist: waitlist,
           about: about,
           city: cityPage
         };
         app.innerHTML = (views[state.screen] || explore)();
         applyLocale();
+        window.requestAnimationFrame(revealAboutChapters);
       }
 
       app.addEventListener("click", function (event) {
@@ -1743,7 +2494,22 @@
           state.screen = "explore";
           render();
         }
-        if (action === "nav") navigate(control.dataset.screen);
+        if (action === "toggle-interest") toggleInterest(control.dataset.interestId || "");
+        if (action === "skip-interests") {
+          state.interests = [];
+          persistInterests();
+          render();
+        }
+        if (action === "start-onboarding") {
+          state.profileDraft = Object.assign({}, state.profileDraft || state.personalProfile || normalisePersonalProfile({}));
+          navigate("welcome");
+        }
+        if (action === "edit-interests" || action === "edit-profile") {
+          state.profileDraft = Object.assign({}, state.personalProfile || normalisePersonalProfile({}));
+          navigate("welcome");
+        }
+        if (action === "start-exploring") navigate("welcome");
+        if (action === "nav") switchMainScreen(control.dataset.screen);
         if (action === "explore") navigate("explore");
         if (action === "profile") navigate("profile");
         if (action === "city") navigate("city");
@@ -1768,8 +2534,7 @@
           render();
         }
         if (action === "join") navigate("join");
-        if (action === "withdraw") withdrawLiveInterest();
-        if (action === "waitlist") navigate("waitlist");
+        if (action === "withdraw" && window.confirm(i18n("Retirer ton intérêt de ce groupe ? Ton profil ne sera plus visible aux autres personnes intéressées.", "Remove your interest from this group? Your profile will no longer be visible to the other interested people."))) withdrawLiveInterest();
         if (action === "about") navigate("about");
         if (action === "toggle-dark") { state.dark = !state.dark; render(); }
         if (action === "set-locale") {
@@ -1780,6 +2545,14 @@
 
       app.addEventListener("input", function (event) {
         var input = event.target;
+        var onboardingKeys = {
+          "onboarding-first-name": "firstName",
+          "onboarding-last-name": "lastName",
+          "onboarding-age": "age"
+        };
+        if (onboardingKeys[input.id]) {
+          state.profileDraft[onboardingKeys[input.id]] = input.value;
+        }
         if (input.id === "card-number") {
           input.value = input.value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
         }
@@ -1791,6 +2564,9 @@
       });
 
       app.addEventListener("change", function (event) {
+        if (event.target.id === "onboarding-gender") {
+          state.profileDraft.gender = event.target.value;
+        }
         if (event.target.id === "simulation-day") {
           var ticketGroup = activeReservation();
           if (!ticketGroup) return;
@@ -1801,11 +2577,42 @@
       });
 
       app.addEventListener("submit", function (event) {
+        if (event.target && event.target.id === "onboarding-form") {
+          event.preventDefault();
+          submitOnboardingProfile();
+        }
         if (event.target && event.target.id === "live-interest-form") {
           event.preventDefault();
           submitLiveInterest();
         }
       });
+
+      function onboardingFieldValue(id) {
+        var input = app.querySelector("#" + id);
+        return input ? String(input.value || "").trim() : "";
+      }
+
+      function setOnboardingFeedback(message) {
+        var feedback = app.querySelector("#onboarding-feedback");
+        if (feedback) feedback.textContent = message || "";
+      }
+
+      function submitOnboardingProfile() {
+        var profileData = normalisePersonalProfile({
+          firstName: onboardingFieldValue("onboarding-first-name"),
+          lastName: onboardingFieldValue("onboarding-last-name"),
+          age: onboardingFieldValue("onboarding-age"),
+          gender: onboardingFieldValue("onboarding-gender")
+        });
+        if (!profileData.firstName || !profileData.lastName || !profileData.age) {
+          setOnboardingFeedback(i18n("Renseigne ton prénom, ton nom et ton âge (18–30 ans) pour continuer.", "Enter your first name, last name and age (18–30) to continue."));
+          return;
+        }
+        state.personalProfile = profileData;
+        state.profileDraft = Object.assign({}, profileData);
+        persistPersonalProfile();
+        startExploring();
+      }
 
       function joinFieldValue(id) {
         var input = app.querySelector("#" + id);
@@ -1823,7 +2630,11 @@
         var firstName = joinFieldValue("live-first-name");
         var lastName = joinFieldValue("live-last-name");
         var email = joinFieldValue("live-email").toLowerCase();
+        var age = Number(joinFieldValue("live-age"));
+        var nationality = joinFieldValue("live-nationality");
         var activity = joinFieldValue("live-activity");
+        var description = joinFieldValue("live-description");
+        var passions = joinFieldValue("live-passions");
         var gender = joinFieldValue("live-gender") || "unspecified";
         var website = joinFieldValue("live-website");
         var adult = !!(app.querySelector("#live-adult") || {}).checked;
@@ -1831,8 +2642,8 @@
         var contactConsent = !!(app.querySelector("#live-contact-consent") || {}).checked;
         var emailLooksValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-        if (!firstName || !lastName || !activity || !emailLooksValid) {
-          setJoinFeedback(i18n("Renseigne ton prénom, ton nom, ton e-mail et ton activité.", "Enter your first name, last name, email and activity."));
+        if (!firstName || !lastName || !activity || !emailLooksValid || !Number.isInteger(age) || age < 18 || age > 30 || !nationality) {
+          setJoinFeedback(i18n("Renseigne ton prénom, ton nom, ton e-mail, ton âge (18–30 ans), ta nationalité et ton activité.", "Enter your first name, last name, email, age (18–30), nationality and activity."));
           return;
         }
         if (!adult || !publicConsent || !contactConsent) {
@@ -1841,11 +2652,11 @@
         }
 
         state.joinStatus = "sending";
-        setJoinFeedback(i18n("Enregistrement de ton intérêt…", "Saving your interest…"));
+        setJoinFeedback(i18n("Ajout de ton profil au groupe…", "Adding your profile to the group…"));
         var submitButton = form.querySelector("button[type='submit']");
         if (submitButton) submitButton.disabled = true;
+        var event = selectedEvent();
         try {
-          var event = selectedEvent();
           var payload = await apiRequest("/api/interests", {
             method: "POST",
             headers: { "content-type": "application/json", "accept": "application/json" },
@@ -1855,7 +2666,11 @@
               lastName: lastName,
               email: email,
               gender: gender,
+              age: age,
+              nationality: nationality,
               activity: activity,
+              description: description,
+              passions: passions,
               adult: adult,
               publicConsent: publicConsent,
               contactConsent: contactConsent,
@@ -1864,13 +2679,21 @@
           });
           applyLiveEvent(event, payload);
           if (payload.member && payload.withdrawToken) rememberWithdrawal(event, payload.member.id, payload.withdrawToken);
+          state.personalProfile = normalisePersonalProfile({
+            firstName: firstName,
+            lastName: lastName,
+            age: age,
+            gender: gender
+          });
+          state.profileDraft = Object.assign({}, state.personalProfile);
+          persistPersonalProfile();
           state.joinStatus = "";
           state.history = [];
           state.screen = "contact";
           render();
         } catch (error) {
           state.joinStatus = "";
-          setJoinFeedback(error && error.message ? error.message : i18n("Impossible d’enregistrer ton intérêt pour le moment.", "We could not save your interest right now."));
+          setJoinFeedback(error && error.message ? error.message : i18n("Impossible d’ajouter ton intérêt pour le moment.", "We could not add your interest right now."));
           if (submitButton) submitButton.disabled = false;
         }
       }
@@ -1969,7 +2792,7 @@
         var reservation = activeReservation();
         if (!reservation) return;
         var message = input.value.trim();
-        reservation.messages.push({ author: "Alex", text: message, mine: true });
+        reservation.messages.push({ author: userFirstName() || i18n("Moi", "Me"), text: message, mine: true });
         reservation.messages.push({ author: nextResponder(reservation), text: contextualReply(message, groupEvent()), mine: false });
         render();
       }
@@ -1991,7 +2814,7 @@
       loadLiveCounts();
       window.addEventListener("focus", function () {
         loadLiveCounts();
-        if (state.screen === "event" || state.screen === "people" || state.screen === "member-profile" || state.screen === "contact") {
+        if (state.screen === "event" || state.screen === "people" || state.screen === "member-profile") {
           loadLiveEvent(selectedEvent());
         }
       });
