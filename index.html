@@ -2232,8 +2232,8 @@
         var personal = state.personalProfile || normalisePersonalProfile({});
         var savedGender = ["woman", "man"].indexOf(personal.gender) >= 0 ? personal.gender : "unspecified";
         var countNote = count ? i18n(count + " personne" + (count > 1 ? "s sont" : " est") + " déjà intéressée" + (count > 1 ? "s" : "") + ".", count + " person" + (count > 1 ? "s are" : " is") + " already interested.") : i18n("Tu peux lancer ce groupe live.", "You can start this live group.");
-        return "<div class='scroll live-form'><h1>" + esc(i18n("Ton profil pour cette sortie", "Your profile for this event")) + "</h1>" +
-          "<p class='muted'>" + esc(i18n("Envoie ce formulaire pour ajouter ton profil au groupe. Tu pourras ensuite compléter le formulaire de contact.", "Send this form to add your profile to the group. You can then complete the contact form.")) + "</p>" +
+        return "<div class='scroll live-form'><h1>" + esc(i18n("Ton formulaire pour cette sortie", "Your form for this event")) + "</h1>" +
+          "<p class='muted'>" + esc(i18n("Envoie ce formulaire : ton profil sera ajouté automatiquement au groupe. Il n’y aura aucune étape « Ajouter au groupe » ensuite.", "Send this form: your profile will be added to the group automatically. There will be no separate “Add to group” step afterwards.")) + "</p>" +
           "<div class='live-banner'>" + esc(countNote) + "</div>" +
           "<form id='live-interest-form' novalidate autocomplete='off'>" +
           "<p class='tiny'>✨ " + esc(i18n("Les informations de ton profil sont préremplies. Tu peux les modifier pour cette sortie.", "Your profile details are pre-filled. You can edit them for this event.")) + "</p>" +
@@ -2252,9 +2252,9 @@
           "<div class='honeypot' aria-hidden='true'><label for='live-website'>Website</label><input id='live-website' name='website' tabindex='-1' autocomplete='off'></div>" +
           "<label class='check'><input id='live-adult' type='checkbox' required><span>" + esc(i18n("J’ai au moins 18 ans.", "I am at least 18 years old.")) + "</span></label>" +
           "<label class='check'><input id='live-public-consent' type='checkbox' required><span>" + esc(i18n("J’accepte que mon prénom, mon âge, ma nationalité, mon genre renseigné, mon activité, ma description, mes passions et mon avatar illustré soient visibles sur la fiche de cet événement. Mon nom et mon e-mail ne seront jamais affichés.", "I agree that my first name, age, nationality, chosen gender, activity, introduction, passions and illustrated avatar can appear on this event page. My last name and email will never be displayed.")) + "</span></label>" +
-          "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("Je souhaite être recontacté·e au lancement et je compléterai le formulaire de contact à l’étape suivante.", "I would like to be contacted at launch and will complete the contact form in the next step.")) + "</span></label>" +
+          "<label class='check'><input id='live-contact-consent' type='checkbox' required><span>" + esc(i18n("J’accepte d’être recontacté·e au lancement de l’application.", "I agree to be contacted when the app launches.")) + "</span></label>" +
           "<p id='live-join-feedback' class='feedback' role='status' aria-live='polite'></p>" +
-          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Ajout du profil…", "Adding profile…") : i18n("Ajouter mon profil au groupe", "Add my profile to the group")) + "</button></div>" +
+          "<div class='live-form-actions'><button type='submit' class='primary coral'" + (waiting ? " disabled" : "") + ">" + esc(waiting ? i18n("Envoi du formulaire…", "Sending form…") : i18n("Envoyer mon formulaire", "Send my form")) + "</button></div>" +
           "</form></div>";
       }
 
@@ -2262,10 +2262,10 @@
         var event = selectedEvent();
         var count = liveCount(event);
         var countNote = i18n("Le groupe compte maintenant " + count + " personne" + (count > 1 ? "s" : "") + " intéressée" + (count > 1 ? "s" : "") + ".", "The group now has " + count + " interested person" + (count > 1 ? "s" : "") + ".");
-        return "<section class='view'>" + homeHeader(i18n("Finaliser", "Finish")) + "<div class='scroll'>" +
-          "<h1>" + esc(i18n("Ton intérêt est enregistré", "Your interest is registered")) + "</h1>" +
-          "<div class='success-card'><b>✓ " + esc(i18n("Ton profil est visible dans ce groupe live.", "Your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
-          "<div class='form-note'><b>" + esc(i18n("Formulaire de contact", "Contact form")) + "</b><br>" + esc(i18n("Complète ce formulaire sans quitter Never Go Alone pour être recontacté·e au lancement. Il n’y a aucune étape supplémentaire après son envoi.", "Complete this form without leaving Never Go Alone to hear from us at launch. There is no additional step after you send it.")) + "</div>" +
+        return "<section class='view'>" + homeHeader(i18n("C’est fait", "Done")) + "<div class='scroll'>" +
+          "<h1>" + esc(i18n("Ton profil a été ajouté", "Your profile has been added")) + "</h1>" +
+          "<div class='success-card'><b>✓ " + esc(i18n("Ton profil est maintenant visible dans ce groupe live.", "Your profile is now visible in this live group.")) + "</b><p>" + esc(countNote) + "</p></div>" +
+          "<div class='form-note'><b>" + esc(i18n("Formulaire de contact", "Contact form")) + "</b><br>" + esc(i18n("Complète ce formulaire sans quitter Never Go Alone pour être recontacté·e au lancement. Ton profil est déjà ajouté : il n’y a aucun bouton « Ajouter au groupe » à cliquer après l’envoi.", "Complete this form without leaving Never Go Alone to hear from us at launch. Your profile is already added: there is no “Add to group” button to click after sending it.")) + "</div>" +
           googleFormEmbed() +
           "<button type='button' class='primary' data-action='home'>" + esc(i18n("Retourner à l’accueil", "Return to Home")) + "</button>" +
           "<button type='button' class='primary ghost withdraw-button' data-action='withdraw'>" + esc(i18n("Retirer mon intérêt", "Remove my interest")) + "</button>" +
@@ -2647,12 +2647,12 @@
           return;
         }
         if (!adult || !publicConsent || !contactConsent) {
-          setJoinFeedback(i18n("Confirme les trois cases pour ajouter ton profil au groupe.", "Confirm all three checkboxes to add your profile to the group."));
+          setJoinFeedback(i18n("Confirme les trois cases pour envoyer ton formulaire.", "Confirm all three checkboxes to send your form."));
           return;
         }
 
         state.joinStatus = "sending";
-        setJoinFeedback(i18n("Ajout de ton profil au groupe…", "Adding your profile to the group…"));
+        setJoinFeedback(i18n("Envoi du formulaire et ajout de ton profil…", "Sending your form and adding your profile…"));
         var submitButton = form.querySelector("button[type='submit']");
         if (submitButton) submitButton.disabled = true;
         var event = selectedEvent();
