@@ -3,9 +3,24 @@ import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
 
 const STORE_NAME = "never-go-alone-live-v3";
 const RECORD_PREFIX = "interest/";
-const MAX_REQUEST_BYTES = 4096;
+const MAX_REQUEST_BYTES = 8192;
 const MAX_PUBLIC_MEMBERS = 100;
+const MAX_DESCRIPTION_LENGTH = 320;
+const MAX_PASSIONS_LENGTH = 180;
+const MAX_NATIONALITY_LENGTH = 70;
+const MAX_LAUNCH_FEEDBACK_LENGTH = 600;
 const EVENT_ID_PATTERN = /^nga-(paris|lyon|lille|marseille|bordeaux|nantes|strasbourg)-[a-z0-9-]{3,170}$/;
+const GENDERS = new Set(["woman", "man", "unspecified"]);
+const GOOGLE_FORM_RESPONSE_URL = process.env.GOOGLE_FORM_RESPONSE_URL || "https://docs.google.com/forms/d/e/1FAIpQLSeoXqtJ7WOj_NkDK2kqRJa8Fey_msSvvU62978PLLdd5iaNNg/formResponse";
+const LAUNCH_INTEREST_RESPONSES = new Map([
+  ["very", "Very interested, I’d use it right away"],
+  ["interested", "Interested, I’d like to try it"],
+  ["curious", "Curious, but not sure yet"]
+]);
+const LAUNCH_CHAT_RESPONSES = new Map([
+  ["yes", "Yes, feel free to contact me"],
+  ["no", "No, thanks"]
+]);
 const submissionWindows = new Map();
 
 class HttpError extends Error {
@@ -28,6 +43,80 @@ function json(data, status = 200) {
 
 function cleanText(value, maximumLength) {
   return typeof value === "string" ? value.trim().replace(/\s+/g, " ").slice(0, maximumLength) : "";
+}
+
+function publicProfileText(record, key, maximumLength) {
+  return record && typeof record[key] === "string" ? cleanText(record[key], maximumLength) : "";
+}
+
+function cleanOptionalPublicText(value, maximumLength, label) {
+  if (value === undefined || value === null) return { provided: false, value: "" };
+  if (typeof value !== "string") throw new HttpError(400, label + " invalide.");
+
+  // Keep profile text readable and safe to render, even if a client bypasses
+  // the form's maxlength attributes. The front end still escapes this text.
+  const normalized = value
+    .normalize("NFC")
+    .replace(/[\p{Cc}\p{Cf}]/gu, "")
+    .trim()
+    .replace(/\s+/g, " ");
+  if (normalized.length > maximumLength || /[<>]/.test(normalized)) {
+    throw new HttpError(400, label + " est trop long ou contient des caractères non autorisés.");
+  }
+  return { provided: true, value: normalized };
+}
+
+function cleanRequiredPublicText(value, maximumLength, label) {
+  const text = cleanOptionalPublicText(value, maximumLength, label);
+  if (!text.provided || !text.value) throw new HttpError(400, label + " est requis.");
+  return text.value;
+}
+
+function cleanAge(value) {
+  const age = typeof value === "number"
+    ? value
+    : typeof value === "string" && /^\d{1,2}$/.test(value.trim())
+      ? Number(value.trim())
+      : Number.NaN;
+  if (!Number.isInteger(age) || age < 18 || age > 30) {
+    throw new HttpError(400, "L’âge doit être compris entre 18 et 30 ans.");
+  }
+  return age;
+}
+
+function launchResponseValue(value, choices, label) {
+  const normalized = cleanText(value, 30);
+  const response = choices.get(normalized);
+  if (!response) throw new HttpError(400, label + " invalide.");
+  return response;
+}
+
+async function submitLaunchQuestionnaire(email, interest, feedback, chat) {
+  const body = new URLSearchParams({
+    "entry.2059906264": email,
+    "entry.725885935": interest,
+    "entry.2046482610": feedback,
+    "entry.1936886010": chat
+  });
+
+  let response;
+  try {
+    response = await fetch(GOOGLE_FORM_RESPONSE_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body,
+      redirect: "follow"
+    });
+  } catch {
+    throw new HttpError(502, "Le formulaire de lancement est indisponible. Réessaie dans un instant.");
+  }
+  if (!response.ok) {
+    throw new HttpError(502, "Le formulaire de lancement n’a pas pu être envoyé. Réessaie dans un instant.");
+  }
+}
+
+function isGender(value) {
+  return typeof value === "string" && GENDERS.has(value);
 }
 
 function assertEventId(value) {
@@ -78,6 +167,13 @@ function publicMember(record) {
     id: String(record.id),
     firstName: String(record.firstName),
     activity: String(record.activity),
+    // Legacy profiles are retained even though they predate these fields.
+    age: Number.isInteger(record.age) ? record.age : null,
+    nationality: publicProfileText(record, "nationality", MAX_NATIONALITY_LENGTH),
+    // Profiles created before gender was shared publicly remain readable.
+    gender: isGender(record.gender) ? record.gender : "unspecified",
+    description: publicProfileText(record, "description", MAX_DESCRIPTION_LENGTH),
+    passions: publicProfileText(record, "passions", MAX_PASSIONS_LENGTH),
     avatarKey: Number(record.avatarKey),
     createdAt: String(record.createdAt)
   };
@@ -88,6 +184,11 @@ function validRecord(record) {
     typeof record.id === "string" &&
     typeof record.firstName === "string" && record.firstName.length > 0 &&
     typeof record.activity === "string" && record.activity.length > 0 &&
+    (!Object.hasOwn(record, "age") || (Number.isInteger(record.age) && record.age >= 18 && record.age <= 30)) &&
+    (!Object.hasOwn(record, "nationality") || typeof record.nationality === "string") &&
+    (!Object.hasOwn(record, "gender") || isGender(record.gender)) &&
+    (!Object.hasOwn(record, "description") || typeof record.description === "string") &&
+    (!Object.hasOwn(record, "passions") || typeof record.passions === "string") &&
     Number.isInteger(Number(record.avatarKey)) &&
     typeof record.createdAt === "string";
 }
@@ -159,6 +260,13 @@ async function createInterest(request) {
   const email = cleanText(payload.email, 254).toLowerCase();
   const activity = cleanText(payload.activity, 80);
   const gender = cleanText(payload.gender, 20) || "unspecified";
+  const age = cleanAge(payload.age);
+  const nationality = cleanRequiredPublicText(payload.nationality, MAX_NATIONALITY_LENGTH, "Nationalité");
+  const submittedDescription = cleanOptionalPublicText(payload.description, MAX_DESCRIPTION_LENGTH, "Description");
+  const submittedPassions = cleanOptionalPublicText(payload.passions, MAX_PASSIONS_LENGTH, "Passions");
+  const launchInterest = launchResponseValue(payload.launchInterest, LAUNCH_INTEREST_RESPONSES, "Niveau d’intérêt");
+  const launchFeedback = cleanRequiredPublicText(payload.launchFeedback, MAX_LAUNCH_FEEDBACK_LENGTH, "Retour");
+  const launchChat = launchResponseValue(payload.launchChat, LAUNCH_CHAT_RESPONSES, "Disponibilité");
   const namePattern = /^[\p{L}][\p{L}\p{M}' -]{1,49}$/u;
   const firstNamePattern = /^[\p{L}][\p{L}\p{M}' -]{1,29}$/u;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -166,7 +274,7 @@ async function createInterest(request) {
   if (!firstNamePattern.test(firstName) || !namePattern.test(lastName) || !emailPattern.test(email) || activity.length < 2 || /[<>]/.test(activity)) {
     throw new HttpError(400, "Vérifie ton prénom, ton nom, ton e-mail et ton activité.");
   }
-  if (!Object.hasOwn({ woman: true, man: true, unspecified: true }, gender)) {
+  if (!GENDERS.has(gender)) {
     throw new HttpError(400, "Genre invalide.");
   }
   if (payload.adult !== true || payload.publicConsent !== true || payload.contactConsent !== true) {
@@ -179,18 +287,40 @@ async function createInterest(request) {
   const key = recordKey(eventId, emailHash);
   const store = interestStore();
   const existing = await store.get(key, { type: "json" });
+  const questionnaireAlreadySent = validRecord(existing) && existing.launchQuestionnaireSubmitted === true;
+
+  // The launch questionnaire is submitted before the profile is persisted.
+  // Therefore a visitor never appears in a group without their response being
+  // received by the Google Form. The marker avoids duplicate responses when a
+  // person updates an existing profile for the same event.
+  if (!questionnaireAlreadySent) {
+    await submitLaunchQuestionnaire(email, launchInterest, launchFeedback, launchChat);
+  }
   const now = new Date().toISOString();
   const record = {
     id: validRecord(existing) ? existing.id : randomUUID(),
     firstName,
     activity,
+    age,
+    nationality,
+    gender,
+    // When an older client re-submits an interest without these newer fields,
+    // keep the profile details that the person had already shared.
+    description: submittedDescription.provided && submittedDescription.value
+      ? submittedDescription.value
+      : publicProfileText(existing, "description", MAX_DESCRIPTION_LENGTH),
+    passions: submittedPassions.provided && submittedPassions.value
+      ? submittedPassions.value
+      : publicProfileText(existing, "passions", MAX_PASSIONS_LENGTH),
+    launchQuestionnaireSubmitted: true,
     avatarKey: avatarKeyFrom(emailHash, gender),
     withdrawalHash,
     createdAt: validRecord(existing) ? existing.createdAt : now,
     updatedAt: now
   };
 
-  // Raw e-mail, surname and gender never enter the persistent store.
+  // Raw e-mail and surname never enter the persistent store. The selected
+  // gender, age and nationality are public only after explicit consent.
   await store.setJSON(key, record);
   const snapshot = await eventSnapshot(eventId);
   return json(Object.assign(snapshot, { member: publicMember(record), withdrawToken: withdrawalToken }));
